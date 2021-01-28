@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Hello</h1>
+
+<% response.sendRedirect(request.getContextPath()+"mainView.do"); %>
 </body>
 </html>

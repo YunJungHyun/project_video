@@ -18,15 +18,15 @@
 	<!-- dataSource : MySQL과 연결을 담당한다. DataSource는 JDBC 커넥셔늘 처리하는 기능을 가지고있기에 DB와 연동하는 작업에 반드시 필요하다.  -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<!-- <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property> -->
-		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+		<!-- <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property> -->
 		<!-- <property name="url" value="jdbc:mysql://localhost:3306/testdb?useSSL=false&amp;serverTimezone=UTC"> -->
 		<!-- SQL이 잘못되어 에러가 발생하는 경우가 있는데, 이를 대비하여 조금 더 자세히 로그를 조사할 수 있도록 로그 설정을 변경  -->
-		<property name="url" value="jdbc:log4jdbc:mysql://localhost:3306/mall?useSSL=false&amp;serverTimezone=UTC"> 
-		</property> 
-		<property name="username" value="mallid"></property>
-		<property name="password" value="0000"></property> 
-	</bean>
+		<property name="url" value="jdbc:mysql://localhost:3306/project_video?useSSL=false&amp;serverTimezone=UTC"> 
+		</property>  
+		<property name="username" value="videoid"></property>
+		<property name="password" value="0000"></property>  
+	</bean> 
  
 	  
 	<!-- mybatis SqlSessionFactoryBean -->
