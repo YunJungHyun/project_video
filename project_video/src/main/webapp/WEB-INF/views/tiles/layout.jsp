@@ -32,7 +32,7 @@
 			<div class="mainBox col-md-8 col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 "> 
 					<tiles:insertAttribute name="body" />	
 			</div>
-			<div class="right-menuBox  d-none d-xl-block col-xl-2">
+			<div class="right-menuBox col-12 col-xl-2">
 				<tiles:insertAttribute name="right-menu" />	
 			</div>
 		</div>
