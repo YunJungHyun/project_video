@@ -3,25 +3,27 @@
 "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 
-	<definition name="default_body" templateExpression="/WEB-INF/views/tiles/layout.jsp">	
+	<definition name="new.default_body" templateExpression="/WEB-INF/views/tiles/layout.jsp">	
 	
 		<put-attribute name="header" expression="/WEB-INF/views/tiles/header.jsp"/> 
+		<put-attribute name="left-menu" expression="/WEB-INF/views/tiles/left-menu.jsp"/> 
 		<put-attribute name="body" expression=""/> 
+		<put-attribute name="right-menu" expression="/WEB-INF/views/tiles/right-menu.jsp"/> 
 		<put-attribute name="footer" expression="/WEB-INF/views/tiles/footer.jsp"/>
 	</definition>  
 	
-	<!-- tiles 사용하여 화면에 표현  --> 
-	<definition name="*.page" extends="default_body"> 
+	<!-- tiles 사용하여 화면에 표현  -->  
+	<definition name="*.page" extends="new.default_body"> 
 		<!-- Controller 에서 사용하기 위한 방법을 설정  -->
 		<put-attribute name="body" value="/WEB-INF/views/{1}.jsp"/>
 	  
 	</definition>
-	<definition name="*/*.page" extends="default_body"> 
+	<definition name="*/*.page" extends="new.default_body"> 
 		<!-- Controller 에서 사용하기 위한 방법을 설정  -->
 		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/>
 	   
 	</definition> 
-	<definition name="*/*/*.page" extends="default_body"> 
+	<definition name="*/*/*.page" extends="new.default_body"> 
 		<!-- Controller 에서 사용하기 위한 방법을 설정  -->
 		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp"/>
 	   
