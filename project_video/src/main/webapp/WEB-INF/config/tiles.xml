@@ -5,7 +5,8 @@
 
 	<definition name="new.default_body" templateExpression="/WEB-INF/views/tiles/layout.jsp">	
 	
-		<put-attribute name="header" expression="/WEB-INF/views/tiles/header.jsp"/> 
+		<put-attribute name="noUserHeader" expression="/WEB-INF/views/tiles/noUserHeader.jsp"/> 
+		<put-attribute name="userHeader" expression="/WEB-INF/views/tiles/userHeader.jsp"/> 
 		<put-attribute name="left-menu" expression="/WEB-INF/views/tiles/left-menu.jsp"/> 
 		<put-attribute name="body" expression=""/> 
 		<put-attribute name="right-menu" expression="/WEB-INF/views/tiles/right-menu.jsp"/> 

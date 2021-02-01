@@ -15,7 +15,7 @@
 	</div>
 </div>
 <div id="remoteCnt">
-	
+	<a href="example.do">ex</a>
 </div>
 
 <div>

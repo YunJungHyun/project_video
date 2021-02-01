@@ -24,8 +24,13 @@
 
 </head>
 <body>
-	<div class="headerBox">
-			<tiles:insertAttribute name="header" />
+	<div class="headerBox"> 
+		<c:if test="${ user == null}">
+			<tiles:insertAttribute name="noUserHeader" />
+		</c:if>
+		<c:if test="${ user != null}">
+			<tiles:insertAttribute name="userHeader" />
+		</c:if>
 	</div>
 	<div class="container-fluid">
 		<div class="row flex-xl-nowrap">

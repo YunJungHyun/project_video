@@ -64,3 +64,14 @@
 	
 	border : 1px solid red;
 }
+
+ 
+#idCheck{
+	
+	display : none;
+	
+}
+.uph{
+	
+	display: inline-block;
+}
