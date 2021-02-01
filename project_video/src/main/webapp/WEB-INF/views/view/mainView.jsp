@@ -10,12 +10,12 @@
 	</div>
 	<div class="input-group col-sm-6 justify-content-end">
 		<span class="input-group-text spanBtn">&lt;</span>
-		<span class="input-group-text "> PAGE</span>
+		<span class="input-group-text ">PAGE</span>
 		<span class="input-group-text spanBtn">&nbsp;&nbsp;&nbsp;&gt;</span>
 	</div>
 </div>
 <div id="remoteCnt">
-	<a href="example.do">ex</a>
+	
 </div>
 
 <div>

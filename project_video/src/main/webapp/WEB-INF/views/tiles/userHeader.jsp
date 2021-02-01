@@ -17,8 +17,8 @@
 					<a class="nav-link nav-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">내정보</a>
 					<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
 						<button class="dropdown-item" type="button">나의 회원 정보</button>
-						<button class="dropdown-item" type="button">내가 작성한 게시글</button>
-						
+						<button class="dropdown-item" type="button">내가 작성한 게시글</button>		
+						<button class="dropdown-item" id="logoutBtn" type="button">로그아웃</button>		
 					</div>
 				</div>
 			
@@ -30,25 +30,72 @@
  
 
 <!-- Modal -->
-<div class="modal fade" id="boardRegFormModal" tabindex="-1" role="dialog" aria-labelledby="boardRegFormModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="boardRegFormModalLabel">게시글 등록</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-     	<form id="boardRegForm" action="boardReg.do" method="POST">
-			
-		</form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">등록</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-      </div>
-    </div>
-  </div>
+<div class="modal fade" id="boardRegFormModal" tabindex="-1"
+	role="dialog" aria-labelledby="boardRegFormModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="boardRegFormModalLabel">게시글 등록</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form id="boardRegForm" name="boardRegForm">
+					<div class="form-group">
+						<label>LINK</label> 
+						<input type="text" class="form-control" name="vUrl" placeholder="https://example.com">
+					</div>
+					<div class="form-group">
+						<label>제목</label> 
+						<input type="text" class="form-control" name="vtitle" placeholder="TITLE">
+					</div>
+					<div class="form-group">
+						<label>동영상 비밀번호</label> 
+						<input type="password" class="form-control" name="vpw" placeholder="LINK PASSWORD">
+					</div>
+					<input type="hidden" name="unum" value="${gui.unum }">
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="boardReg" class="btn btn-primary">등록</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+			</div>
+		</div>
+	</div>
 </div>
- 
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		$("#boardReg").on("click" , function(){
+			
+			var queryString = $("form[name=boardRegForm]").serialize() ;
+			
+			//alert(queryString);
+			 
+			$.ajax({
+				
+				type :"POST",
+				url : "boardReg.do",
+				data : queryString,
+				dataType : "json",
+				success: function(data){
+					
+					
+				},error : function(){
+					
+					alert("error");
+				}
+			})
+			
+		})
+		
+		$("#logoutBtn").on("click" , function(){
+			
+			window.location.href="logout.do";
+			
+		})
+	})
+</script>

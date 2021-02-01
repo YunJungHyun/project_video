@@ -23,14 +23,29 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 </head>
+<c:if test="${message eq 'loginSuccess' }">
+	<script type="text/javascript">
+		alert("로그인 되었습니다.");
+	</script>
+</c:if>
+<c:if test="${message eq 'logoutSuccess' }">
+	<script type="text/javascript">
+		alert("로그아웃 되었습니다.");
+	</script>
+</c:if>
+<c:if test="${message eq 'loginFail'}">
+	<script type="text/javascript">
+		alert("로그인 실패하였습니다.");
+	</script>
+</c:if>
 <body>
 	<div class="headerBox"> 
-		<c:if test="${ user == null}">
+	<c:if test="${gui == null}">
 			<tiles:insertAttribute name="noUserHeader" />
-		</c:if>
-		<c:if test="${ user != null}">
+	</c:if>
+	<c:if test="${gui != null}">
 			<tiles:insertAttribute name="userHeader" />
-		</c:if>
+	</c:if>
 	</div>
 	<div class="container-fluid">
 		<div class="row flex-xl-nowrap">

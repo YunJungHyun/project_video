@@ -1,5 +1,6 @@
 package com.spring.controller;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -7,8 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.spring.service.UserService;
+
 @Controller
 public class MainViewController {
+		
+	
+		@Inject
+		UserService userService;
 		
 		HttpSession session;	
 		
@@ -19,17 +26,10 @@ public class MainViewController {
 			System.out.println("[mainView.do]");
 			
 			
-			//임시
-			session =request.getSession(true);
-			session.setAttribute("user", "admin");
 			
 			return "view/mainView.page";
 		}
 		
-		@RequestMapping(value="example.do")
-		public String example() {
-			
-			return "view/example.page";
-		}
+		
 		
 }

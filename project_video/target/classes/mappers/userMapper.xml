@@ -12,6 +12,10 @@
 		SELECT COUNT(*) FROM users WHERE userid = #{userid}
 	</select>
 	
+	<select id="getUserInfo" resultType="userVO">
+		SELECT * FROM users WHERE userid = #{userid} and userpw =#{userpw}
+	</select>
+	
 </mapper>
 
  
