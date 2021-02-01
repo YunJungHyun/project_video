@@ -8,10 +8,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserController {
 
 	
+	
 	@RequestMapping(value="login.do" , method=RequestMethod.POST)
 	public void login(String userid, String userpw) {
 		
-		System.out.println("userid : " +userid);
-		System.out.println("userpw : " +userpw);
+		System.out.println("[login.do]");
+	}
+	
+	
+	@RequestMapping(value="idCheck.do" , method=RequestMethod.POST)
+	public void idCheck(String userid) {
+		System.out.println("[idCheck.do]");
+		
+		
+		
 	}
 }

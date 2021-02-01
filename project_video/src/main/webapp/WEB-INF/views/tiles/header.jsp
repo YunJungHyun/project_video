@@ -7,7 +7,7 @@
 
 		<ul class="nav justify-content-end">
 			<li class="nav-item">
-				<a class="nav-link nav-btn" data-toggle="modal" data-target="#loginFormModal" href="#">LOGIN</a>
+				<a class="nav-link nav-btn" data-toggle="modal" id="loginBtn" data-target="#loginFormModal" href="#">LOGIN</a>
 			</li>
 		</ul>
 	</div>
@@ -28,16 +28,16 @@
 		<form id="loginForm" action="login.do" method="POST">
 			<div class="form-group"> 
 				<label>아이디</label>
-				<input type="text" class="form-control" id="userid" name="userid" placeholder="ID">
+				<input type="text" class="form-control"  name="userid" placeholder="ID">
 			</div>
 			<div class="form-group"> 
 				<label>비밀번호</label>
-				<input type="password" class="form-control" id="userpw" name="userpw" placeholder="PASSWORD">
+				<input type="password" class="form-control" name="userpw" placeholder="PASSWORD">
 			</div>
 		</form>
       </div>
       <div class="modal-footer">
-        <button type="button" id="signUp" class="btn btn-primary" data-toggle="modal" data-target="#signUpFormModal">회원가입</button>
+        <button type="button" id="signUp" class="btn btn-primary">회원가입</button>
         <button type="submit" form="loginForm" class="btn btn-primary">확인</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
       </div>
@@ -56,19 +56,31 @@
         </button>
       </div>
       <div class="modal-body">
-		<form id="loginForm" action="login.do" method="POST">
+		<form id="signUpForm" >
 			<div class="form-group"> 
 				<label>아이디</label>
-				<input type="text" class="form-control" id="userid" name="userid" placeholder="ID">
+				<input type="text" class="form-control" id="signUp-userid" name="userid" placeholder="ID">
+			</div>
+			<div class="form-group"> 
+				<label>이름</label>
+				<input type="password" class="form-control"  name="uname" placeholder="USERNAME">
 			</div>
 			<div class="form-group"> 
 				<label>비밀번호</label>
-				<input type="password" class="form-control" id="userpw" name="userpw" placeholder="PASSWORD">
+				<input type="password" class="form-control" name="userpw" placeholder="PASSWORD">
+			</div>
+			<div class="form-group"> 
+				<label>E-mail</label>
+				<input type="password" class="form-control" name="uemail" placeholder="PASSWORD">
+			</div>
+			<div class="form-group"> 
+				<label>전화번호</label>
+				<input type="password" class="form-control"  name="uphn" placeholder="PASSWORD">
 			</div>
 		</form>
       </div>
       <div class="modal-footer">
-        <button type="submit" form="loginForm" class="btn btn-primary">확인</button>
+        <button type="button" class="btn btn-primary"  >확인</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
       </div>
     </div>
@@ -82,13 +94,44 @@
 
 $(document).ready(function(){
 	
+	
 	$("#signUp").on("click",function(){
 		
 	  
 		$('#loginFormModal').modal('hide');
 		
 		$('#signUpFormModal').modal('show');
-		
+			
 	})
+	
+	$("#signUp-userid").blur(function(){
+			
+		if($("#signUp-userid").val() != ""){
+			
+			var userid = $("#signUp-userid").val();
+			
+			$.ajax({
+				
+				type: "POST",
+				url: "idCheck.do",
+				dataType: "text",
+				data : { 
+					
+					"userid" : userid
+				},
+				success: function(){
+					
+				},
+				error : function(){
+					
+					alert("error");
+					
+				}
+			})
+			
+			
+		}
+	})
+	
 })
 </script>
