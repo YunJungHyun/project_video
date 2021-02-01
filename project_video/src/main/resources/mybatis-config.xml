@@ -7,9 +7,10 @@ VO클래스 등록하면 mapper.xml에서 VO 클래스를 mybatis-config.xml에 
 <configuration>
 	<typeAliases>
             <typeAlias type="com.spring.vo.UserVO" alias="userVO"/>
+            <typeAlias type="com.spring.vo.VideoVO" alias="videoVO"/>
         
         </typeAliases>
- 
+  
 
 
 </configuration>

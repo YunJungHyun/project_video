@@ -8,6 +8,7 @@ public class VideoVO {
 	private String vthumimg;
 	private String vpw;
 	private String vtitle;
+	
 	public int getVnum() {
 		return vnum;
 	}

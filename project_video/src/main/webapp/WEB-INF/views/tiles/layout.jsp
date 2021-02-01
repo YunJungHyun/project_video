@@ -28,6 +28,16 @@
 		alert("로그인 되었습니다.");
 	</script>
 </c:if>
+<c:if test="${message eq 'videoRegSuccess' }">
+	<script type="text/javascript">
+		alert("게시물이 등록되었습니다.");
+	</script>
+</c:if>
+<c:if test="${message eq 'videoRegFail' }">
+	<script type="text/javascript">
+		alert("게시물이 등록실패하였습니다.");
+	</script>
+</c:if>
 <c:if test="${message eq 'logoutSuccess' }">
 	<script type="text/javascript">
 		alert("로그아웃 되었습니다.");

@@ -9,7 +9,7 @@
 		
 		<ul class="nav justify-content-end">
 			<li class="nav-item">
-				<a class="nav-link nav-btn" data-target="#boardRegFormModal" data-toggle="modal" href="#">게시물 등록</a>
+				<a class="nav-link nav-btn" data-target="#videoRegFormModal" data-toggle="modal" href="#">게시물 등록</a>
 			</li>
 			&nbsp;
 			<li class="nav-item ">
@@ -30,23 +30,23 @@
  
 
 <!-- Modal -->
-<div class="modal fade" id="boardRegFormModal" tabindex="-1"
-	role="dialog" aria-labelledby="boardRegFormModalLabel"
+<div class="modal fade" id="videoRegFormModal" tabindex="-1"
+	role="dialog" aria-labelledby="videoRegFormModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="boardRegFormModalLabel">게시글 등록</h5>
+				<h5 class="modal-title" id="videoRegFormModalLabel">게시글 등록</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<form id="boardRegForm" name="boardRegForm">
+				<form id="videoRegForm" name="videoRegForm">
 					<div class="form-group">
 						<label>LINK</label> 
-						<input type="text" class="form-control" name="vUrl" placeholder="https://example.com">
-					</div>
+						<input type="text" class="form-control" name="vurl" placeholder="https://example.com">
+					</div> 
 					<div class="form-group">
 						<label>제목</label> 
 						<input type="text" class="form-control" name="vtitle" placeholder="TITLE">
@@ -59,7 +59,7 @@
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="boardReg" class="btn btn-primary">등록</button>
+				<button type="button" id="videoReg" class="btn btn-primary">등록</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 			</div>
 		</div>
@@ -69,19 +69,31 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		$("#boardReg").on("click" , function(){
+		$("#videoReg").on("click" , function(){
 			
-			var queryString = $("form[name=boardRegForm]").serialize() ;
+			var queryString = $("form[name=videoRegForm]").serialize() ;
 			
 			//alert(queryString);
 			 
 			$.ajax({
 				
 				type :"POST",
-				url : "boardReg.do",
+				url : "videoReg.do",
 				data : queryString,
-				dataType : "json",
+				dataType : "text",
 				success: function(data){
+					
+					
+					if(data == 'success'){
+						
+						alert("게시글이 등록되었습니다.");
+						
+						window.location.href="mainView.do";
+				
+					}else{
+						
+						 
+					}
 					
 					
 				},error : function(){
