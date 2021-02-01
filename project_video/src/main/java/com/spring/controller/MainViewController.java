@@ -13,10 +13,5 @@ public class MainViewController {
 			
 			return "view/mainView.page";
 		}
-		@RequestMapping(value="loginView.do" , method=RequestMethod.GET)
-		public String loginView() {
-			System.out.println("[loginView.do]");
-			
-			return "view/userInfo/loginView.page";
-		}
+		
 }
