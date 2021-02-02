@@ -23,7 +23,7 @@ public class VideoController {
 	
 	@RequestMapping(value="videoReg.do", method=RequestMethod.POST)
 	@ResponseBody
-	public void boardReg(
+	public String videoReg(
 			VideoVO videoVO
 		
 			
@@ -34,22 +34,23 @@ public class VideoController {
 //		System.out.println("videoVO.getVpw() :" + videoVO.getVpw());
 //		System.out.println("videoVO.getUnum() :" + videoVO.getUnum());
 		
-		int vnum = videoService.insertVideo(videoVO);
+		videoService.insertVideo(videoVO);
 		 
-		System.out.println("vnum : "+ vnum);
-		//System.out.println("result : "+ result);
 		
-		/* int bresult = boardService.insertBoard(videoVO); */
+		System.out.println("videoVO.getVnum():"+videoVO.getVnum());
+		System.out.println("videoVO.getUnum():"+videoVO.getUnum());
 		
-//		if(result >= 1) {
-//			
-//		
-//				return "success";
-//			
-//		}else {
-//			return "fail";
-//		}
-//		 
+		int result = boardService.insertBoard(videoVO); 
+		
+		if(result >= 1) {
+			
+		
+				return "success";
+		
+		}else {
+			return "fail";
+		}
+		 
 		
 	}
 }

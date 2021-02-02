@@ -20,7 +20,7 @@ public class VideoDAOImpl implements VideoDAO {
 	@Override 
 	public int insertVideo(VideoVO videoVO) {
 		int result = sqlSession.insert(Namespace+".insertVideo", videoVO);
-		int vnum =videoVO.getVnum();
-		return vnum;
+	
+		return result;
 	}
 }
