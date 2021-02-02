@@ -7,10 +7,15 @@
 	<!-- mybatis-config.xml의 typeAlias에 등록해두지 않았다면 <select id="selectMember" 
 		resultType="com.example.dto.MemberVO" > SELECT ID, PW ,NAME FROM TEST </select> 
 		이렇게 해야 한다. -->
+	
 
-	<insert id="insertVideo" >
+		
+	<insert id="insertVideo" parameterType="videoVO" keyProperty="vnum" keyColumn="vnum" useGeneratedKeys="true"  >
 		INSERT INTO videos(vurl ,unum ,vpw, vtitle) VALUES(#{vurl}, #{unum}, #{vpw}, #{vtitle} )
+	
 	</insert>
+
+	
 	
 </mapper>
 

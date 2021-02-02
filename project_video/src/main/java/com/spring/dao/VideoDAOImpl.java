@@ -2,6 +2,8 @@ package com.spring.dao;
 
 import javax.inject.Inject;
 
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +20,7 @@ public class VideoDAOImpl implements VideoDAO {
 	@Override 
 	public int insertVideo(VideoVO videoVO) {
 		int result = sqlSession.insert(Namespace+".insertVideo", videoVO);
-		return result;
+		int vnum =videoVO.getVnum();
+		return vnum;
 	}
 }

@@ -22,7 +22,7 @@ public class MainViewController {
 		@Inject
 		BoardService boardService;
 		
-		@Inject
+		@Inject 
 		VideoService videoService;
 		
 		HttpSession session;	
@@ -32,7 +32,6 @@ public class MainViewController {
 				HttpServletRequest request
 				) {
 			System.out.println("[mainView.do]");
-			
 			
 			
 			

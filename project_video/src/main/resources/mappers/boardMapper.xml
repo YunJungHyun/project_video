@@ -3,19 +3,15 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 실질적인 쿼리문을 작성하는 곳 -->
-<mapper namespace="com.spring.mapper.videoMapper">
+<mapper namespace="com.spring.mapper.boardMapper">
 	<!-- mybatis-config.xml의 typeAlias에 등록해두지 않았다면 <select id="selectMember" 
 		resultType="com.example.dto.MemberVO" > SELECT ID, PW ,NAME FROM TEST </select> 
 		이렇게 해야 한다. -->
 	
-
+	<insert id="insertBoard" >
+		INSERT INTO boards(unum , vnum) VALUES( #{unum}, #{vnum} )
 		
-	<insert id="insertVideo" parameterType="videoVO" keyProperty="vnum" keyColumn="vnum" useGeneratedKeys="true"  >
-		INSERT INTO videos(vurl ,unum ,vpw, vtitle) VALUES(#{vurl}, #{unum}, #{vpw}, #{vtitle} )
-	
 	</insert>
-
-	
 	
 </mapper>
 

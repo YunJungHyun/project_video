@@ -6,8 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.spring.service.BoardService;
 import com.spring.service.VideoService;
 import com.spring.vo.VideoVO;
 
@@ -17,10 +17,13 @@ public class VideoController {
 	
 	@Inject
 	VideoService videoService;
-
+	
+	@Inject
+	BoardService boardService;
+	
 	@RequestMapping(value="videoReg.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String boardReg(
+	public void boardReg(
 			VideoVO videoVO
 		
 			
@@ -31,17 +34,22 @@ public class VideoController {
 //		System.out.println("videoVO.getVpw() :" + videoVO.getVpw());
 //		System.out.println("videoVO.getUnum() :" + videoVO.getUnum());
 		
-		int result = videoService.insertVideo(videoVO);
-		
-		if(result >= 1) {
-			
-		
-				return "success";
-			
-		}else {
-			return "fail";
-		}
+		int vnum = videoService.insertVideo(videoVO);
 		 
+		System.out.println("vnum : "+ vnum);
+		//System.out.println("result : "+ result);
+		
+		/* int bresult = boardService.insertBoard(videoVO); */
+		
+//		if(result >= 1) {
+//			
+//		
+//				return "success";
+//			
+//		}else {
+//			return "fail";
+//		}
+//		 
 		
 	}
 }
