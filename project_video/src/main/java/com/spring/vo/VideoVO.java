@@ -4,11 +4,26 @@ public class VideoVO {
 
 	private int vnum;
 	private int unum;
+	private int bnum; 
+	private int RN;
 	private String vurl;
 	private String vthumimg;
 	private String vpw;
 	private String vtitle;
 	
+	
+	public int getRN() {
+		return RN;
+	}
+	public void setRN(int rN) {
+		RN = rN;
+	}
+	public int getBnum() {
+		return bnum;
+	}
+	public void setBnum(int bnum) {
+		this.bnum = bnum;
+	}
 	public int getVnum() {
 		return vnum;
 	}
@@ -45,12 +60,14 @@ public class VideoVO {
 	public void setVtitle(String vtitle) {
 		this.vtitle = vtitle;
 	}
-	
 	@Override
 	public String toString() {
-		return "VideoVO [vnum=" + vnum + ", unum=" + unum + ", vurl=" + vurl + ", vthumimg=" + vthumimg + ", vpw=" + vpw
-				+ ", vtitle=" + vtitle + "]";
+		return "VideoVO [vnum=" + vnum + ", unum=" + unum + ", bnum=" + bnum + ", RN=" + RN + ", vurl=" + vurl
+				+ ", vthumimg=" + vthumimg + ", vpw=" + vpw + ", vtitle=" + vtitle + "]";
 	}
+
+
 	
+	 
 	
 }

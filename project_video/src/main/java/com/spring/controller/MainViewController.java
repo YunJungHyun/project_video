@@ -16,6 +16,7 @@ import com.spring.service.GenreService;
 import com.spring.service.UserService;
 import com.spring.service.VideoService;
 import com.spring.vo.GenreVO;
+import com.spring.vo.VideoVO;
 
 @Controller
 public class MainViewController {
@@ -42,9 +43,17 @@ public class MainViewController {
 				) {
 			System.out.println("[mainView.do]");
 			
+			//장르
 			List<GenreVO> glist= genreService.getAllGenre();
 			
+			//등록한동영상 정보
+			List<VideoVO> vlist = videoService.getAllList();
+			
+			System.out.println("vlist.toString : "+vlist.toString());
+			
+			
 			model.addAttribute("glist", glist);
+			model.addAttribute("vlist", vlist);
 			
 			return "view/mainView.page";
 		}
