@@ -75,3 +75,14 @@
 	
 	display: inline-block;
 }
+
+.genre-box > button{
+	
+	width : 16.2%;
+	margin-bottom: 10px;
+}
+
+.main-content{
+	
+	border: 1px solid;
+}
