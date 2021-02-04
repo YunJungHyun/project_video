@@ -59,11 +59,11 @@
 	
 }
 /* test */
-.row > div {
+/* .row > div {
 	
 	
 	border : 1px solid red;
-}
+} */
 
  
 #idCheck{
@@ -80,9 +80,48 @@
 	
 	width : 16.2%;
 	margin-bottom: 10px;
+	font-weight:bold;
+	color: #55279a;
+    border-color: #55279a;
+	
 }
 
 .main-content{
 	
 	/* border: 1px solid; */
+}
+ 
+.video-info-box{
+	
+	border-left: 1px solid silver;
+    border-left-style: dashed;
+}
+.video-img-box > img {
+	
+	max-width:100%;
+	height:auto;
+
+}
+
+.video-info-box > label {
+	font-size : 28px;
+	font-weight: bold;
+	margin-bottom: 0px;
+	width: 100%;
+    border-bottom: 1px solid;
+    color: #ab71ff;
+    
+}
+.info-group  {
+	
+	margin-top: 10px;
+}
+.info-group > li {
+	
+	font-weight: bold;
+	
+}
+.btn-box {
+    float: right;
+    margin: 10px 10px auto;
 }
