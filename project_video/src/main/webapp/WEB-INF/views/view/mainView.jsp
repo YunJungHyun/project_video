@@ -19,7 +19,7 @@
 	
 	<div class="genre-box">
 		<c:forEach items="${glist }" var="glist">
-			<button class="btn btn-outline-secondary">${ glist.gname}</button>
+			<button class="btn btn-outline-secondary">${glist.gname}</button>
 			
 		</c:forEach>
 	
@@ -28,63 +28,88 @@
 
 <div class="main-content col-12">
 
-	<c:forEach items="${vlist}" var="vlist">
-
-		<div class="accordion" id="accordion-${vlist.RN}">
+	<div class="accordion" id="accordion">
+		<c:forEach items="${vlist}" var="vlist">
 			<div class="card">
-				<div class="card-header" id="heading-${vlist.RN }">
-					<h2 class="mb-0">
-						<button  onclick="playerOpen('${vlist.vurl}');" class="btn btn-link collapsed" type="button"
+				<div class="card-header" id="heading-${vlist.RN }" name="${vlist.vnum}">
+					<h2 class="mb-0" id="${vlist.vurl }">
+						<button class="btn btn-link collapsed" type="button"
 							data-toggle="collapse" data-target="#collapse-${vlist.RN }"
-							aria-expanded="false" aria-controls="collapse-${vlist.RN }" >
-							${vlist.vtitle }	
-						</button>
+							aria-expanded="false" aria-controls="collapse-${vlist.RN }">
+							${vlist.vtitle }</button>
 					</h2>
-				</div>  
+				</div>
 
-				<div id="collapse-${vlist.RN}" class="collapse" aria-labelledby="heading-${vlist.RN }" data-parent="#accordion-${vlist.RN }">
-					<div class="card-body">	
+				<div id="collapse-${vlist.RN}" class="collapse"
+					aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">
+					<div class="card-body">
+
+						<div class="videoBox video-box-player-${vlist.vnum}" id="videoBox-${vlist.vnum }">
+							<div id="player-${vlist.vnum}"></div>
+						</div>
 						
-						<div class="videoBox video-box-player-${vlist.bnum }" >
-							<div id="player-${vlist.bnum }"></div>		
-						</div>	
-					</div> 
+					</div>
 				</div>
 			</div>
-		</div> 
-	</c:forEach>
-
-	
+		</c:forEach>
+	</div>
 </div>
 
 <script type="text/javascript">
-	var __player = null;
-	
-	var videoId =null;
-	
-	function playerOpen(vurl) {
+	$(".card-header").on("click", function() {
+			var vnum = $(this).attr("name");
+				var vurl = $(this).children().attr("id");
 
-		var strArray = vurl.split("/");
+				var player = $(this).next().children().children().children().attr("id");
 
-		videoId = strArray[3];
-	}
-	
-	$(".card-header").on("click",function(){
-		var checkShow = $(this).next().hasClass("show");
-		var player =$(this).next().children().children().children().attr("id");
-		 
-		if(checkShow == false){
-		 
-			__player = new YT.Player(player, {
+				var openChk = $(this).next().children().children().hasClass("open");
+				
+				$(".videoBox").each(function(){
 					
-				height : '500px',
-				width : '100%',
-				videoId : videoId
+					if($(".videoBox").hasClass("open")){
+						//alert("열려있는 아코디언있음");
+						var rePlayer = $(this).children().attr("id");
+						
+						$(this).removeClass("open");
+						$(this).children().replaceWith("<div id="+rePlayer+"></div>");
+						
+					}
+				})
+				 
+				if (openChk == false) {
+ 						//alert("openChk==false");
+					$.ajax({
+
+						url : "getOneBoard.do",
+						type : "POST",
+						dataType : "json",
+						data : {
+
+							'vnum' : vnum,
+							'vurl' : vurl
+						},
+						success : function(data) {
+							//alert(data.videoId);  
+							var vnum = data.map.vnum;
+
+							$(".video-box-player-" + vnum).addClass("open");
+
+					
+							youTube_player = new YT.Player(player, {
+
+								height : '700px',
+								width : '100%',
+								videoId : data.videoId
+
+							}) 
+
+						},
+						error : function(error) {
+							alert("error");
+						}
+
+					})
+				} 
 
 			})
-			
-		}
-	})
-	
-
 </script>

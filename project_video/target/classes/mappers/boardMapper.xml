@@ -13,6 +13,11 @@
 		
 	</insert>
 	
+	<select id="getOneBoard" resultType="boardVO">
+	
+		SELECT * FROM boards WHERE vnum=#{vnum}
+	</select>
+	
 </mapper>
 
  
