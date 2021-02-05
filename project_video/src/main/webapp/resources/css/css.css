@@ -122,6 +122,24 @@
 	
 }
 .btn-box {
-    float: right;
-    margin: 10px 10px auto;
+  
+    margin: 10px 5px auto;
+}
+
+.btn-comment-box {
+    display: inline-block;
+}
+
+.btn-like-box{
+	
+	float: right;
+}
+
+.reply-input-group{
+	margin: 0px;
+	text-align :right;
+}
+ 
+i.replyIcon{
+	line-height: 1.69;
 }
