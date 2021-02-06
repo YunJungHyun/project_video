@@ -20,6 +20,7 @@
 <div class="genre-container col-12">
 	<div class="genre-box">
 		<c:forEach items="${glist }" var="glist">
+			
 			<button class="btn btn-outline-secondary">${glist.gname}</button>
 			
 		</c:forEach>
@@ -51,7 +52,7 @@
 										<img  src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg">
 								
 									</c:if>
-							 	</c:forEach>
+							 	</c:forEach> 
 								
 							</div>
 							

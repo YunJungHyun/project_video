@@ -67,7 +67,7 @@
 			</div>
 			<div class="form-group"> 
 				<label>이름</label>
-				<input type="password" class="form-control"  name="uname" placeholder="USERNAME">
+				<input type="text" class="form-control"  name="uname" placeholder="USERNAME">
 			</div>
 			<div class="form-group"> 
 				<label>비밀번호</label>
