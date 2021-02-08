@@ -136,10 +136,76 @@
 }
 
 .reply-input-group{
-	margin: 0px;
-	text-align :right;
+	margin : 0px auto;
+	padding: 5px;
+}
+
+.reply-input-group > div{
+	
+	padding : 0px;
+}
+
+.reply-input-btn{
+	
+	text-align:center;
+}
+.reply-input-btn.parentBtn{
+	
+	text-align : right;
+}
+.reply-input-btn >button {
+	
+	margin : 0px 3px auto;
 }
  
 i.replyIcon{
 	line-height: 1.69;
+}
+
+.reply-box {
+    /* border: 1px solid; */
+    padding: 5px;
+    margin: 5px;
+}
+
+.reply-replyer-box {
+    border-bottom: 1px solid #dee2e6;
+    font-weight: bold;
+    margin-bottom: 8px;
+    padding: 5px;
+}
+
+.reply-text-box {
+    font-size: 18px;
+    padding: 5px;
+}
+
+.reReply {
+    float: right;
+    font-size: 17px;
+    padding: 5px;
+    line-height: 1;
+    font-weight: bold;
+}
+
+.reReply-box{
+	 margin: 5px;
+	
+}
+
+.reReplyIcon{
+	
+	text-align: center;
+	margin : auto;
+}
+
+.reReply-box-child{
+	
+	padding : 5px;
+	
+}
+
+.reReplyContainer{
+	
+	padding : 10px;
 }

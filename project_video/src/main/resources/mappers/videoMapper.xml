@@ -17,7 +17,9 @@
 
 	<select id="getAllList" resultType="videoVO">
 		
-		SELECT ROW_NUMBER() over(ORDER BY vnum DESC) AS RN ,vnum ,unum, vurl, vthumimg, vtitle, vpw FROM videos;
+		SELECT ROW_NUMBER() over (ORDER by bnum DESC ) AS RN ,  bnum , B.vnum, B.unum  ,  vurl , vtitle 
+				FROM boards A INNER JOIN videos B 
+					ON A.vnum = B.vnum
 	</select>
 	
 </mapper>

@@ -32,10 +32,8 @@
 
 	<div class="accordion" id="accordion">
 		<c:forEach items="${vlist}" var="vlist">
-			
-			<div class="card" id="${vlist.vnum }" name="${vlist.vurl}">
+			<div class="card" id="${vlist.vnum}" name="${vlist.vurl}">
 				<div class="card-header mqdefault" id="heading-${vlist.RN }" >
-					
 					<div class="container">
 						<div class="row">
 							
@@ -57,9 +55,9 @@
 							</div>
 							
 							<div class="col-12 col-md-8 video-info-box">
-								<label id="video-title" data-toggle="collapse" data-target="#collapse-${vlist.RN}"
+								<label class="video-title" data-toggle="collapse" data-target="#collapse-${vlist.RN}"
 									aria-expanded="false" aria-controls="collapse-${vlist.RN }">
-									${vlist.vtitle }</label>
+									${vlist.vtitle}</label>
 									
 									<ul class="list-group info-group">
 										<li class="list-group-item">작성자 : ${vlist.unum } </li>
@@ -68,7 +66,7 @@
 									
 									<div class="btn-box">
 										<div class="btn-comment-box">
-											<button class="btn btn-outline-dark" onclick="commentBox('${vlist.vnum}')" >댓글</button>
+											<button class="btn btn-outline-dark" onclick="commentBox('${vlist.vnum}','${vlist.bnum }')" >댓글</button>
 										</div>
 										<div class="btn-like-box">
 											<button class="btn btn-outline-success">좋아요 <i class="fas fa-thumbs-up"></i> 0</button>
@@ -87,25 +85,24 @@
 							<div id="player-${vlist.vnum}"></div>
 						</div>		
 					</div>
-				</div>
-				
-				<div id="collapse-${vlist.RN}" class="collapse comment-${vlist.vnum}" aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">		
+				</div> 
+				<hr>
+				<div id="${vlist.bnum}" class="collapse comment-${vlist.vnum}" aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">		
 					<div class="card-body">
 						<div class="container">
 							<div class="reply-input-group row">
-								<i class="fa fa-comment fa-lg replyIcon"></i>
-							
 								<div class="col-md-10">
-									<textarea  style="resize: none;" class="form-control"  rows="1" placeholder="댓글을 입력해주세요."></textarea>
+									<textarea  style="resize: none;" id="replyText-${vlist.bnum}" class="form-control"  rows="1" placeholder="댓글을 입력해주세요."></textarea>
 								</div>
-								<div class="col-md">
-									<button type="button" class="btn btn-dark" >댓글 등록</button>
+								<div class="col-md-2 reply-input-btn parentBtn">
+									
+									<button type="button"  name="boardNum-${vlist.bnum }" class="btn btn-dark insertReply ">댓글 등록</button>
 								</div>
 							</div>
 						</div>
 						<hr>
-						<div class="reply-list-group">
-							<div id="reply-list-"></div>
+						<div class="reply-list-group container">
+							<div id="replyList-${vlist.bnum }"></div>
 						</div>
 					</div>
 				</div> 
@@ -116,20 +113,16 @@
 
 <script type="text/javascript">
 
+$(document).ready(function(){
+	
+	
+	$(".video-img-box, .video-title").on("click", function() {
+	
+	
+	var clickTitle=$(this).attr("class");
+	
+	var bnum= $(this).parents(".card").children().next().next().next().attr("id");
 
-function commentBox(vnum){
-	
-	var cmShowChk =$(".comment-"+vnum).hasClass("show");
-	if(cmShowChk==false){
-		$(".comment-"+vnum).addClass("show");
-		
-	}else{
-		
-		$(".comment-"+vnum).removeClass("show");
-	}
-}
-$(".video-img-box, #video-title").on("click", function() {
-	
 	
 	var vnum = $(this).parents(".card").attr("id");
 	
@@ -139,6 +132,8 @@ $(".video-img-box, #video-title").on("click", function() {
 
 	var openChk = $(this).parents(".card").children().next().children().children().hasClass("open");
 	
+
+	//열려 있는 아코디언이있다면 this의 "open" 을 삭제하고 iframe을 삭제한다.
 	$(".videoBox").each(function(){
 		
 		if($(".videoBox").hasClass("open")){
@@ -147,7 +142,7 @@ $(".video-img-box, #video-title").on("click", function() {
 			
 			$(this).removeClass("open");
 			$(this).children().replaceWith("<div id="+rePlayer+"></div>");
-			
+			$(".comment-"+vnum).removeClass("show");
 		}
 	})
 	 
@@ -168,8 +163,15 @@ $(".video-img-box, #video-title").on("click", function() {
 				var vnum = data.map.vnum;
 
 				$(".video-box-player-" + vnum).addClass("open");
-
-		
+				
+				//타이틀을 클릭해서 이벤트가 발생했다면 댓글창을 같이 보여준다.
+				if(clickTitle == "video-title"){
+					//alert("title");
+					$(".comment-"+vnum).addClass("show");
+					replyList(bnum);
+				
+				}
+				
 				youTube_player = new YT.Player(player, {
 
 					height : '700px',
@@ -187,4 +189,129 @@ $(".video-img-box, #video-title").on("click", function() {
 	} 
 
 })
+
+
+
+$(".insertReply").on("click", function() {
+ 
+							var replyName = $(this).attr("name");
+							var rnArray = replyName.split("-");
+							var bnum = rnArray[1];
+							var replyText = $("#replyText-"+bnum).val();
+
+							alert(bnum);
+
+							$.ajax({
+
+								url : "insertReply.do",
+								type : "post",
+								dataType : "text",
+								data : {
+									"replyText" : replyText,
+									"bnum" : bnum
+								},
+								success : function(data) {
+
+									alert(data);
+									replyList(bnum);
+								},
+								error : function() {
+									alert("error");
+								}
+
+							})
+			})
+			
+					
+})
+					
+					
+function commentBox(vnum,bnum){
+	
+	var cmShowChk =$(".comment-"+vnum).hasClass("show");
+	if(cmShowChk==false){
+		$(".comment-"+vnum).addClass("show");
+		
+		replyList(bnum);
+		
+	}else{
+		
+		$(".comment-"+vnum).removeClass("show");
+	}
+	
+}
+
+function replyList(data){
+	
+	var bnum = data;
+	
+	$.ajax({
+		type:"get",
+		url : "replyList.do?bnum="+bnum,
+		type : "json",
+		success : function(result){
+			
+			//alert(JSON.stringify(result));
+			var output ="";
+			for (var i in result){
+				
+					
+				output += "<div class='reply-box border rounded-lg' id='reply-"+result[i].rpnum+"' >";
+				output += "<div class='reply-replyer-box'>"+result[i].replyer+"</div>";
+				output += "<div class='reply-text-box'>"+result[i].replyText+"<button class='btn btn-outline-dark reReply' onclick='reCommentBox("+result[i].rpnum+","+result[i].rnum+","+result[i].bnum+")'>답글</button></div>";  
+				output +="</div>";																																			
+				output +="<div id='reReply-"+result[i].rpnum+"'></div>"
+				
+				
+				if(result[i].rnum != 0){
+					output +="<div class='reReply-box row'>";
+					output += "<i class='fas fa-reply fa-rotate-180 fa-2x col-sm-1 reReplyIcon'></i>";
+					output += "<div class='border rounded-lg col-sm reReply-box-child'>";
+					output += "<div class='reply-replyer-box'>"+result[i].replyer+"</div>";
+					output += "<div class='reply-text-box'>"+result[i].replyText+"<button class='btn btn-outline-dark reReply' id='reReply' onclick='reCommentBox()' >답글</button></div>"; 
+					output += "</div>";
+					output += "</div>";
+				}; 
+			}
+			
+			$("#replyList-"+bnum).html(output);
+		},error :function(){
+			
+			alert("error");
+			
+		}
+		 
+		
+	})
+}
+
+function reCommentBox(rpnum ,rnum,bnum){
+	var output ="<div class='reReplyContainer reReply-"+rpnum+"'>"
+		output+="<div class='reply-input-group row'>"
+		
+		output+="<div class='col-md-10'>"
+		output+="<textarea  style='resize: none;' id='replyText-"+bnum+"' class='form-control'  rows='1' placeholder='답글을 입력해주세요.'></textarea>"
+		output+="</div>"
+		output+="<div class='col-md-2 reply-input-btn'>"
+		
+		output+="<button type='button' name='boardNum-"+bnum+"' class='btn btn-outline-secondary' onclick='insertReReply("+bnum+","+rpnum+")'>답글 등록</button>"
+		output+="<button type='button' class='btn btn-outline-secondary' onclick ='cancel("+rpnum+")'>취소</button>"
+		output+="</div></div></div><hr>"
+	  
+	
+		$("#reReply-"+rpnum).html(output); 
+	
+}
+
+function cancel(rpnum){
+	
+	$(".reReply-"+rpnum).replaceWith("<div id='reReply-"+rpnum+"></div>");
+}
+
+
+function insertReReply(bnum, rpnum){
+	alert(bnum +','+rpnum);
+}
+
+
 </script>
