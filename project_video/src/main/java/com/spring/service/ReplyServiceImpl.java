@@ -27,4 +27,10 @@ public class ReplyServiceImpl implements ReplyService{
 		// TODO Auto-generated method stub
 		return replyDAO.getBnumReply(bnum);
 	}
+	
+	@Override
+	public int insertReReply(ReplyVO replyVO) {
+		// TODO Auto-generated method stub
+		return replyDAO.insertReReply(replyVO);
+	}
 }

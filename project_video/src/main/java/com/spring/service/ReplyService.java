@@ -9,5 +9,7 @@ public interface ReplyService {
 	int insertReply(ReplyVO replyVO);
 
 	List<ReplyVO> getBnumReply(int bnum);
+
+	int insertReReply(ReplyVO replyVO);
 	
 }

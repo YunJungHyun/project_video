@@ -31,5 +31,11 @@ public class ReplyDAOImpl implements ReplyDAO{
 		List<ReplyVO> rlist = sqlSession.selectList(Namespace+".getBnumReply", bnum);
 		return rlist;
 	}
+	
+	@Override
+	public int insertReReply(ReplyVO replyVO) {
+		int result = sqlSession.insert(Namespace+".insertReReply",replyVO);
+		return result;
+	}
 
 }

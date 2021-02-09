@@ -119,7 +119,8 @@ $(document).ready(function(){
 	$(".video-img-box, .video-title").on("click", function() {
 	
 	
-	var clickTitle=$(this).attr("class");
+	var clickTitle=$(this).hasClass("video-title");
+	
 	
 	var bnum= $(this).parents(".card").children().next().next().next().attr("id");
 
@@ -165,8 +166,8 @@ $(document).ready(function(){
 				$(".video-box-player-" + vnum).addClass("open");
 				
 				//타이틀을 클릭해서 이벤트가 발생했다면 댓글창을 같이 보여준다.
-				if(clickTitle == "video-title"){
-					//alert("title");
+				if(clickTitle==true){
+					alert("title");
 					$(".comment-"+vnum).addClass("show");
 					replyList(bnum);
 				
@@ -212,7 +213,7 @@ $(".insertReply").on("click", function() {
 								},
 								success : function(data) {
 
-									alert(data);
+									//alert(data);
 									replyList(bnum);
 								},
 								error : function() {
@@ -255,22 +256,23 @@ function replyList(data){
 			var output ="";
 			for (var i in result){
 				
-					
-				output += "<div class='reply-box border rounded-lg' id='reply-"+result[i].rpnum+"' >";
-				output += "<div class='reply-replyer-box'>"+result[i].replyer+"</div>";
-				output += "<div class='reply-text-box'>"+result[i].replyText+"<button class='btn btn-outline-dark reReply' onclick='reCommentBox("+result[i].rpnum+","+result[i].rnum+","+result[i].bnum+")'>답글</button></div>";  
-				output +="</div>";																																			
-				output +="<div id='reReply-"+result[i].rpnum+"'></div>"
-				
+				if(result[i].rnum == 0){
+					output += "<div class='reply-box border rounded-lg' id='reply-"+result[i].rpnum+"' >";
+					output += "<div class='reply-replyer-box'>"+result[i].replyer+"</div>";
+					output += "<div class='reply-text-box'>"+result[i].replyText+"<button class='btn btn-outline-dark reReply' onclick='reCommentBox("+result[i].rpnum+","+result[i].rnum+","+result[i].bnum+",0)'>답글</button></div>";  
+					output +="</div>";																																			
+					output +="<div id='reReply-"+result[i].bnum+"-"+result[i].rpnum+"'></div>"
+				}
 				
 				if(result[i].rnum != 0){
 					output +="<div class='reReply-box row'>";
-					output += "<i class='fas fa-reply fa-rotate-180 fa-2x col-sm-1 reReplyIcon'></i>";
+					output += "<i class='fas fa-level-up-alt fa-rotate-90 fa-2x col-sm-1 reReplyIcon'></i>";
 					output += "<div class='border rounded-lg col-sm reReply-box-child'>";
 					output += "<div class='reply-replyer-box'>"+result[i].replyer+"</div>";
-					output += "<div class='reply-text-box'>"+result[i].replyText+"<button class='btn btn-outline-dark reReply' id='reReply' onclick='reCommentBox()' >답글</button></div>"; 
+					output += "<div class='reply-text-box'>"+result[i].replyText+"</div>"; 
 					output += "</div>";
 					output += "</div>";
+					output +="<div id='reReply-"+result[i].bnum+"-"+result[i].rpnum+"-"+result[i].rnum+"'></div>"
 				}; 
 			}
 			
@@ -285,32 +287,65 @@ function replyList(data){
 	})
 }
 
-function reCommentBox(rpnum ,rnum,bnum){
-	var output ="<div class='reReplyContainer reReply-"+rpnum+"'>"
+function reCommentBox(rpnum ,rnum,bnum ,rnum){
+	
+	//alert(rnum);
+	var output ="<div class='reReplyContainer reReply-"+bnum+"-"+rpnum+"'>"
 		output+="<div class='reply-input-group row'>"
 		
 		output+="<div class='col-md-10'>"
-		output+="<textarea  style='resize: none;' id='replyText-"+bnum+"' class='form-control'  rows='1' placeholder='답글을 입력해주세요.'></textarea>"
+		output+="<textarea  style='resize: none;' id='replyText-"+bnum+"-"+rpnum+"' class='form-control'  rows='1' placeholder='답글을 입력해주세요.'></textarea>"
 		output+="</div>"
 		output+="<div class='col-md-2 reply-input-btn'>"
 		
 		output+="<button type='button' name='boardNum-"+bnum+"' class='btn btn-outline-secondary' onclick='insertReReply("+bnum+","+rpnum+")'>답글 등록</button>"
-		output+="<button type='button' class='btn btn-outline-secondary' onclick ='cancel("+rpnum+")'>취소</button>"
+		output+="<button type='button' class='btn btn-outline-secondary' onclick ='cancel("+rpnum+","+bnum+")'>취소</button>"
 		output+="</div></div></div><hr>"
 	  
-	
-		$("#reReply-"+rpnum).html(output); 
-	
+		if(rnum == 0){
+			
+			$("#reReply-"+bnum+"-"+rpnum).html(output); 
+		} 
+		else{
+			$("#reReply-"+bnum+"-"+rpnum+"-"+rnum).html(output); 
+			
+		}
 }
 
-function cancel(rpnum){
+function cancel(rpnum, bnum){
 	
-	$(".reReply-"+rpnum).replaceWith("<div id='reReply-"+rpnum+"></div>");
+	$(".reReply-"+bnum+"-"+rpnum).replaceWith("<div id='reReply-"+bnum+"-"+rpnum+"></div>");
 }
 
 
-function insertReReply(bnum, rpnum){
-	alert(bnum +','+rpnum);
+function insertReReply(bnumData, rpnumData){
+	
+
+	var bnum = bnumData;
+	var rpnum = rpnumData;
+	var replyText =$("#replyText-"+bnum+"-"+rpnum).val();
+	
+	//alert(bnum +','+rpnum+','+replyText);
+	$.ajax({
+		
+		url : "insertReReply.do",
+		type : "post",
+		data : {
+			"bnum" : bnum,
+			"rpnum" : rpnum,
+			"replyText" : replyText
+			
+		},
+		dataType : "text",
+		success : function(result){
+			
+			//alert("대댓글 :" +result);
+			replyList(bnum);
+			
+		},error : function(){
+			alert("error");
+		}
+	})
 }
 
 
