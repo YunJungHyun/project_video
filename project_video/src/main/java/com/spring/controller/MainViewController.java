@@ -1,8 +1,11 @@
 package com.spring.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -13,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.service.BoardService;
 import com.spring.service.GenreService;
+import com.spring.service.ReplyService;
 import com.spring.service.UserService;
 import com.spring.service.VideoService;
 import com.spring.vo.GenreVO;
 import com.spring.vo.PagingVO;
+import com.spring.vo.ReplyVO;
 import com.spring.vo.VideoVO;
 
 @Controller
@@ -35,6 +40,9 @@ public class MainViewController {
 		@Inject
 		GenreService genreService;
 		
+		@Inject
+		ReplyService replyService;
+		
 		HttpSession session;	
 		
 		@RequestMapping(value="mainView.do" , method=RequestMethod.GET)
@@ -42,15 +50,15 @@ public class MainViewController {
 				PagingVO pagingVO,
 				@RequestParam(value="nowPage", required= false) String nowPage,
 				@RequestParam(value="cntPerPage", required= false) String cntPerPage,
-				
+				HttpServletRequest request,
 				Model model
 				) {
 			System.out.println("[mainView.do]");
-			System.out.println("nowPage  : " +nowPage);
-			System.out.println("cntPerPage  : " +cntPerPage);
+			//System.out.println("nowPage  : " +nowPage);
+			//System.out.println("cntPerPage  : " +cntPerPage);
 			int total = boardService.boardTotalCnt();
 			
-			System.out.println("전체 글 수 : "+total);
+			//System.out.println("전체 글 수 : "+total);
 			
 			if(nowPage == null && cntPerPage == null) {
 				nowPage = "1";
@@ -62,16 +70,30 @@ public class MainViewController {
 			}
 			pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 			
-			System.out.println("pagingVO :  "+pagingVO.toString());
+			//System.out.println("pagingVO :  "+pagingVO.toString());
 			//장르
 			List<GenreVO> glist= genreService.getAllGenre();
 			
 			//등록한동영상 정보
 			List<VideoVO> vlist = videoService.getAllList(pagingVO);
 			
-			System.out.println("vlist.toString : "+vlist.toString());
-			System.out.println("vlist.size() :" +vlist.size());
+			//페이지 세션
+			Map<String, Integer> map = new HashMap<String,Integer>();
+			map.put("nowPage", pagingVO.getNowPage());
+			map.put("cntPerPage", pagingVO.getCntPerPage());
+			session =request.getSession(true);
+			session.setAttribute("pagingMap", map);
+			
+			//System.out.println(session.getAttribute("pagingMap"));
+			//System.out.println("vlist.toString : "+vlist.toString());
+			//System.out.println("vlist.size() :" +vlist.size());
+			
+			//댓글 갯수가져오기
+			List<ReplyVO> rlist =replyService.getReplyCnt();
+			
+			
 			model.addAttribute("pagingVO",pagingVO);
+			model.addAttribute("rlist", rlist);
 			model.addAttribute("glist", glist);
 			model.addAttribute("vlist", vlist);
 			

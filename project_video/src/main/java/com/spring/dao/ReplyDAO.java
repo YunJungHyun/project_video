@@ -12,4 +12,7 @@ public interface ReplyDAO {
 
 	int insertReReply(ReplyVO replyVO);
 
+
+	List<ReplyVO> getReplyCnt();
+
 }

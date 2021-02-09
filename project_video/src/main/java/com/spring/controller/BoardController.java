@@ -6,9 +6,9 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.service.BoardService;
@@ -40,6 +40,26 @@ public class BoardController {
 		
 	}
 	
+	@RequestMapping(value="boardJudgment.do", method=RequestMethod.GET)
+	@ResponseBody
+	public String boardJudgment(
+			@RequestParam(value="judg" ,  required= true) String judg ,
+			@RequestParam(value="bnum" ,  required= true) int bnum 
+			) {
+		
+		
+		if(judg.equals("up")) {
+			
+			boardService.updateUpCnt(bnum); 
+			return "up";
+		}
+		else  {
+			boardService.updateDownCnt(bnum);
+			
+			return "down";
+		}
+		
+	}
 
 	
 }

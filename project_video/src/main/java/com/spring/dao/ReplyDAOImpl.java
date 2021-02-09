@@ -38,4 +38,11 @@ public class ReplyDAOImpl implements ReplyDAO{
 		return result;
 	}
 
+	@Override
+	public List<ReplyVO> getReplyCnt() {
+		List<ReplyVO> rlist = sqlSession.selectList(Namespace+".getReplyCnt");
+		return rlist;
+	}
+	
+	
 }

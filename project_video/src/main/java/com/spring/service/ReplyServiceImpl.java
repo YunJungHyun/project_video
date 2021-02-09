@@ -33,4 +33,10 @@ public class ReplyServiceImpl implements ReplyService{
 		// TODO Auto-generated method stub
 		return replyDAO.insertReReply(replyVO);
 	}
+	
+	@Override
+	public List<ReplyVO> getReplyCnt() {
+		
+		return replyDAO.getReplyCnt();
+	}
 }

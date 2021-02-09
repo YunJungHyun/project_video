@@ -5,6 +5,28 @@ public class BoardVO {
 	private int bnum;
 	private int vnum;
 	private int unum;
+	private int upcnt;
+	private int downcnt;
+	private int viewcnt;
+	
+	public int getUpcnt() {
+		return upcnt;
+	}
+	public void setUpcnt(int upcnt) {
+		this.upcnt = upcnt;
+	}
+	public int getDowncnt() {
+		return downcnt;
+	}
+	public void setDowncnt(int downcnt) {
+		this.downcnt = downcnt;
+	}
+	public int getViewcnt() {
+		return viewcnt;
+	}
+	public void setViewcnt(int viewcnt) {
+		this.viewcnt = viewcnt;
+	}
 	public int getBnum() {
 		return bnum;
 	}

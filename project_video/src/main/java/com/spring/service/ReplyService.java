@@ -11,5 +11,7 @@ public interface ReplyService {
 	List<ReplyVO> getBnumReply(int bnum);
 
 	int insertReReply(ReplyVO replyVO);
+
+	List<ReplyVO> getReplyCnt();
 	
 }

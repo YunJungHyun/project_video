@@ -4,14 +4,43 @@ public class VideoVO {
 
 	private int vnum;
 	private int unum;
+	private String userid;
 	private int bnum; 
 	private int RN;
 	private String vurl;
 	private String vthumimg;
 	private String vpw;
 	private String vtitle;
+	private int upcnt;
+	private int downcnt;
+	private int viewcnt;
 	
 	
+
+	public String getUserid() {
+		return userid;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+	public int getUpcnt() {
+		return upcnt;
+	}
+	public void setUpcnt(int upcnt) {
+		this.upcnt = upcnt;
+	}
+	public int getDowncnt() {
+		return downcnt;
+	}
+	public void setDowncnt(int downcnt) {
+		this.downcnt = downcnt;
+	}
+	public int getViewcnt() {
+		return viewcnt;
+	}
+	public void setViewcnt(int viewcnt) {
+		this.viewcnt = viewcnt;
+	}
 	public int getRN() {
 		return RN;
 	}

@@ -22,6 +22,10 @@
 		INSERT INTO replys(bnum,rpnum,rnum,replyText,replyer)
 		VALUES (#{bnum}, #{rpnum}, IFNULL( ( SELECT * FROM (SELECT MAX(rnum)+1 FROM replys WHERE bnum = #{bnum} AND rpnum =#{rpnum} ) NEXT ), 1),#{replyText},#{replyer})
 	</insert>
+	
+	<select id="getReplyCnt" resultType="replyVO">
+		SELECT bnum, COUNT(*) AS 'bnumCnt' FROM replys GROUP BY bnum
+	</select>
 </mapper>
 
  

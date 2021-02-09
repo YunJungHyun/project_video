@@ -28,7 +28,7 @@ public class VideoDAOImpl implements VideoDAO {
 	@Override
 	public List<VideoVO> getAllList(PagingVO pagingVO) {
 		
-		System.out.println(pagingVO.getStart() + "," + pagingVO.getEnd());
+		//System.out.println(pagingVO.getStart() + "," + pagingVO.getEnd());
 		List<VideoVO> list= sqlSession.selectList(Namespace+".getAllList" ,pagingVO);
 		return list;
 	}

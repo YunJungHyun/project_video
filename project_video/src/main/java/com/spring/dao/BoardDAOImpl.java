@@ -1,5 +1,7 @@
 package com.spring.dao;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -37,5 +39,18 @@ public class BoardDAOImpl implements BoardDAO {
 		 int result = sqlSession.selectOne(Namespace+".boardTotalCnt");
 		return result;
 	}
+	
+	@Override
+	public int updateUpCnt(int bnum) {
+		int result = sqlSession.update(Namespace+".updateUpCnt",bnum);
+		return result;
+	}
+	
+	@Override
+	public int updateDownCnt(int bnum) {
+		int result = sqlSession.update(Namespace+".updateDownCnt",bnum);
+		return result;
+	}
 }
+
  

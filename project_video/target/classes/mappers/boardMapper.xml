@@ -23,6 +23,14 @@
 		SELECT COUNT(*) FROM boards
 	</select>
 	
+	
+	<update id="updateUpCnt">
+		UPDATE boards SET upcnt = upcnt + 1 WHERE bnum = #{bnum}
+	</update>
+	
+	<update id="updateDownCnt">
+		UPDATE boards SET downcnt = downcnt + 1 WHERE bnum = #{bnum}
+	</update>
 </mapper>
 
  

@@ -7,7 +7,7 @@
 	<div class="input-group col-sm-6 ">
 		<input type="text" class="form-control" placeholder="영상 검색" >
 		<div class="input-group-append">
-			<span class="input-group-text">검색</span>
+			<span class="input-group-text">검색 </span>
 		</div>
 	</div>
 	<div class="input-group col-sm-6 justify-content-end">
@@ -84,17 +84,25 @@
 									${vlist.vtitle}</label>
 									
 									<ul class="list-group info-group">
-										<li class="list-group-item">작성자 : ${vlist.unum } </li>
+										<li class="list-group-item">작성자 : ${vlist.userid } </li>
 										<li class="list-group-item">영상 링크 : ${vlist.vurl } </li>
 									</ul>
 									
 									<div class="btn-box">
 										<div class="btn-comment-box">
-											<button class="btn btn-outline-dark" onclick="commentBox('${vlist.vnum}','${vlist.bnum }')" >댓글</button>
+											<button class="btn btn-outline-dark" id="replyBtn-${vlist.bnum }" onclick="commentBox('${vlist.vnum}','${vlist.bnum }')" > 댓글 (0)
+												<c:forEach items="${rlist }" var="rlist">
+														<c:if test="${vlist.bnum == rlist.bnum }"> 
+															<script>
+															 	$("#replyBtn-"+${vlist.bnum}).html("댓글 ("+${rlist.bnumCnt}+")");
+															 </script>
+														</c:if>	 
+												</c:forEach>
+											</button>
 										</div>
 										<div class="btn-like-box">
-											<button class="btn btn-outline-success">좋아요 <i class="fas fa-thumbs-up"></i> 0</button>
-											<button class="btn btn-outline-danger">싫어요 <i class="fas fa-thumbs-down"></i> 0</button> 
+											<button class="btn btn-outline-success" onclick="judgment('up','${vlist.bnum}')">좋아요 <i class="fas fa-thumbs-up"></i> ${vlist.upcnt }</button>
+											<button class="btn btn-outline-danger" onclick="judgment('down','${vlist.bnum}')">싫어요 <i class="fas fa-thumbs-down"></i> ${vlist.downcnt }</button> 
 										</div>
 									</div>
 							</div>
@@ -218,13 +226,20 @@ $(document).ready(function(){
 
 
 $(".insertReply").on("click", function() {
- 
+ 	var gui = "${gui}";
+ 	
+ 	if( gui == ""){
+ 		
+ 		alert("로그인 후 이용해주세요.");
+ 		return false;
+ 	}
+							
 							var replyName = $(this).attr("name");
 							var rnArray = replyName.split("-");
 							var bnum = rnArray[1];
 							var replyText = $("#replyText-"+bnum).val();
 
-							alert(bnum);
+							//alert(bnum);
 
 							$.ajax({
 
@@ -324,7 +339,7 @@ function reCommentBox(rpnum ,rnum,bnum ,rnum){
 		
 		output+="<button type='button' name='boardNum-"+bnum+"' class='btn btn-outline-secondary' onclick='insertReReply("+bnum+","+rpnum+")'>답글 등록</button>"
 		output+="<button type='button' class='btn btn-outline-secondary' onclick ='cancel("+rpnum+","+bnum+")'>취소</button>"
-		output+="</div></div></div><hr>"
+		output+="</div></div></div>"
 	  
 		if(rnum == 0){
 			
@@ -344,7 +359,14 @@ function cancel(rpnum, bnum){
 
 function insertReReply(bnumData, rpnumData){
 	
-
+	var gui = "${gui}";
+ 	
+ 	if( gui == ""){
+ 		
+ 		alert("로그인 후 이용해주세요.");
+ 		return false;
+ 	}
+ 	
 	var bnum = bnumData;
 	var rpnum = rpnumData;
 	var replyText =$("#replyText-"+bnum+"-"+rpnum).val();
@@ -372,5 +394,42 @@ function insertReReply(bnumData, rpnumData){
 	})
 }
 
+function judgment(judg ,bnum){
+	
+	
+	var gui = "${gui}";
+ 	
+ 	if( gui == ""){
+ 		
+ 		alert("로그인 후 이용해주세요.");
+ 		return false;
+ 	}
+	
+	$.ajax({
+		
+		url :"boardJudgment.do",
+		type : "get",
+		data : {
+			"judg" : judg,
+			"bnum" : bnum	
+		},
+		dataType : "text",
+		success :function(data){
+			if(data == 'up'){
+				alert("해당 게시물을 좋아합니다.");
+			}
+			if(data == 'down'){
+				
+				alert("해당 게시물을 싫어합니다.");
+			}
+			window.location.href="mainView.do?nowPage="+${pagingMap.nowPage}+"&cntPerPage="+${pagingMap.cntPerPage}
+			
+		},error : function(error){
+			
+			alert("error");
+		}
+	})
+	
+}
 
 </script>

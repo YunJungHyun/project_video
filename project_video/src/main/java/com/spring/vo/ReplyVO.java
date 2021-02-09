@@ -7,6 +7,16 @@ public class ReplyVO {
 	private int rpnum;
 	private String replyText;
 	private String replyer;
+	private String bnumCnt;
+	
+	
+	
+	public String getBnumCnt() {
+		return bnumCnt;
+	}
+	public void setBnumCnt(String bnumCnt) {
+		this.bnumCnt = bnumCnt;
+	}
 	
 	public int getRpnum() {
 		return rpnum;

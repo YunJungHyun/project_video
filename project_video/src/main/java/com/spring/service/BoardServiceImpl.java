@@ -1,5 +1,7 @@
 package com.spring.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -30,5 +32,17 @@ public class BoardServiceImpl implements BoardService{
 	public int boardTotalCnt() {
 		// TODO Auto-generated method stub
 		return boardDAO.boardTotalCnt();
+	}
+	
+	@Override
+	public int updateUpCnt(int bnum) {
+		// TODO Auto-generated method stub
+		return boardDAO.updateUpCnt(bnum);
+	}
+	
+	@Override
+	public int updateDownCnt(int bnum) {
+		// TODO Auto-generated method stub
+		return boardDAO.updateDownCnt(bnum);
 	}
 }
