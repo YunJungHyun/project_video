@@ -9,4 +9,6 @@ public interface BoardDAO {
 
 	BoardVO getOneBoard(String vnum);
 
+	int boardTotalCnt();
+
 }

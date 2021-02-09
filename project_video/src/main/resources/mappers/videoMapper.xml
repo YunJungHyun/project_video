@@ -16,10 +16,14 @@
 	</insert>
 
 	<select id="getAllList" resultType="videoVO">
+			
 		
+	SELECT * FROM(
 		SELECT ROW_NUMBER() over (ORDER by bnum DESC ) AS RN ,  bnum , B.vnum, B.unum  ,  vurl , vtitle 
-				FROM boards A INNER JOIN videos B 
-					ON A.vnum = B.vnum
+					FROM boards A INNER JOIN videos B 
+						ON A.vnum = B.vnum
+					) C
+					WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 	
 </mapper>

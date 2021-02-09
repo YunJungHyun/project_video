@@ -25,7 +25,7 @@ public class BoardController {
 	public Map<String, Object> getOneBoard(String vnum,String vurl) {
 		System.out.println("vnum : "+ vnum);
 		Map<String, Object> map = new HashMap<String,Object>();
-		String videoId = null;;
+		String videoId = null;
 		BoardVO boardVO = boardService.getOneBoard(vnum);
 		
 		

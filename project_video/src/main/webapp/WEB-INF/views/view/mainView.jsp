@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="search-container mb-3 ">
@@ -11,9 +11,33 @@
 		</div>
 	</div>
 	<div class="input-group col-sm-6 justify-content-end">
-		<span class="input-group-text spanBtn">&lt;</span>
-		<span class="input-group-text ">PAGE</span>
-		<span class="input-group-text spanBtn">&nbsp;&nbsp;&nbsp;&gt;</span>
+		<c:if test="${pagingVO.nowPage == 1 }">
+			<a href="#">
+				<span class="input-group-text spanBtn">&lt;</span>
+			</a>
+		</c:if>	
+		<c:if test="${pagingVO.nowPage != 1 }">
+			<a href="mainView.do?nowPage=${pagingVO.startPage-1}&cntPerPage=${pagingVO.cntPerPage}">
+				<span class="input-group-text spanBtn">&lt;</span>
+			</a>
+		</c:if>	
+		
+		<span class="input-group-text ">
+		
+			<b>${pagingVO.nowPage}</b>
+		
+		</span>
+		
+		<c:if test="${ pagingVO.nowPage != pagingVO.lastPage}">
+			<a href="mainView.do?nowPage=${pagingVO.nowPage+1 }&cntPerPage=${pagingVO.cntPerPage}">
+				<span class="input-group-text spanBtn">&nbsp;&nbsp;&nbsp;&gt;</span>
+			</a>
+		</c:if>
+		<c:if test="${pagingVO.nowPage == pagingVO.lastPage }">
+			<a href="#">
+			<span class="input-group-text spanBtn">&nbsp;&nbsp;&nbsp;&gt;</span>
+			</a>
+		</c:if>
 	</div>
 </div>
 <br>
@@ -167,7 +191,7 @@ $(document).ready(function(){
 				
 				//타이틀을 클릭해서 이벤트가 발생했다면 댓글창을 같이 보여준다.
 				if(clickTitle==true){
-					alert("title");
+					 
 					$(".comment-"+vnum).addClass("show");
 					replyList(bnum);
 				

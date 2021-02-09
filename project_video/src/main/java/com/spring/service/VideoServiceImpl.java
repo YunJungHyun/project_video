@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.spring.dao.VideoDAO;
+import com.spring.vo.PagingVO;
 import com.spring.vo.VideoVO;
 
 @Service
@@ -22,8 +23,8 @@ public class VideoServiceImpl implements VideoService{
 	}
 	
 	@Override
-	public List<VideoVO> getAllList() {
+	public List<VideoVO> getAllList(PagingVO pagingVO) {
 		// TODO Auto-generated method stub
-		return videoDAO.getAllList();
+		return videoDAO.getAllList(pagingVO);
 	}
 }

@@ -18,6 +18,11 @@
 		SELECT * FROM boards WHERE vnum=#{vnum}
 	</select>
 	
+	<select id ="boardTotalCnt" resultType="int">
+		
+		SELECT COUNT(*) FROM boards
+	</select>
+	
 </mapper>
 
  

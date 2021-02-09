@@ -25,4 +25,10 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardDAO.getOneBoard(vnum);
 	}
+	
+	@Override
+	public int boardTotalCnt() {
+		// TODO Auto-generated method stub
+		return boardDAO.boardTotalCnt();
+	}
 }

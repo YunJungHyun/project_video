@@ -8,5 +8,7 @@ public interface BoardService {
 	int insertBoard(VideoVO videoVO);
 
 	BoardVO getOneBoard(String vnum);
+
+	int boardTotalCnt();
 	
 }
