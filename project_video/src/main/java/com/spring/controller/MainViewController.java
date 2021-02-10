@@ -50,12 +50,18 @@ public class MainViewController {
 				PagingVO pagingVO,
 				@RequestParam(value="nowPage", required= false) String nowPage,
 				@RequestParam(value="cntPerPage", required= false) String cntPerPage,
+				@RequestParam(value="gnum", required= false) String gnum,
 				HttpServletRequest request,
 				Model model
 				) {
 			System.out.println("[mainView.do]");
 			//System.out.println("nowPage  : " +nowPage);
 			//System.out.println("cntPerPage  : " +cntPerPage);
+			
+			if(gnum== null) {
+				gnum= "";
+			}
+			
 			int total = boardService.boardTotalCnt();
 			
 			//System.out.println("전체 글 수 : "+total);
@@ -70,6 +76,7 @@ public class MainViewController {
 			}
 			pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 			
+			pagingVO.setGnum(gnum);
 			//System.out.println("pagingVO :  "+pagingVO.toString());
 			//장르
 			List<GenreVO> glist= genreService.getAllGenre();
@@ -81,6 +88,13 @@ public class MainViewController {
 			Map<String, Integer> map = new HashMap<String,Integer>();
 			map.put("nowPage", pagingVO.getNowPage());
 			map.put("cntPerPage", pagingVO.getCntPerPage());
+			if(pagingVO.getGnum()=="") {
+				
+				map.put("gnum", 0);
+			}else {
+				
+				map.put("gnum", Integer.parseInt(pagingVO.getGnum()));
+			}
 			session =request.getSession(true);
 			session.setAttribute("pagingMap", map);
 			

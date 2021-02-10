@@ -7,8 +7,9 @@
 	<div class="input-group col-sm-6 ">
 		<input type="text" class="form-control" placeholder="영상 검색" >
 		<div class="input-group-append">
-			<span class="input-group-text">검색 </span>
+			<span class="input-group-text">검색</span>
 		</div>
+		<a href="mainView.do" >전체보기</a> 
 	</div>
 	<div class="input-group col-sm-6 justify-content-end">
 		<c:if test="${pagingVO.nowPage == 1 }">
@@ -17,7 +18,13 @@
 			</a>
 		</c:if>	
 		<c:if test="${pagingVO.nowPage != 1 }">
-			<a href="mainView.do?nowPage=${pagingVO.startPage-1}&cntPerPage=${pagingVO.cntPerPage}">
+			<a href="mainView.do?nowPage=${pagingVO.startPage-1}&cntPerPage=${pagingVO.cntPerPage}
+				<c:if test="${pagingMap.gnum != 0 }">
+				&gnum=${pagingMap.gnum}
+				</c:if>
+				">
+			
+			
 				<span class="input-group-text spanBtn">&lt;</span>
 			</a>
 		</c:if>	
@@ -29,13 +36,18 @@
 		</span>
 		
 		<c:if test="${ pagingVO.nowPage != pagingVO.lastPage}">
-			<a href="mainView.do?nowPage=${pagingVO.nowPage+1 }&cntPerPage=${pagingVO.cntPerPage}">
+			<a href="mainView.do?nowPage=${pagingVO.nowPage+1 }&cntPerPage=${pagingVO.cntPerPage}
+				<c:if test="${pagingMap.gnum != 0 }">
+				&gnum=${pagingMap.gnum}
+				</c:if>
+				"
+			>
 				<span class="input-group-text spanBtn">&nbsp;&nbsp;&nbsp;&gt;</span>
 			</a>
 		</c:if>
 		<c:if test="${pagingVO.nowPage == pagingVO.lastPage }">
 			<a href="#">
-			<span class="input-group-text spanBtn">&nbsp;&nbsp;&nbsp;&gt;</span>
+				<span class="input-group-text spanBtn">&nbsp;&nbsp;&nbsp;&gt;</span>
 			</a>
 		</c:if>
 	</div>
@@ -45,7 +57,7 @@
 	<div class="genre-box">
 		<c:forEach items="${glist }" var="glist">
 			
-			<button class="btn btn-outline-secondary">${glist.gname}</button>
+			<button class="btn btn-outline-secondary" onclick="gnameClick('${glist.gnum}')">${glist.gname}</button>
 			
 		</c:forEach>
 	
@@ -53,8 +65,11 @@
 </div>
 <br>
 <div class="main-content col-12">
-
+	
 	<div class="accordion" id="accordion">
+		<c:if test="${vlist.size() ==0}">
+			<h1>게시물이없습니다.</h1>
+		</c:if>	
 		<c:forEach items="${vlist}" var="vlist">
 			<div class="card" id="${vlist.vnum}" name="${vlist.vurl}">
 				<div class="card-header mqdefault" id="heading-${vlist.RN }" >
@@ -351,6 +366,13 @@ function reCommentBox(rpnum ,rnum,bnum ,rnum){
 		}
 }
 
+function gnameClick(gnum){
+	 
+	window.location.href="mainView.do?gnum="+gnum;
+}
+
+
+
 function cancel(rpnum, bnum){
 	
 	$(".reReply-"+bnum+"-"+rpnum).replaceWith("<div id='reReply-"+bnum+"-"+rpnum+"></div>");
@@ -422,8 +444,13 @@ function judgment(judg ,bnum){
 				
 				alert("해당 게시물을 싫어합니다.");
 			}
-			window.location.href="mainView.do?nowPage="+${pagingMap.nowPage}+"&cntPerPage="+${pagingMap.cntPerPage}
-			
+			if(${pagingMap.gnum}==0){
+				window.location.href="mainView.do?nowPage="+${pagingMap.nowPage}+"&cntPerPage="+${pagingMap.cntPerPage};
+			}else{
+				
+				window.location.href="mainView.do?nowPage="+${pagingMap.nowPage}+"&cntPerPage="+${pagingMap.cntPerPage}+"&gnum="+${pagingMap.gnum};
+			}
+				
 		},error : function(error){
 			
 			alert("error");

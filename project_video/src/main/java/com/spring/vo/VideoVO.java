@@ -7,16 +7,24 @@ public class VideoVO {
 	private String userid;
 	private int bnum; 
 	private int RN;
+	private String gnum;
 	private String vurl;
 	private String vthumimg;
 	private String vpw;
 	private String vtitle;
+	
 	private int upcnt;
 	private int downcnt;
 	private int viewcnt;
 	
 	
 
+	public String getGnum() {
+		return gnum;
+	}
+	public void setGnum(String gnum) {
+		this.gnum = gnum;
+	}
 	public String getUserid() {
 		return userid;
 	}

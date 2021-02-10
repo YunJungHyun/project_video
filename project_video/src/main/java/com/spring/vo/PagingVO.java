@@ -7,6 +7,9 @@ public class PagingVO {
 				// 한 눈에 보이는 페이지 쪽수
 		private int cntPage = 1;
 		
+		//장르선택
+		private String gnum;
+		
 		public PagingVO() {
 			
 		}
@@ -108,6 +111,16 @@ public class PagingVO {
 		public void getCntPage(int cntPage) {
 			this.cntPage = cntPage;
 		}
+		
+		
+		public String getGnum() {
+			return gnum;
+		}
+
+		public void setGnum(String gnum) {
+			this.gnum = gnum;
+		}
+
 		@Override
 		public String toString() {
 			return "PagingVO [nowPage=" + nowPage + ", startPage=" + startPage + ", endPage=" + endPage + ", total=" + total

@@ -43,13 +43,25 @@
 			</div>
 			<div class="modal-body">
 				<form id="videoRegForm" name="videoRegForm">
+					<input type="hidden" id="userid" name="userid" value="${gui.userid }">
 					<div class="form-group">
 						<label>LINK</label> 
 						<input type="text" class="form-control" name="vurl" placeholder="https://example.com">
 					</div> 
-					<div class="form-group">
-						<label>제목</label> 
-						<input type="text" class="form-control" name="vtitle" placeholder="TITLE">
+					<div class="row">
+						<div class="form-group col-md-6">
+							<label>제목</label> 
+							<input type="text" class="form-control" name="vtitle" placeholder="TITLE">
+						</div>
+						<div class="form-group col-md-6">
+							<label>종류 선택</label> 
+							<select class="form-control" id="gname" name="gname">
+								<option value="">선택</option>
+								<c:forEach items="${glist}" var="glist">
+									<option value="${glist.gnum}">${glist.gname}</option>
+								</c:forEach>
+							</select>
+						</div>
 					</div>
 					<div class="form-group">
 						<label>동영상 비밀번호</label> 
