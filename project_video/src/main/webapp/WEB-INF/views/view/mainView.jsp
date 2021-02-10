@@ -96,7 +96,9 @@
 							<div class="col-12 col-md-8 video-info-box">
 								<label class="video-title" data-toggle="collapse" data-target="#collapse-${vlist.RN}"
 									aria-expanded="false" aria-controls="collapse-${vlist.RN }">
-									${vlist.vtitle}</label>
+									${vlist.vtitle}
+									<span class="viewCnt">조회수 : ${vlist.viewcnt} &nbsp;</span>
+								</label>
 									
 									<ul class="list-group info-group">
 										<li class="list-group-item">작성자 : ${vlist.userid } </li>
@@ -109,7 +111,7 @@
 												<c:forEach items="${rlist }" var="rlist">
 														<c:if test="${vlist.bnum == rlist.bnum }"> 
 															<script>
-															 	$("#replyBtn-"+${vlist.bnum}).html("댓글 ("+${rlist.bnumCnt}+")");
+															 	$("#replyBtn-"+${vlist.bnum} ).html("댓글 ("+${rlist.bnumCnt}+")");
 															 </script>
 														</c:if>	 
 												</c:forEach>
@@ -219,7 +221,7 @@ $(document).ready(function(){
 					replyList(bnum);
 				
 				}
-				
+			
 				youTube_player = new YT.Player(player, {
 
 					height : '700px',
@@ -227,13 +229,16 @@ $(document).ready(function(){
 					videoId : data.videoId
 
 				}) 
-
+				
+				
 			},
 			error : function(error) {
 				alert("error");
 			}
 
 		})
+		
+		viewCntUp(bnum);
 	} 
 
 })
@@ -338,6 +343,25 @@ function replyList(data){
 		}
 		 
 		
+	})
+}
+
+function viewCntUp(bnum){
+	
+	$.ajax({
+		
+		url : "viewCntUp.do",
+		data : {
+				"bnum" : bnum
+			},
+		dataType:"text",
+		success : function(data){
+			
+			
+			
+		},error :function(){
+			alert("error");
+		}
 	})
 }
 

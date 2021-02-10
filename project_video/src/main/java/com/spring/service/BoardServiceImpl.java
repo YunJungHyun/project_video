@@ -45,4 +45,10 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardDAO.updateDownCnt(bnum);
 	}
+	
+	@Override
+	public int viewCntUp(String bnum) {
+		// TODO Auto-generated method stub
+		return boardDAO.viewCntUp(bnum);
+	}
 }

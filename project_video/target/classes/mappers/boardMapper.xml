@@ -31,6 +31,13 @@
 	<update id="updateDownCnt">
 		UPDATE boards SET downcnt = downcnt + 1 WHERE bnum = #{bnum}
 	</update>
+	
+	<update id="viewCntUp">
+		UPDATE boards SET viewcnt = viewcnt + 1 WHERE bnum=#{bnum}
+	</update>
+	
+	
+	
 </mapper>
 
  

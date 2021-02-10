@@ -11,7 +11,9 @@
 	font-weight: 700;
 	font-size: 26px;
 } 
-
+.mainCotainer{
+	padding-top: 4em;
+}
 .row{
 	
 	display: flex;
@@ -22,17 +24,33 @@
 	height: calc(100vh - 4rem);
     top: 4em;
   	position: sticky;
+  	border-right : 1px solid #dfdfdf;
+  	padding :2em;
+}
+.left-menu{
+	
+	text-align: center;
+}
+.left-list-group > li {
+	
+	background-color: #9370db3d;
+	
+/* 	border-radius: 20px;*/
+	padding : 12px 5px 12px 5px;
+	margin: 2px;
+	font-weight: bold;
 }
 
 .mainBox{
-	 top: 4em;
-	
+	/* top: 4em;*/
 }
+
 
 .right-menuBox{
 	height: calc(100vh - 4rem);
     top: 4em;
 	position: sticky;
+	
 }
 
 .nav-btn{ 
@@ -208,4 +226,13 @@ i.replyIcon{
 .reReplyContainer{
 	
 	padding : 10px;
+}
+
+.viewCnt{
+	color: black;
+	position: relative;
+	float: right;
+    font-size: 15px;
+    font-weight: bold;
+	bottom: -20px;	 
 }

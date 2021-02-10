@@ -17,5 +17,7 @@ public interface BoardService {
 
 	int updateDownCnt(int bnum);
 
+	int viewCntUp(String bnum);
+
 	
 }

@@ -51,6 +51,14 @@ public class BoardDAOImpl implements BoardDAO {
 		int result = sqlSession.update(Namespace+".updateDownCnt",bnum);
 		return result;
 	}
+	
+	@Override
+	public int viewCntUp(String bnum) {
+		int result =sqlSession.update(Namespace+".viewCntUp",bnum);
+		
+		
+		return result;
+	}
 }
 
  

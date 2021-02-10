@@ -17,5 +17,7 @@ public interface BoardDAO {
 
 	int updateDownCnt(int bnum);
 
+	int viewCntUp(String bnum);
+
 
 }

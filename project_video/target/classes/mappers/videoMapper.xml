@@ -19,14 +19,17 @@
 			
 		
 	SELECT * FROM(
-		SELECT ROW_NUMBER() over (ORDER by bnum DESC ) AS RN ,  bnum , B.vnum, B.unum,B.gnum ,B.userid ,  vurl , vtitle , A.upcnt, A.downcnt, A.viewcnt 
+		SELECT ROW_NUMBER() over (ORDER by ${con} DESC ) AS RN ,bnum ,B.vnum ,B.unum ,B.gnum ,B.userid ,vurl , vtitle , A.upcnt, A.downcnt, A.viewcnt 
 					FROM boards A INNER JOIN videos B 
 						ON A.vnum = B.vnum 
 						WHERE B.gnum LIKE CONCAT( #{gnum}, '%') 
 					) C
 					WHERE RN BETWEEN #{start} AND #{end}
+					
+
+			
 	</select>
-	
+	 
 </mapper>
 
  

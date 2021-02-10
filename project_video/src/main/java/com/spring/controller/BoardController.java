@@ -23,7 +23,7 @@ public class BoardController {
 	@RequestMapping(value="getOneBoard", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> getOneBoard(String vnum,String vurl) {
-		System.out.println("vnum : "+ vnum);
+		//System.out.println("vnum : "+ vnum);
 		Map<String, Object> map = new HashMap<String,Object>();
 		String videoId = null;
 		BoardVO boardVO = boardService.getOneBoard(vnum);
@@ -32,7 +32,7 @@ public class BoardController {
 		String[] strArray =vurl.split("/");
 		videoId = strArray[3];
 		
-		System.out.println("videoId :"+ videoId);
+		//System.out.println("videoId :"+ videoId);
 		map.put("map", boardVO);
 		map.put("videoId", videoId);
 		
@@ -60,6 +60,27 @@ public class BoardController {
 		}
 		
 	}
-
+	
+	@RequestMapping(value="viewCntUp.do")
+	@ResponseBody
+	public String viewCntUp(
+			@RequestParam(value="bnum" ,required=true) String bnum
+			) {
+	
+		//System.out.println("bnum :"+bnum);
+		
+		int result  =boardService.viewCntUp(bnum);
+		
+		if(result >= 1) {
+			
+			System.out.println("조회수 증가");
+		}else{
+			
+			System.out.println("조회수 증가 실패");
+		}
+		
+		return Integer.toString(result);
+		
+	}
 	
 }

@@ -10,6 +10,9 @@ public class PagingVO {
 		//장르선택
 		private String gnum;
 		
+		//리스트 보는 조건 선택
+		private String con;
+		
 		public PagingVO() {
 			
 		}
@@ -119,6 +122,14 @@ public class PagingVO {
 
 		public void setGnum(String gnum) {
 			this.gnum = gnum;
+		}
+		
+		public String getCon() {
+			return con;
+		}
+
+		public void setCon(String con) {
+			this.con = con;
 		}
 
 		@Override

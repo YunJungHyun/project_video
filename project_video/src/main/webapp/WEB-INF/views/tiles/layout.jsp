@@ -4,7 +4,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 <!DOCTYPE html>
-<html>
+<html id="html">
 <head>
 <meta charset="UTF-8">
 <title>Project_video</title>
@@ -63,7 +63,7 @@
 			<tiles:insertAttribute name="userHeader" />
 	</c:if>
 	</div>
-	<div class="container-fluid">
+	<div class="container-fluid mainCotainer">
 		<div class="row flex-xl-nowrap">
 			<div class="left-menuBox col-12 col-md-3 col-xl-2">
 				<tiles:insertAttribute name="left-menu" />	
@@ -76,9 +76,9 @@
 			</div>
 		</div>
 	</div>
-	<div class="footerBox">
+	<%-- <div class="footerBox">
 			<tiles:insertAttribute name="footer" />
-	</div>
+	</div> --%>
 
 </body>
 </html>

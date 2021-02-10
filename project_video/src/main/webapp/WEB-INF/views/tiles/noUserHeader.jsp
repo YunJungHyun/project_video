@@ -4,7 +4,7 @@
 	
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
 	<div class="container">
-		<a class="navbar-brand" id="navbar-brand" href="#page-top">
+		<a class="navbar-brand" id="navbar-brand" href="#">
 			YOONPLAYER </a>
 	
 		<ul class="nav justify-content-end">
