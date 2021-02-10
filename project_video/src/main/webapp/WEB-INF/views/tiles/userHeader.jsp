@@ -55,7 +55,7 @@
 						</div>
 						<div class="form-group col-md-6">
 							<label>종류 선택</label> 
-							<select class="form-control" id="gname" name="gname">
+							<select class="form-control" id="gnum" name="gnum">
 								<option value="">선택</option>
 								<c:forEach items="${glist}" var="glist">
 									<option value="${glist.gnum}">${glist.gname}</option>

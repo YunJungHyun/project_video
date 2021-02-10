@@ -50,7 +50,7 @@
 	height: calc(100vh - 4rem);
     top: 4em;
 	position: sticky;
-	
+	border-left : 1px solid #dfdfdf;
 }
 
 .nav-btn{ 
@@ -62,7 +62,7 @@
     border-radius: 6px;
 }
 
-.search-container {
+.search-container > div {
 	
 	display: flex;
 }

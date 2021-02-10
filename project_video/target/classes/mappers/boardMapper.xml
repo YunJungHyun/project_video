@@ -20,7 +20,9 @@
 	
 	<select id ="boardTotalCnt" resultType="int">
 		
-		SELECT COUNT(*) FROM boards
+		SELECT COUNT(*) FROM boards A inner JOIN videos B 
+			ON A.vnum =B.vnum	
+			WHERE B.gnum LIKE CONCAT(#{gnum},'%')		
 	</select>
 	
 	

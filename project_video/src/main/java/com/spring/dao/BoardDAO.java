@@ -11,7 +11,7 @@ public interface BoardDAO {
 
 	BoardVO getOneBoard(String vnum);
 
-	int boardTotalCnt();
+	int boardTotalCnt(String gnum);
 
 	int updateUpCnt(int bnum);
 

@@ -29,7 +29,7 @@ public class VideoDAOImpl implements VideoDAO {
 	public List<VideoVO> getAllList(PagingVO pagingVO) {
 		
 		//System.out.println(pagingVO.getStart() + "," + pagingVO.getEnd());
-		System.out.println("pagingVO.getCon() DAOImpl :" +pagingVO.getCon());
+		//System.out.println("pagingVO.getCon() DAOImpl :" +pagingVO.getCon());
 		List<VideoVO> list= sqlSession.selectList(Namespace+".getAllList" ,pagingVO);
 		return list;
 	}

@@ -1,7 +1,5 @@
 package com.spring.service;
 
-import java.util.List;
-
 import com.spring.vo.BoardVO;
 import com.spring.vo.VideoVO;
 
@@ -11,8 +9,8 @@ public interface BoardService {
 
 	BoardVO getOneBoard(String vnum);
 
-	int boardTotalCnt();
-
+	int boardTotalCnt(String gnum);
+ 
 	int updateUpCnt(int bnum);
 
 	int updateDownCnt(int bnum);

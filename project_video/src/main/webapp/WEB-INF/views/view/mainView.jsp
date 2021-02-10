@@ -4,52 +4,25 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="search-container mb-3 ">
-	<div class="input-group col-sm-6 ">
-		<input type="text" class="form-control" placeholder="영상 검색" >
-		<div class="input-group-append">
-			<span class="input-group-text">검색</span>
+	<div id="search-nav">
+		<div class="input-group col-sm-6 ">
+			<input type="text" class="form-control" placeholder="영상 검색" >
+			<div class="input-group-append">
+				<span class="input-group-text">검색</span>
+			</div>
+			
 		</div>
-		<a href="mainView.do" >전체보기</a> 
-	</div>
-	<div class="input-group col-sm-6 justify-content-end">
-		<c:if test="${pagingVO.nowPage == 1 }">
-			<a href="#">
+		<div class="input-group col-sm-6 justify-content-end">
+			<a id="prev" onclick="pageAnchor('prev','${pagingMap.gnum}','${pagingMap.con}','${pagingMap.nowPage}','${pagingVO.startPage}','${pagingVO.lastPage}')" href="#">
 				<span class="input-group-text spanBtn">&lt;</span>
 			</a>
-		</c:if>	
-		<c:if test="${pagingVO.nowPage != 1 }">
-			<a href="mainView.do?nowPage=${pagingVO.startPage-1}&cntPerPage=${pagingVO.cntPerPage}
-				<c:if test="${pagingMap.gnum != 0 }">
-				&gnum=${pagingMap.gnum}
-				</c:if>
-				">
-			
-			
-				<span class="input-group-text spanBtn">&lt;</span>
-			</a>
-		</c:if>	
-		
-		<span class="input-group-text ">
-		
-			<b>${pagingVO.nowPage}</b>
-		
-		</span>
-		
-		<c:if test="${ pagingVO.nowPage != pagingVO.lastPage}">
-			<a href="mainView.do?nowPage=${pagingVO.nowPage+1 }&cntPerPage=${pagingVO.cntPerPage}
-				<c:if test="${pagingMap.gnum != 0 }">
-				&gnum=${pagingMap.gnum}
-				</c:if>
-				"
-			>
+			<span class="input-group-text ">
+				<b>${pagingVO.nowPage}</b>
+			</span>
+			<a id="next" onclick="pageAnchor('next','${pagingMap.gnum}','${pagingMap.con }','${pagingMap.nowPage}','${pagingVO.startPage}','${pagingVO.lastPage }')" href="#">
 				<span class="input-group-text spanBtn">&nbsp;&nbsp;&nbsp;&gt;</span>
-			</a>
-		</c:if>
-		<c:if test="${pagingVO.nowPage == pagingVO.lastPage }">
-			<a href="#">
-				<span class="input-group-text spanBtn">&nbsp;&nbsp;&nbsp;&gt;</span>
-			</a>
-		</c:if>
+			</a>	
+		</div>
 	</div>
 </div>
 <br>
@@ -57,14 +30,14 @@
 	<div class="genre-box">
 		<c:forEach items="${glist }" var="glist">
 			
-			<button class="btn btn-outline-secondary" onclick="gnameClick('${glist.gnum}')">${glist.gname}</button>
+			<button class="btn btn-outline-secondary genreBtn" id="genre-${glist.gnum }" onclick="gnameClick('${glist.gnum}')">${glist.gname}</button>
 			
 		</c:forEach>
 	
 	</div>
 </div>
 <br>
-<div class="main-content col-12">
+<div class="main-content col-12" id="main-content">
 	
 	<div class="accordion" id="accordion">
 		<c:if test="${vlist.size() ==0}">
@@ -391,10 +364,117 @@ function reCommentBox(rpnum ,rnum,bnum ,rnum){
 }
 
 function gnameClick(gnum){
-	 
-	window.location.href="mainView.do?gnum="+gnum;
+	
+
+	$(".genreBtn").each(function(){
+		
+	 	var btnClick = 	$(this).hasClass("genreClick");	
+	 	if(btnClick==true){
+	 		
+	 		$(this).removeClass("genreClick");
+	 		$(this).css("background-color","");
+			$(this).css("color", "#55279a");
+	 		
+	 	}
+	})	
+	
+	$("#genre-"+gnum).css("background-color", "#55279a5e");
+	$("#genre-"+gnum).css("color", "#fff");
+	$("#genre-"+gnum).addClass("genreClick");
+	
+	//var con = "${pagingMap.con}";
+	//alert(con);
+	condition();
 }
 
+function pageAnchor(data , gnum , con ,nowPage, startPage, lastPage){
+					//next , 0 , bnum ,  1 , 10
+	var cntPerPage = 10;
+	var startPrev = Number(startPage)-1;
+	var startNext = Number(startPage)+1;
+
+	//alert(lastPage);
+	switch(data){
+		case "prev" :
+			//alert("prev"); 
+			if(nowPage != 1){
+				//alert("1페이지 아님");
+				$(".search-container").load("mainView.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #search-nav");
+				$("#main-content").load("mainView.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #accordion");
+			}
+			break;
+	
+		case "next" :
+			if(nowPage != lastPage){
+				//alert("다름");
+				$(".search-container").load("mainView.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #search-nav");
+				$("#main-content").load("mainView.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #accordion");
+				
+			}
+			if(nowPage == lastPage){
+				//alert("같음");
+			}
+			break;
+	
+	}
+}
+
+function condition(){
+	
+	var clickCon = false;
+	var clickGenre = false;
+	var con = "";
+	var gnum = "";
+	$(".conBtn").each(function(){
+		
+		var btnClick = 	$(this).hasClass("conClick");	
+	 	if(btnClick==true){
+	 		
+	 		//alert("컨디션클릭된것있음");
+	 		clickCon= true;
+	 		con = $(this).attr("id");
+	 		
+	 		if(con=="allCon"){
+	 			
+	 			location.href="mainView.do";
+	 			
+	 		}
+	 	}
+	})
+	$(".genreBtn").each(function(){
+		
+		var btnClick = 	$(this).hasClass("genreClick");	
+	 	if(btnClick==true){
+	 		
+	 		//alert("장르클릭된것있음");
+	 		clickGenre= true
+	 		var gstr = $(this).attr("id");
+	 		var gArray = gstr.split("-");
+	 		gnum = gArray[1];
+	 	}
+	})
+	
+	if(clickCon ==true && clickGenre == true){
+		//alert("컨디션 o ,장르 o");
+		//alert(con+","+gnum);
+		$(".search-container").load("mainView.do?con="+con+"&gnum="+gnum+" #search-nav");
+		$("#main-content").load("mainView.do?con="+con+"&gnum="+gnum+" #accordion");
+	}else if(clickCon == true && clickGenre == false){
+		
+		//alert("컨디션 o ,장르 x");
+		//alert(con+","+gnum);
+		$(".search-container").load("mainView.do?con="+con+" #search-nav");
+		$("#main-content").load("mainView.do?con="+con+" #accordion");
+	}else if(clickCon == false && clickGenre == true ){
+		//alert("컨디션 x ,장르 o");
+		//alert(con+","+gnum);
+		$(".search-container").load("mainView.do?gnum="+gnum+" #search-nav");
+		$("#main-content").load("mainView.do?gnum="+gnum+" #accordion");
+		
+	}else{
+		//alert("X");
+	}
+};
 
 
 function cancel(rpnum, bnum){
@@ -467,7 +547,7 @@ function judgment(judg ,bnum){
 			if(data == 'down'){
 				
 				alert("해당 게시물을 싫어합니다.");
-			}
+			} 
 			if(${pagingMap.gnum}==0){
 				window.location.href="mainView.do?nowPage="+${pagingMap.nowPage}+"&cntPerPage="+${pagingMap.cntPerPage};
 			}else{
@@ -482,5 +562,6 @@ function judgment(judg ,bnum){
 	})
 	
 }
+
 
 </script>

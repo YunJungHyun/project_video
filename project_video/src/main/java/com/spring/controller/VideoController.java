@@ -29,6 +29,7 @@ public class VideoController {
 			
 			) {
 		
+		System.out.println("videoVO.getGnum :" +videoVO.getGnum());
 //		System.out.println("videoVO.getVurl() :" + videoVO.getVurl());
 //		System.out.println("videoVO.getVtitle() :" + videoVO.getVtitle());
 //		System.out.println("videoVO.getVpw() :" + videoVO.getVpw());

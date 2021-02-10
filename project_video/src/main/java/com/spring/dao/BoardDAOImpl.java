@@ -32,11 +32,11 @@ public class BoardDAOImpl implements BoardDAO {
 		BoardVO board = sqlSession.selectOne(Namespace+".getOneBoard",vnum);
 		 
 		return board;
-	}
+	} 
 	
 	@Override
-	public int boardTotalCnt() {
-		 int result = sqlSession.selectOne(Namespace+".boardTotalCnt");
+	public int boardTotalCnt(String gnum) {
+		 int result = sqlSession.selectOne(Namespace+".boardTotalCnt",gnum);
 		return result;
 	}
 	

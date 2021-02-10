@@ -64,13 +64,15 @@
 	</c:if>
 	</div>
 	<div class="container-fluid mainCotainer">
-		<div class="row flex-xl-nowrap">
+		<div class="row flex-xl-nowrap content">
 			<div class="left-menuBox col-12 col-md-3 col-xl-2">
 				<tiles:insertAttribute name="left-menu" />	
 			</div>
-			<div class="mainBox col-md-8 col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 "> 
-					<tiles:insertAttribute name="body" />	
-			</div>
+			<div id="mainBox" class="mainBox col-md-8 col-12 col-md-9 col-xl-8 py-md-3"> 
+				
+					<tiles:insertAttribute name="body" />
+			
+			</div> 
 			<div class="right-menuBox col-12 col-xl-2">
 				<tiles:insertAttribute name="right-menu" />	
 			</div>

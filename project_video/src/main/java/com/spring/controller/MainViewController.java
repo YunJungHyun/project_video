@@ -57,18 +57,12 @@ public class MainViewController {
 			Model model
 			) {
 		System.out.println("[mainView.do]");
-		//System.out.println("nowPage  : " +nowPage);
-		//System.out.println("cntPerPage  : " +cntPerPage);
-		System.out.println("con : "+ con);
 
-
-		if(gnum== null) {
+		if(gnum== null || gnum.equals("0") ) {
 			gnum= "";
 		}
-
-		int total = boardService.boardTotalCnt();
-
-		//System.out.println("전체 글 수 : "+total);
+		 
+		int total = boardService.boardTotalCnt(gnum);
 
 		if(nowPage == null && cntPerPage == null) {
 			nowPage = "1";
@@ -81,26 +75,29 @@ public class MainViewController {
 		pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 
 		pagingVO.setGnum(gnum);
-		//System.out.println("pagingVO :  "+pagingVO.toString());
+		
 		if(con != null) {
 			switch (con) {
 
-			//case "allCon" :  pagingVO.setCon("");
-			case "viewCon" : pagingVO.setCon("viewcnt") ;	
+			case "allCon" :  pagingVO.setCon("bnum");
 							break;
-			case "upCon" : pagingVO.setCon("upcnt") ;
+			case "viewcnt" : pagingVO.setCon("viewcnt") ;	
+							break;
+			case "upcnt" : pagingVO.setCon("upcnt") ;
+							break;
+			case "latestCon" : pagingVO.setCon("bnum") ;
+							break;
+			case "bnum" : pagingVO.setCon("bnum") ;
 							break;
 			//case "latestCon" :  pagingVO.setCon("");
 
 
 			}
-		}else {
-			
+		}else if(con ==null){
+			 
 			 pagingVO.setCon("bnum");
 		}
-
-		//System.out.println("pagingVO.getCon() :"+pagingVO.getCon());
-
+		System.out.println("pagingVO :  "+pagingVO.toString());
 
 		//장르
 		List<GenreVO> glist= genreService.getAllGenre();
@@ -108,24 +105,21 @@ public class MainViewController {
 		//등록한동영상 정보
 		List<VideoVO> vlist = videoService.getAllList(pagingVO);
 			 
-		System.out.println(vlist.toString());
+		//System.out.println(vlist.toString());
 		//페이지 세션
-		Map<String, Integer> map = new HashMap<String,Integer>();
-		map.put("nowPage", pagingVO.getNowPage());
-		map.put("cntPerPage", pagingVO.getCntPerPage());
+		Map<String, String> map = new HashMap<String,String>();
+		map.put("nowPage", Integer.toString(pagingVO.getNowPage()));
+		map.put("cntPerPage", Integer.toString(pagingVO.getCntPerPage()));
+		map.put("con",pagingVO.getCon());
+		
 		if(pagingVO.getGnum()=="") {
-
-			map.put("gnum", 0);
+			map.put("gnum", "0");
 		}else {
-
-			map.put("gnum", Integer.parseInt(pagingVO.getGnum()));
+			map.put("gnum", pagingVO.getGnum());
 		}
 		session =request.getSession(true);
 		session.setAttribute("pagingMap", map);
-
-		//System.out.println(session.getAttribute("pagingMap"));
-		//System.out.println("vlist.toString : "+vlist.toString());
-		//System.out.println("vlist.size() :" +vlist.size());
+		
 
 		//댓글 갯수가져오기
 		List<ReplyVO> rlist =replyService.getReplyCnt();

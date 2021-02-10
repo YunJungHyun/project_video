@@ -29,9 +29,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public int boardTotalCnt() {
+	public int boardTotalCnt(String gnum) {
 		// TODO Auto-generated method stub
-		return boardDAO.boardTotalCnt();
+		return boardDAO.boardTotalCnt(gnum);
 	}
 	
 	@Override
