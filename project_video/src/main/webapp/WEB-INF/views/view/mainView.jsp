@@ -29,11 +29,8 @@
 <div class="genre-container col-12">
 	<div class="genre-box">
 		<c:forEach items="${glist }" var="glist">
-			
 			<button class="btn btn-outline-secondary genreBtn" id="genre-${glist.gnum }" onclick="gnameClick('${glist.gnum}')">${glist.gname}</button>
-			
-		</c:forEach>
-	
+		</c:forEach>	
 	</div>
 </div>
 <br>
@@ -44,7 +41,7 @@
 			<h1>게시물이없습니다.</h1>
 		</c:if>	
 		<c:forEach items="${vlist}" var="vlist">
-			<div class="card" id="${vlist.vnum}" name="${vlist.vurl}">
+			<div class="card">
 				<div class="card-header mqdefault" id="heading-${vlist.RN }" >
 					<div class="container">
 						<div class="row">
@@ -53,14 +50,13 @@
 								
 								data-toggle="collapse" data-target="#collapse-${vlist.RN}"
 								aria-expanded="false" aria-controls="collapse-${vlist.RN}"
-								id="${vlist.vurl}">
+								>
 								
 								<c:set var="strArray" value="${fn:split(vlist.vurl,'/')}" />
 								<c:forEach items="${strArray }" var="videoId" varStatus="g">
 									
 									<c:if test="${g.count == 3}">
-										<img  src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg">
-								
+										<img  src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg" onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','imgClick')">
 									</c:if>
 							 	</c:forEach> 
 								
@@ -68,7 +64,8 @@
 							
 							<div class="col-12 col-md-8 video-info-box">
 								<label class="video-title" data-toggle="collapse" data-target="#collapse-${vlist.RN}"
-									aria-expanded="false" aria-controls="collapse-${vlist.RN }">
+									aria-expanded="false" aria-controls="collapse-${vlist.RN }"
+									onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','titleClick')">
 									${vlist.vtitle}
 									<span class="viewCnt">조회수 : ${vlist.viewcnt} &nbsp;</span>
 								</label>
@@ -100,16 +97,18 @@
 					</div>
 				</div>
 
-				<div id="collapse-${vlist.RN}" class="collapse" aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">		
+				<div id="collapse-${vlist.RN}" class="collapse colllapse-${vlist.vnum}" aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">		
 					<div class="card-body">
 
-						<div class="videoBox video-box-player-${vlist.vnum}" id="videoBox-${vlist.vnum }">
+						<div id="videoBox-${vlist.vnum}" class="videoBox video-box-player-${vlist.vnum}">
 							<div id="player-${vlist.vnum}"></div>
 						</div>		
 					</div>
 				</div> 
+				
 				<hr>
-				<div id="${vlist.bnum}" class="collapse comment-${vlist.vnum}" aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">		
+				
+				<div class="collapse comment-${vlist.vnum}" aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">		
 					<div class="card-body">
 						<div class="container">
 							<div class="reply-input-group row">
@@ -118,7 +117,7 @@
 								</div>
 								<div class="col-md-2 reply-input-btn parentBtn">
 									
-									<button type="button"  name="boardNum-${vlist.bnum }" class="btn btn-dark insertReply ">댓글 등록</button>
+									<button type="button"  name="boardNum-${vlist.bnum }" class="btn btn-dark" onclick="insertReply('${vlist.bnum}')">댓글 등록</button>
 								</div>
 							</div>
 						</div>
@@ -130,47 +129,43 @@
 				</div> 
 			</div>
 		</c:forEach>
-	</div>
+	
+	</div> 
 </div>
 
-<script type="text/javascript">
 
-$(document).ready(function(){
-	
-	
-	$(".video-img-box, .video-title").on("click", function() {
-	
-	
-	var clickTitle=$(this).hasClass("video-title");
-	
-	
-	var bnum= $(this).parents(".card").children().next().next().next().attr("id");
 
-	
-	var vnum = $(this).parents(".card").attr("id");
-	
-	var vurl = $(this).parents(".card").attr("name");
 
-	var player = $(this).parents(".card").children().next().children().children().children().attr("id");
-
-	var openChk = $(this).parents(".card").children().next().children().children().hasClass("open");
+<script type="text/javascript">				
+function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 	
-
-	//열려 있는 아코디언이있다면 this의 "open" 을 삭제하고 iframe을 삭제한다.
+	
+	var vnum = vnumData;
+	var vurl = vurlData;
+	var bnum = bnumData;
+	
+	var player ="player-"+vnum;
+	
+	var co = clickObjeck;
+	var openChk = $("#videoBox-"+vnum).hasClass("open");
+	
+	//alert("vnum:"+vnum +"/ vurl :"+vurl+"/ player: "+player+"/ openChk:"+openChk+"/ bnum:"+bnum+"/ co:"+co);
+	
 	$(".videoBox").each(function(){
 		
 		if($(".videoBox").hasClass("open")){
 			//alert("열려있는 아코디언있음");
-			var rePlayer = $(this).children().attr("id");
-			
-			$(this).removeClass("open");
-			$(this).children().replaceWith("<div id="+rePlayer+"></div>");
-			$(".comment-"+vnum).removeClass("show");
+			var rePlayer = $(".open").children().attr("id");
+			var str =$(".open").attr("id");
+			//alert(rePlayer);
+			$("#"+str).removeClass("open");
+			$("#"+str).children().replaceWith("<div id="+rePlayer+"></div>");
+			$(".comment-"+vnum).removeClass("show"); 
 		}
 	})
 	 
-	if (openChk == false) {
-				//alert("openChk==false");
+	if(openChk == false){
+		
 		$.ajax({
 
 			url : "getOneBoard.do",
@@ -185,15 +180,15 @@ $(document).ready(function(){
 				//alert(data.videoId);  
 				var vnum = data.map.vnum;
 
-				$(".video-box-player-" + vnum).addClass("open");
+				$(".video-box-player-"+vnum).addClass("open");
 				
 				//타이틀을 클릭해서 이벤트가 발생했다면 댓글창을 같이 보여준다.
-				if(clickTitle==true){
-					 
+				 if(co=="titleClick"){
+					//alert("titleClick");
 					$(".comment-"+vnum).addClass("show");
 					replyList(bnum);
 				
-				}
+				} 
 			
 				youTube_player = new YT.Player(player, {
 
@@ -212,70 +207,51 @@ $(document).ready(function(){
 		})
 		
 		viewCntUp(bnum);
-	} 
+	}
+}
 
-})
-
-
-
-$(".insertReply").on("click", function() {
- 	var gui = "${gui}";
+function insertReply(bnumData){
+	
+	
+	
+	
+	var gui = "${gui}";
  	
  	if( gui == ""){
  		
  		alert("로그인 후 이용해주세요.");
  		return false;
  	}
-							
-							var replyName = $(this).attr("name");
-							var rnArray = replyName.split("-");
-							var bnum = rnArray[1];
-							var replyText = $("#replyText-"+bnum).val();
-
-							//alert(bnum);
-
-							$.ajax({
-
-								url : "insertReply.do",
-								type : "post",
-								dataType : "text",
-								data : {
-									"replyText" : replyText,
-									"bnum" : bnum
-								},
-								success : function(data) {
-
-									//alert(data);
-									replyList(bnum);
-								},
-								error : function() {
-									alert("error");
-								}
-
-							})
-			})
-			
-					
-})
-					
-					
-function commentBox(vnum,bnum){
 	
-	var cmShowChk =$(".comment-"+vnum).hasClass("show");
-	if(cmShowChk==false){
-		$(".comment-"+vnum).addClass("show");
-		
-		replyList(bnum);
-		
-	}else{
-		
-		$(".comment-"+vnum).removeClass("show");
-	}
-	
+	var bnum =bnumData;
+	var replyText = $("#replyText-"+bnum).val();
+
+	//alert(bnum);
+
+	$.ajax({
+
+		url : "insertReply.do",
+		type : "post",
+		dataType : "text",
+		data : {
+			"replyText" : replyText,
+			"bnum" : bnum
+		},
+		success : function(data) {
+
+			//alert(data);
+			replyList(bnum);
+		},
+		error : function() {
+			alert("error");
+		}
+
+	})
+ 	
 }
 
 function replyList(data){
-	
+	//alert(data);
 	var bnum = data;
 	
 	$.ajax({
@@ -318,6 +294,23 @@ function replyList(data){
 		
 	})
 }
+
+function commentBox(vnum,bnum){
+	
+	var cmShowChk =$(".comment-"+vnum).hasClass("show");
+	if(cmShowChk==false){
+		$(".comment-"+vnum).addClass("show");
+		
+		replyList(bnum);
+		
+	}else{
+		
+		$(".comment-"+vnum).removeClass("show");
+	}
+	
+}
+
+
 
 function viewCntUp(bnum){
 	
@@ -399,6 +392,7 @@ function pageAnchor(data , gnum , con ,nowPage, startPage, lastPage){
 			//alert("prev"); 
 			if(nowPage != 1){
 				//alert("1페이지 아님");
+				
 				$(".search-container").load("mainView.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #search-nav");
 				$("#main-content").load("mainView.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #accordion");
 			}
@@ -463,6 +457,7 @@ function condition(){
 		
 		//alert("컨디션 o ,장르 x");
 		//alert(con+","+gnum);
+		
 		$(".search-container").load("mainView.do?con="+con+" #search-nav");
 		$("#main-content").load("mainView.do?con="+con+" #accordion");
 	}else if(clickCon == false && clickGenre == true ){

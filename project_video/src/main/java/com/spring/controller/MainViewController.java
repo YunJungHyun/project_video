@@ -129,7 +129,7 @@ public class MainViewController {
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("glist", glist);
 		model.addAttribute("vlist", vlist);
-
+		
 		return "view/mainView.page";
 	}
 

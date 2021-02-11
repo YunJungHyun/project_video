@@ -4,8 +4,8 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 <!DOCTYPE html>
-<html id="html">
-<head>
+<html id="d-html">
+<head id="d-head" >
 <meta charset="UTF-8">
 <title>Project_video</title>
 
