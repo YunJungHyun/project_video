@@ -1,10 +1,14 @@
 package com.spring.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.service.BoardService;
@@ -53,5 +57,33 @@ public class VideoController {
 		}
 		 
 		
+	}
+	
+	@RequestMapping(value="rightMenuList.do" ,method=RequestMethod.GET)
+	@ResponseBody
+	public void rightMenuList(
+			@RequestParam (value="vnumList" , required= false) String vnumList
+			) {
+		String[] strArray =null;
+		List<VideoVO> list = new ArrayList<VideoVO>();
+		
+		if(!vnumList.contains("/")) {
+			int vnum = Integer.parseInt(vnumList);
+			System.out.println("/있음");
+			VideoVO videoVO= videoService.getOneVideo(vnum);
+			list.add(videoVO);
+		}else {
+		
+			strArray = vnumList.split("/");
+			for(int i=0 ; i < strArray.length ;i++) {
+				
+				int vnum = Integer.parseInt(strArray[i]);
+				VideoVO videoVO= videoService.getOneVideo(vnum);
+				
+				list.add(videoVO);
+			}
+		}
+		
+		System.out.println("list.toString :" +list.toString());
 	}
 }

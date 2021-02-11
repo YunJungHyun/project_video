@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	
 <div class="right-menu-title">
 	<label class="menu-title">
-		최근 본 게시물
+		최근 본 게시물 
 	</label>
+	<%-- <input type="text" id="vnum"> 
+	${vlist.size()}  --%>
 </div>
 <div id="nav-slide" class="carousel vert slide" data-ride="carousel" data-interval="false">
 	
@@ -18,11 +22,12 @@
 		<div class="carousel-item active">
 			<div class="fill">
 				<!-- 반복  -->
+			
 				<div class="recentlyView-box">
 					<img src="https://img.youtube.com/vi/pTux20Yl3yE/mqdefault.jpg">
 					<label>제목</label>
 				</div>
-		
+			
 			</div>
 		</div>
 	</div>

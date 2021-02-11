@@ -37,6 +37,8 @@
 <div class="main-content col-12" id="main-content">
 	
 	<div class="accordion" id="accordion">
+	
+    
 		<c:if test="${vlist.size() ==0}">
 			<h1>게시물이없습니다.</h1>
 		</c:if>	
@@ -136,7 +138,77 @@
 
 
 
-<script type="text/javascript">				
+<script type="text/javascript">	
+
+//window.onload= Page_Load;
+var vnumList = "";
+function Page_Load(vnum){
+	
+    // btnSubmit_Click 버튼의 클릭이벤트 적용
+   setCookie(vnum);
+	// 여러개의 쿠키 리스트를 <span> 태그에 출력
+   displayCookieList();
+
+
+}
+
+//쿠키 리스트 출력 함수 
+function displayCookieList(){
+	
+	var str="";
+	
+	if(document.cookie==""){
+		str ="입력된 쿠키가 없습니다.!";
+	
+	}else{
+		
+		$("#vnum").val(vnumList);
+		
+		$.ajax({
+			url : "rightMenuList.do",
+			type: "get",
+			data : {
+				
+				"vnumList" :vnumList
+			},
+			dataType : "json",
+			success :function(){
+				
+			},
+			error: function(){
+				alert("error");
+			}
+			
+		})
+     }
+      
+	
+}
+
+//쿠키 저장 함수
+function setCookie(vnum){
+	//alert(vnum);
+	// 쿠키 소멸시키기
+	//var expireDate = new Date();
+	//expireDate.setMonth(expireDate.getMonth() +1);
+	//var vnumText =$("#vnum").text(vnum);
+	//쿠키 저장  
+	document.cookie = vnum;
+	//alert(document.cookie);
+	if( vnumList !=""){
+				vnumList += "/"+document.cookie;
+				} 
+	else if(vnumList ==""){
+		
+			vnumList += document.cookie;
+	}
+}
+
+ 
+
+
+
+
 function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 	
 	
@@ -207,12 +279,12 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 		})
 		
 		viewCntUp(bnum);
+		Page_Load(vnum);
 	}
 }
 
+ 
 function insertReply(bnumData){
-	
-	
 	
 	
 	var gui = "${gui}";

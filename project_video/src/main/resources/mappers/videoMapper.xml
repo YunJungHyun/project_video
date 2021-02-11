@@ -29,7 +29,11 @@
 
 			
 	</select>
-	 
+	
+	<select id="getOneVideo" resultType="videoVO">
+		SELECT * FROM videos WHERE vnum =#{vnum}
+	</select>
+	
 </mapper>
 
  

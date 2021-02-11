@@ -33,4 +33,11 @@ public class VideoDAOImpl implements VideoDAO {
 		List<VideoVO> list= sqlSession.selectList(Namespace+".getAllList" ,pagingVO);
 		return list;
 	}
+	@Override
+	public VideoVO getOneVideo(int vnum) {
+		VideoVO videoVO = sqlSession.selectOne(Namespace+".getOneVideo" , vnum);
+		return videoVO;
+	}
+	
+	
 }

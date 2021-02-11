@@ -11,6 +11,9 @@ public interface VideoService {
 
 	List<VideoVO> getAllList(PagingVO pagingVO);
 
+	VideoVO getOneVideo(int vnum);
+
+	
 
 
 	

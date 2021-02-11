@@ -11,4 +11,8 @@ public interface VideoDAO {
 
 	List<VideoVO> getAllList(PagingVO pagingVO);
 
+	VideoVO getOneVideo(int vnum);
+
+	 
+
 }
