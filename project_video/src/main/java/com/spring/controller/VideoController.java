@@ -1,7 +1,9 @@
 package com.spring.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -61,7 +63,7 @@ public class VideoController {
 	
 	@RequestMapping(value="rightMenuList.do" ,method=RequestMethod.GET)
 	@ResponseBody
-	public void rightMenuList(
+	public Map<String, Object> rightMenuList(
 			@RequestParam (value="vnumList" , required= false) String vnumList
 			) {
 		String[] strArray =null;
@@ -83,7 +85,10 @@ public class VideoController {
 				list.add(videoVO);
 			}
 		}
+		Map<String,Object> map = new HashMap<String,Object>();
 		
-		System.out.println("list.toString :" +list.toString());
+		map.put("mList", list);
+		//System.out.println("list.toString :" +list.toString());
+		return map;
 	}
 }

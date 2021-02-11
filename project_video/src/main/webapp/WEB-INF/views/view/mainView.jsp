@@ -172,8 +172,12 @@ function displayCookieList(){
 				"vnumList" :vnumList
 			},
 			dataType : "json",
-			success :function(){
-				
+			success :function(data){
+				var length =data.mList.length;
+				//alert(length);
+				for(int i = 0 ; i < 4; i++){
+					
+				}
 			},
 			error: function(){
 				alert("error");

@@ -24,8 +24,7 @@
 				<!-- 반복  -->
 			
 				<div class="recentlyView-box">
-					<img src="https://img.youtube.com/vi/pTux20Yl3yE/mqdefault.jpg">
-					<label>제목</label>
+					<div id="right-menu-list"></div>
 				</div>
 			
 			</div>

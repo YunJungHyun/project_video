@@ -43,7 +43,7 @@ public class BoardController {
 		map.put("map", boardVO);
 		map.put("videoId", videoId);
 		
-		Map<String, String> rMap = new HashMap<String,String>();
+		//Map<String, String> rMap = new HashMap<String,String>();
 		
 	
 		
