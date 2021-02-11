@@ -4,8 +4,8 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 <!DOCTYPE html>
-<html id="d-html">
-<head id="d-head" >
+<html>
+<head>
 <meta charset="UTF-8">
 <title>Project_video</title>
 
@@ -65,18 +65,18 @@
 	</div>
 	<div class="container-fluid mainCotainer">
 		<div class="row flex-xl-nowrap content">
-			<div class="left-menuBox col-12 col-md-3 col-xl-2">
+			<div class="left-menuBox col-12 col-md-1 col-xl-2 py-md-3">
 				<tiles:insertAttribute name="left-menu" />	
 			</div>
 			<div id="mainBox" class="mainBox col-md-8 col-12 col-md-9 col-xl-8 py-md-3"> 
 				
 					<tiles:insertAttribute name="body" />
-			
+			 
 			</div> 
-			<div class="right-menuBox col-12 col-xl-2">
+			<div class="right-menuBox col-12 col-xl-2 py-md-3">
 				<tiles:insertAttribute name="right-menu" />	
 			</div>
-		</div>
+		</div> 
 	</div>
 	<%-- <div class="footerBox">
 			<tiles:insertAttribute name="footer" />

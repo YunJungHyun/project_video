@@ -1,9 +1,14 @@
 @charset "UTF-8";
 
- 
+a { 
+	text-decoration:none;
+} 
+a:hover{
+	text-decoration:none;
+}
 #mainNav{
 	background-color: #55279a ;  
-	 /* display:none; */ 
+	   /* display:none;  */
 }
 
 #navbar-brand{
@@ -25,7 +30,7 @@
     top: 4em;
   	position: sticky;
   	border-right : 1px solid #dfdfdf;
-  	padding :2em;
+  	/* padding :2em; */
 }
 .left-menu{
 	
@@ -51,6 +56,7 @@
     top: 4em;
 	position: sticky;
 	border-left : 1px solid #dfdfdf;
+	/* padding: 2em 0.5em; */
 }
 
 .nav-btn{ 
@@ -235,4 +241,88 @@ i.replyIcon{
     font-size: 15px;
     font-weight: bold;
 	bottom: -20px;	 
+}
+
+.right-menuBox > div{
+	
+	/* border :1px solid; */ 
+}
+
+.carousel-control-up, .carousel-control-down{
+	height: 3em;
+	left:0;
+	right:0;
+	position: absolute;
+    z-index: 1;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    color: #000;
+    text-align: center;
+    opacity: .5;
+    transition: opacity .15s ease;
+}
+
+.carousel-control-up{
+	top :0;
+}
+.carousel-control-down{
+	bottom :0;
+}
+#nav-slide{
+	height: calc(100vh - 10rem);
+    top: 0.5em;
+}
+.slide-body{
+	
+	height: inherit; 
+}
+.carousel-item{
+	height: inherit; 
+}
+.fill{
+	
+	height: calc(100vh - 16rem);
+    background-color: white;
+    top: 3em;
+    position: relative;
+   /*  border: 1px solid;
+    padding :0.5em; */
+}
+
+.vert .carousel-item-next.carousel-item-left,
+.vert .carousel-item-prev.carousel-item-right {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+}
+
+.vert .carousel-item-next,
+.vert .active.carousel-item-right {
+    -webkit-transform: translate3d(0, 100%, 0);
+            transform: translate3d(0, 100% 0);
+}
+
+.vert .carousel-item-prev,
+.vert .active.carousel-item-left {
+-webkit-transform: translate3d(0,-100%, 0);
+        transform: translate3d(0,-100%, 0);
+}
+.right-menu-title{
+	text-align: center;
+	font-size : 20px;
+	font-weight: bold;
+}
+.menu-title{
+	margin-bottom : 0px;
+}
+.recentlyView-box{
+	border : 1px solid ;
+ 
+}
+.recentlyView-box >img {
+	max-width:100%;
+	height:auto;
 }

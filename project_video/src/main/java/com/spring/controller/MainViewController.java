@@ -120,7 +120,8 @@ public class MainViewController {
 		session =request.getSession(true);
 		session.setAttribute("pagingMap", map);
 		
-
+		
+		
 		//댓글 갯수가져오기
 		List<ReplyVO> rlist =replyService.getReplyCnt();
 

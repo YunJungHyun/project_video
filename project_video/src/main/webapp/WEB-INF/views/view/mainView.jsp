@@ -25,7 +25,7 @@
 		</div>
 	</div>
 </div>
-<br>
+
 <div class="genre-container col-12">
 	<div class="genre-box">
 		<c:forEach items="${glist }" var="glist">
@@ -33,7 +33,7 @@
 		</c:forEach>	
 	</div>
 </div>
-<br>
+
 <div class="main-content col-12" id="main-content">
 	
 	<div class="accordion" id="accordion">
