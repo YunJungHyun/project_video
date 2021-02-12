@@ -1,11 +1,13 @@
 package com.spring.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,8 @@ public class VideoController {
 	
 	@Inject
 	BoardService boardService;
+	
+	
 	
 	@RequestMapping(value="videoReg.do", method=RequestMethod.POST)
 	@ResponseBody
@@ -63,32 +67,33 @@ public class VideoController {
 	
 	@RequestMapping(value="rightMenuList.do" ,method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> rightMenuList(
-			@RequestParam (value="vnumList" , required= false) String vnumList
+	public Map<String,Object> rightMenuList(
+			@RequestParam (value="cookie" , required= false) String cookie
 			) {
-		String[] strArray =null;
+		System.out.println("cookie : "+cookie);
 		List<VideoVO> list = new ArrayList<VideoVO>();
 		
-		if(!vnumList.contains("/")) {
-			int vnum = Integer.parseInt(vnumList);
-			System.out.println("/있음");
+		String[] cArray= cookie.split("&");
+		
+		for(int i = 0 ; i < cArray.length ;i++) {
+			
+			//System.out.println("cArray.length :"+cArray[i].length());
+			int vnum =Integer.parseInt(cArray[i].substring(1,cArray[i].length()-1));
+			System.out.println("vnum : "+ vnum);
+		
 			VideoVO videoVO= videoService.getOneVideo(vnum);
+			
 			list.add(videoVO);
-		}else {
-		
-			strArray = vnumList.split("/");
-			for(int i=0 ; i < strArray.length ;i++) {
-				
-				int vnum = Integer.parseInt(strArray[i]);
-				VideoVO videoVO= videoService.getOneVideo(vnum);
-				
-				list.add(videoVO);
-			}
 		}
-		Map<String,Object> map = new HashMap<String,Object>();
+		//return map;
 		
-		map.put("mList", list);
-		//System.out.println("list.toString :" +list.toString());
+		Map<String,Object> map = new HashMap<String,Object>();
+		Collections.reverse(list);
+		
+		
+		//System.out.println("list.size() :"+list.size());
+		map.put("mlist", list);
+		
 		return map;
 	}
 }

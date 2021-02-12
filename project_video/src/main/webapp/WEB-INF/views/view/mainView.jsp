@@ -83,7 +83,7 @@
 												<c:forEach items="${rlist }" var="rlist">
 														<c:if test="${vlist.bnum == rlist.bnum }"> 
 															<script>
-															 	$("#replyBtn-"+${vlist.bnum} ).html("댓글 ("+${rlist.bnumCnt}+")");
+															 	$("#replyBtn-"+${vlist.bnum}).html("댓글 ("+${rlist.bnumCnt}+")");
 															 </script>
 														</c:if>	 
 												</c:forEach>
@@ -140,77 +140,154 @@
 
 <script type="text/javascript">	
 
-//window.onload= Page_Load;
-var vnumList = "";
-function Page_Load(vnum){
+$(document).ready(function(){
 	
-    // btnSubmit_Click 버튼의 클릭이벤트 적용
-   setCookie(vnum);
-	// 여러개의 쿠키 리스트를 <span> 태그에 출력
-   displayCookieList();
+	refresh();	
+})
 
 
+	
+ 
+function add_cookie(vnum,exdays){
+
+
+	var cmap = "{"+vnum+"}";
+	setCookie(cmap,exdays);
+	
+
+	$("#vnum").val(document.cookie);
 }
 
-//쿠키 리스트 출력 함수 
-function displayCookieList(){
+function setCookie( cmap , exdays){
 	
-	var str="";
+	var chk = document.cookie.indexOf(cmap);
 	
-	if(document.cookie==""){
-		str ="입력된 쿠키가 없습니다.!";
-	
+	if(exdays!=""){
+		var day = new Date();
+		day.setTime(day.getTime() + (exdays * 24 * 60 * 60 * 1000));
+		var expires="; expires="+date.toGMTString();
 	}else{
 		
-		$("#vnum").val(vnumList);
+		var expires="";
+	}			
+	//alert(chk);  
+	if(chk == -1){
 		
-		$.ajax({
-			url : "rightMenuList.do",
-			type: "get",
-			data : {
-				
-				"vnumList" :vnumList
-			},
-			dataType : "json",
-			success :function(data){
-				var length =data.mList.length;
-				//alert(length);
-				for(int i = 0 ; i < 4; i++){
-					
-				}
-			},
-			error: function(){
-				alert("error");
-			}
-			
-		})
-     }
-      
+		if(document.cookie ==""){
+			document.cookie +=cmap+expires+"; path=/"; 
+		
+		}else{
+			document.cookie += "&"+cmap+expires+"; path=/";
+		}
+		alert(document.cookie);
+	}else{
+		
+	
+		document.cookie = 	document.cookie.replace(cmap+"&",""); 
+		document.cookie += "&"+cmap+expires+"; path=/";
+	}
+	
+	refresh();
 	
 }
 
-//쿠키 저장 함수
-function setCookie(vnum){
-	//alert(vnum);
-	// 쿠키 소멸시키기
-	//var expireDate = new Date();
-	//expireDate.setMonth(expireDate.getMonth() +1);
-	//var vnumText =$("#vnum").text(vnum);
-	//쿠키 저장  
-	document.cookie = vnum;
-	//alert(document.cookie);
-	if( vnumList !=""){
-				vnumList += "/"+document.cookie;
-				} 
-	else if(vnumList ==""){
+function refresh(){
+	//alert("refresh");
+if(document.cookie==""){ 
+	alert("쿠키없음");
+	
+	$("#recentlyNone").css("display","block");
+	$("#nav-slide").css("display","none");
+}else{
+	$("#recentlyNone").css("display","none");
+	$("#nav-slide").css("display","block");
+$.ajax ({
 		
-			vnumList += document.cookie;
+		url : "rightMenuList.do",
+		type :"GET",
+		data :{
+			
+			"cookie" :document.cookie
+		},
+		dataType:"json",
+		success : function(data){
+			//	var x =data;
+			var length = data.mlist.length;
+			//alert(length);
+			var output="";
+			var k =0;
+			var i =0;
+			var l =0;
+		
+			for(var j=0; j < length/3 ;j++){
+				
+				if(k>0){
+					
+					i = l;
+				}
+				output+="<div class='carousel-item'>";
+				output+="<ul class='recentlyView-box list-group'>";
+				
+				for( i ; i < length ; i++){
+					
+					var vurl = data.mlist[i].vurl;
+					var vtitle =data.mlist[i].vtitle;
+					var videoIdArray=vurl.split("/");
+					var videoId = videoIdArray[3];
+					
+					
+					if(k < l+3){
+							
+						output+="<li class='list-group-item'>";
+						output+="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>";
+						output+="<label>"+vtitle+"</label>";				
+						output+="</li>";
+				
+						k++;
+					}else{
+						
+						l=3;
+						break;
+					}
+				}
+				
+				output +="</ul>";
+				output +="</div>";
+			}
+			
+			$(".slide-body").html(output);
+			$(".slide-body").children().first().addClass("active");
+			
+			
+			//alert($(".carousel-item").length);
+		},error : function(){
+			alert("error");
+		}
+	})
 	}
 }
 
- 
 
 
+function getCookie(cname){
+	
+	var i, x, y, arrayCookies = document.cookie.split(";");
+	
+	for(i = 0 ; i< arrayCookies.length; i++){
+		//cname추출
+		x = arrayCookies[i].substr(0, arrayCookies[i].indexOf("="));
+       	//cvalue 추출
+		y = arrayCookies[i].substr(arrayCookies[i].indexOf("=") + 1);
+      	//문자제거
+       	x = x.replace(/^\s+|\s+$/g, "");
+
+         if (x == cname) {
+               return unescape(y);
+         }
+		
+	}
+}
+  
 
 
 function videoClick(vnumData , vurlData,bnumData, clickObjeck){
@@ -225,6 +302,7 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 	var co = clickObjeck;
 	var openChk = $("#videoBox-"+vnum).hasClass("open");
 	
+
 	//alert("vnum:"+vnum +"/ vurl :"+vurl+"/ player: "+player+"/ openChk:"+openChk+"/ bnum:"+bnum+"/ co:"+co);
 	
 	$(".videoBox").each(function(){
@@ -255,7 +333,7 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 			success : function(data) {
 				//alert(data.videoId);  
 				var vnum = data.map.vnum;
-
+				
 				$(".video-box-player-"+vnum).addClass("open");
 				
 				//타이틀을 클릭해서 이벤트가 발생했다면 댓글창을 같이 보여준다.
@@ -283,9 +361,12 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 		})
 		
 		viewCntUp(bnum);
-		Page_Load(vnum);
+		/* 쿠키적용 함수  */
+		
+		add_cookie(vnum ,"");
 	}
 }
+
 
  
 function insertReply(bnumData){

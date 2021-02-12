@@ -281,17 +281,13 @@ i.replyIcon{
 	height: inherit; 
 }
 .carousel-item{
-	height: inherit; 
-}
-.fill{
 	
 	height: calc(100vh - 16rem);
     background-color: white;
     top: 3em;
     position: relative;
-   /*  border: 1px solid;
-    padding :0.5em; */
 }
+
 
 .vert .carousel-item-next.carousel-item-left,
 .vert .carousel-item-prev.carousel-item-right {
@@ -319,10 +315,15 @@ i.replyIcon{
 	margin-bottom : 0px;
 }
 .recentlyView-box{
-	border : 1px solid ;
+	/* border : 1px solid ; */
  
 }
-.recentlyView-box >img {
+.list-group-item >img {
 	max-width:100%;
 	height:auto;
+}
+
+#recentlyNone{
+	
+	display: none;
 }

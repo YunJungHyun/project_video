@@ -72,7 +72,8 @@
 				
 					<tiles:insertAttribute name="body" />
 			 
-			</div> 
+			</div>
+			
 			<div class="right-menuBox col-12 col-xl-2 py-md-3">
 				<tiles:insertAttribute name="right-menu" />	
 			</div>
