@@ -179,7 +179,7 @@ function setCookie( cmap , exdays){
 		}else{
 			document.cookie += "&"+cmap+expires+"; path=/";
 		}
-		alert(document.cookie);
+		//alert(document.cookie);
 	}else{
 		
 	
@@ -194,7 +194,7 @@ function setCookie( cmap , exdays){
 function refresh(){
 	//alert("refresh");
 if(document.cookie==""){ 
-	alert("쿠키없음");
+	//alert("쿠키없음");
 	
 	$("#recentlyNone").css("display","block");
 	$("#nav-slide").css("display","none");
@@ -246,7 +246,7 @@ $.ajax ({
 						k++;
 					}else{
 						
-						l=3;
+						l+=3;
 						break;
 					}
 				}
