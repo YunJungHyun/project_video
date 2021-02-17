@@ -67,15 +67,14 @@ a {
 	justify-content: center;
 }
 
-.card-header {
-	
-	display : flex;
-}
 
 .genre-box>button {
 	margin: 0px 2px 0px 2px;
 }
-
+.card-header >div {
+	
+	width : 100%;
+}
 .video-img-box > img {
 	
 	max-width:100%;
