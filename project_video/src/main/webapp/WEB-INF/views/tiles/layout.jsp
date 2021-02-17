@@ -7,26 +7,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 <title>Project_video</title>
 
 <!-- bootstrap 4.3.1 css   -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
 
 <!-- 내가 설정한 css  -->
-<link type="text/css" rel="stylesheet" href="<c:url value='resources/css/css.css'/>"/>
+<link type="text/css" rel="stylesheet"
+	href="<c:url value='resources/css/css.css'/>" />
 
- 
-
-<!-- bootstrap 4.3.1 js  -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-<!-- youtube api  -->
-<script src="http://www.youtube.com/iframe_api"></script>
 
 <!-- icon  -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
 
 </head>
 <c:if test="${message eq 'loginSuccess' }">
@@ -55,29 +55,42 @@
 	</script>
 </c:if>
 <body>
-	<div class="headerBox"> 
-	<c:if test="${gui == null}">
+	
+	<!-- bootstrap 4.3.1 js  -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+
+<!-- youtube api  -->
+<script src="http://www.youtube.com/iframe_api"></script>
+	
+	<div class="headerBox">
+
+		<c:if test="${gui == null}">
 			<tiles:insertAttribute name="noUserHeader" />
-	</c:if>
-	<c:if test="${gui != null}">
+		</c:if>
+		<c:if test="${gui != null}">
 			<tiles:insertAttribute name="userHeader" />
-	</c:if>
+		</c:if>
 	</div>
-	<div class="container-fluid mainCotainer">
-		<div class="row flex-xl-nowrap content">
-			<div class="left-menuBox col-12 col-md-1 col-xl-2 py-md-3">
-				<tiles:insertAttribute name="left-menu" />	
-			</div>
-			<div id="mainBox" class="mainBox col-md-8 col-12 col-md-9 col-xl-8 py-md-3"> 
-				
+	<div class="container mainContainer">
+		<div class="row">
+		
+			<div class="left-menuBox col-lg-3">
+					<tiles:insertAttribute name="left-menu" />
+			</div>	
+		
+			<div class="mainBox col-lg-9">
 					<tiles:insertAttribute name="body" />
+			</div>
 			 
-			</div>
-			
-			<div class="right-menuBox col-12 col-xl-2 py-md-3">
-				<tiles:insertAttribute name="right-menu" />	
-			</div>
-		</div> 
+		</div>
 	</div>
 	<%-- <div class="footerBox">
 			<tiles:insertAttribute name="footer" />

@@ -3,123 +3,125 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<div class="search-container mb-3 ">
-	<div id="search-nav">
-		<div class="input-group col-sm-6 ">
-			<input type="text" class="form-control" placeholder="영상 검색" >
-			<div class="input-group-append">
-				<span class="input-group-text">검색</span>
-			</div>
-			
-		</div>
-		<div class="input-group col-sm-6 justify-content-end">
-			<a id="prev" onclick="pageAnchor('prev','${pagingMap.gnum}','${pagingMap.con}','${pagingMap.nowPage}','${pagingVO.startPage}','${pagingVO.lastPage}')" href="#">
-				<span class="input-group-text spanBtn">&lt;</span>
-			</a>
-			<span class="input-group-text ">
-				<b>${pagingVO.nowPage}</b>
-			</span>
-			<a id="next" onclick="pageAnchor('next','${pagingMap.gnum}','${pagingMap.con }','${pagingMap.nowPage}','${pagingVO.startPage}','${pagingVO.lastPage }')" href="#">
-				<span class="input-group-text spanBtn">&nbsp;&nbsp;&nbsp;&gt;</span>
-			</a>	
-		</div>
+<div class="search-box my-4">	
+	
+	<div class="col-md-6 con-btn-group">
+		<a href="#" class="conBtn" >전체보기</a>
+		<a href="#" class="conBtn">최신</a>
+		<a href="#" class="conBtn">조회수</a>
+		<a href="#"  class="conBtn" >좋아요</a>
+	</div>
+	
+	<div class="input-group rounded col-md-6 search-group">
+		<input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+    aria-describedby="search-addon" />
+		<span class="input-group-text border-0" id="search-addon">
+			<i class="fas fa-search"></i>
+		</span>
 	</div>
 </div>
 
-<div class="genre-container col-12">
-	<div class="genre-box">
+<div class="genre-container my-3">
+	<div class="genre-box col-12">
 		<c:forEach items="${glist }" var="glist">
-			<button class="btn btn-outline-secondary genreBtn" id="genre-${glist.gnum }" onclick="gnameClick('${glist.gnum}')">${glist.gname}</button>
-		</c:forEach>	
+			<button class="btn btn-outline-secondary genreBtn col-md-2"
+				id="genre-${glist.gnum }" onclick="gnameClick('${glist.gnum}')">${glist.gname}</button>
+		</c:forEach>
 	</div>
 </div>
 
-<div class="main-content col-12" id="main-content">
-	
+<div class="main-content" id="main-content">
 	<div class="accordion" id="accordion">
-	
-    
 		<c:if test="${vlist.size() ==0}">
 			<h1>게시물이없습니다.</h1>
-		</c:if>	
+		</c:if>
 		<c:forEach items="${vlist}" var="vlist">
-			<div class="card">
-				<div class="card-header mqdefault" id="heading-${vlist.RN }" >
-					<div class="container">
-						<div class="row">
-							
-							<div class="col-12 col-md-4 align-self-center video-img-box"
-								
-								data-toggle="collapse" data-target="#collapse-${vlist.RN}"
-								aria-expanded="false" aria-controls="collapse-${vlist.RN}"
-								>
-								
-								<c:set var="strArray" value="${fn:split(vlist.vurl,'/')}" />
-								<c:forEach items="${strArray }" var="videoId" varStatus="g">
-									
-									<c:if test="${g.count == 3}">
-										<img  src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg" onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','imgClick')">
-									</c:if>
-							 	</c:forEach> 
-								
-							</div>
-							
-							<div class="col-12 col-md-8 video-info-box">
-								<label class="video-title" data-toggle="collapse" data-target="#collapse-${vlist.RN}"
-									aria-expanded="false" aria-controls="collapse-${vlist.RN }"
-									onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','titleClick')">
-									${vlist.vtitle}
-									<span class="viewCnt">조회수 : ${vlist.viewcnt} &nbsp;</span>
-								</label>
-									
-									<ul class="list-group info-group">
-										<li class="list-group-item">작성자 : ${vlist.userid } </li>
-										<li class="list-group-item">영상 링크 : ${vlist.vurl } </li>
-									</ul>
-									
-									<div class="btn-box">
-										<div class="btn-comment-box">
-											<button class="btn btn-outline-dark" id="replyBtn-${vlist.bnum }" onclick="commentBox('${vlist.vnum}','${vlist.bnum }')" > 댓글 (0)
-												<c:forEach items="${rlist }" var="rlist">
-														<c:if test="${vlist.bnum == rlist.bnum }"> 
-															<script>
+			<div class="card col-lg-12">
+				<div class="card-header" id="heading-${vlist.RN }">
+						
+					<div class="col-lg-4 align-self-center video-img-box"
+						data-toggle="collapse" data-target="#collapse-${vlist.RN}"
+						aria-expanded="false" aria-controls="collapse-${vlist.RN}">
+
+						<c:set var="strArray" value="${fn:split(vlist.vurl,'/')}" />
+						<c:forEach items="${strArray }" var="videoId" varStatus="g">
+							<c:if test="${g.count == 3}">
+								<img src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg"
+									onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','imgClick')">
+							</c:if>
+						</c:forEach>
+
+					</div>
+
+					<div class="col-lg-8 video-info-box">
+						<label class="video-title" data-toggle="collapse"
+							data-target="#collapse-${vlist.RN}" aria-expanded="false"
+							aria-controls="collapse-${vlist.RN }"
+							onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','titleClick')">
+							${vlist.vtitle} <span class="viewCnt">조회수 :
+								${vlist.viewcnt} &nbsp;</span>
+						</label>
+
+						<ul class="list-group info-group">
+							<li class="list-group-item">작성자 : ${vlist.userid }</li>
+							<li class="list-group-item">영상 링크 : ${vlist.vurl }</li>
+							<li class="list-group-item">
+								<div class="btn-box">
+									<div class="btn-comment-box">
+										<button class="btn btn-outline-dark"
+											id="replyBtn-${vlist.bnum }"
+											onclick="commentBox('${vlist.vnum}','${vlist.bnum }')">
+											댓글 (0)
+											<c:forEach items="${rlist }" var="rlist">
+												<c:if test="${vlist.bnum == rlist.bnum }">
+													<script>
 															 	$("#replyBtn-"+${vlist.bnum}).html("댓글 ("+${rlist.bnumCnt}+")");
 															 </script>
-														</c:if>	 
-												</c:forEach>
-											</button>
-										</div>
-										<div class="btn-like-box">
-											<button class="btn btn-outline-success" onclick="judgment('up','${vlist.bnum}')">좋아요 <i class="fas fa-thumbs-up"></i> ${vlist.upcnt }</button>
-											<button class="btn btn-outline-danger" onclick="judgment('down','${vlist.bnum}')">싫어요 <i class="fas fa-thumbs-down"></i> ${vlist.downcnt }</button> 
-										</div>
+												</c:if>
+											</c:forEach>
+										</button>
 									</div>
-							</div>
+									<div class="btn-like-box">
+										<button class="btn btn-outline-success"
+											onclick="judgment('up','${vlist.bnum}')">
+											좋아요 <i class="fas fa-thumbs-up"></i> ${vlist.upcnt }
+										</button>
+										<button class="btn btn-outline-danger"
+											onclick="judgment('down','${vlist.bnum}')">
+											싫어요 <i class="fas fa-thumbs-down"></i> ${vlist.downcnt }
+										</button>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+
+				</div>
+				<div id="collapse-${vlist.RN}"
+					class="collapse colllapse-${vlist.vnum}"
+					aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">
+					<div class="card-body">
+
+						<div id="videoBox-${vlist.vnum}"
+							class="videoBox video-box-player-${vlist.vnum}">
+							<div id="player-${vlist.vnum}"></div>
 						</div>
 					</div>
 				</div>
-
-				<div id="collapse-${vlist.RN}" class="collapse colllapse-${vlist.vnum}" aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">		
-					<div class="card-body">
-
-						<div id="videoBox-${vlist.vnum}" class="videoBox video-box-player-${vlist.vnum}">
-							<div id="player-${vlist.vnum}"></div>
-						</div>		
-					</div>
-				</div> 
-				
-				<hr>
-				
-				<div class="collapse comment-${vlist.vnum}" aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">		
+				<div class="collapse comment-${vlist.vnum}"
+					aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">
 					<div class="card-body">
 						<div class="container">
 							<div class="reply-input-group row">
 								<div class="col-md-10">
-									<textarea  style="resize: none;" id="replyText-${vlist.bnum}" class="form-control"  rows="1" placeholder="댓글을 입력해주세요."></textarea>
+									<textarea style="resize: none;" id="replyText-${vlist.bnum}"
+										class="form-control" rows="1" placeholder="댓글을 입력해주세요."></textarea>
 								</div>
 								<div class="col-md-2 reply-input-btn parentBtn">
-									
-									<button type="button"  name="boardNum-${vlist.bnum }" class="btn btn-dark" onclick="insertReply('${vlist.bnum}')">댓글 등록</button>
+
+									<button type="button" name="boardNum-${vlist.bnum }"
+										class="btn btn-dark" onclick="insertReply('${vlist.bnum}')">댓글
+										등록</button>
 								</div>
 							</div>
 						</div>
@@ -128,11 +130,11 @@
 							<div id="replyList-${vlist.bnum }"></div>
 						</div>
 					</div>
-				</div> 
+				</div>
 			</div>
 		</c:forEach>
-	
-	</div> 
+
+	</div>
 </div>
 
 
