@@ -40,8 +40,7 @@ ul {
 }
 
 .left-card-header{
-	max-height: 4rem;
-    min-height: 4rem;
+	
   	background-color: #fff;
   	padding :0px;
 }
@@ -105,9 +104,6 @@ ul {
 	float :right;
 }
 
-.con-btn-group {
-	padding-left: 0px;
-}
 
 #paging-btn-group > button, #paging-btn-group > span{
 	
@@ -117,8 +113,9 @@ ul {
 }
 
 .con-btn-group {
+	padding-left: 0px;
 	align-self: flex-end;
-	font-size: 18px;
+	font-size: 1rem;
 	font-weight: bold;
 }
 
@@ -131,10 +128,16 @@ ul {
 	margin: 0px 2px 0px 2px;
 }
 
-.card-header {
+
+.body-card-header{
 	height: 9rem;
 	padding-top: 5px;
 	padding-bottom: 5px;
+}
+
+.body-card{
+	
+	border-top : 1px solid #c1c1c1;
 }
 
 .card-header>.row {
@@ -299,27 +302,26 @@ ul {
 }
 
 #nav-slide{
-	height: 45rem;
+	height: 34rem;
     
 }
 .slide-body{
 	
-	height: inherit; 
+	height: 30rem;
+    top: 2rem;
 }
+
 .carousel-item{
-	
-	height: 41rem;
-    background-color: white;
-    top:  2rem;
-    position: relative;
+	height: inherit;
 }
 
 .recentlyView-box{
 	
 	display: flex;
-	flex-direction: column;
-	height: 100%;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    padding: 1rem;
 }
 
 .vert .carousel-item-next.carousel-item-left,
@@ -346,16 +348,8 @@ ul {
 	padding :0px;
 }
 
-.carousel-item{
-	
-	padding-top :1rem;
-	padding-bottom: 1rem;
-	padding: 0.5rem;
-}
-
 .slide-item-title{
-	
-	font-size: 2rem;
+	font-size: 1rem;
 	font-weight: bold;
 	width: 100%;
     padding: 0.5rem;
