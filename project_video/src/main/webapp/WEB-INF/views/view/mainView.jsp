@@ -3,26 +3,40 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<div class="search-box my-4">
 
-	<div class="col-md-6 con-btn-group">
-		<a href="#" class="conBtn">전체보기</a> <a href="#" class="conBtn">최신</a>
-		<a href="#" class="conBtn">조회수</a> <a href="#" class="conBtn">좋아요</a>
+
+<div class="paging-box">
+
+
+	<div class="col-lg-4 con-btn-group">
+		<a href="#" class="conBtn" id="allCon">전체보기</a> <a href="#"
+			class="conBtn" id="latestCon">최신</a> <a href="#" class="conBtn"
+			id="viewcnt">조회수</a> <a href="#" class="conBtn" id="upcnt">좋아요</a>
 	</div>
 
-	<div class="input-group rounded col-md-6 search-group">
-		<input type="search" class="form-control rounded" placeholder="Search"
-			aria-label="Search" aria-describedby="search-addon" /> <span
-			class="input-group-text border-0" id="search-addon"> <i
-			class="fas fa-search"></i>
-		</span>
+	<div class="paging-btn  col-lg-auto ml-auto">
+		<div id="paging-btn-group" class="btn-group" role="group"
+			aria-label="Basic example">
+			<button id="prev" type="button" class="btn btn-secondary"
+				onclick="pageAnchor('prev','${pagingMap.gnum}','${pagingMap.con}','${pagingMap.nowPage}','${pagingVO.startPage}','${pagingVO.lastPage}')">
+				<i class="fas fa-caret-left"></i>
+			</button>
+			<span class="btn btn-secondary"><b>${pagingVO.nowPage}</b></span>
+			<button id="next" type="button" class="btn btn-secondary"
+				onclick="pageAnchor('next','${pagingMap.gnum}','${pagingMap.con }','${pagingMap.nowPage}','${pagingVO.startPage}','${pagingVO.lastPage }')">
+				<i class="fas fa-caret-right"></i>
+			</button>
+		</div>
 	</div>
+
+	
+
 </div>
 
 <div class="genre-container my-3">
 	<div class="genre-box col-12">
 		<c:forEach items="${glist }" var="glist">
-			<button class="btn btn-outline-secondary genreBtn col-md-2"
+			<button class="btn btn-outline-secondary genreBtn col-lg-2"
 				id="genre-${glist.gnum }" onclick="gnameClick('${glist.gnum}')">${glist.gname}</button>
 		</c:forEach>
 	</div>
@@ -47,47 +61,98 @@
 								</c:if>
 							</c:forEach>
 						</div>
-						<div class="col-lg-8  col-md-6">
-							<a href="#"> </a>
-						</div>
 
-						<div id="collapse-${vlist.RN}"
-							class="collapse colllapse-${vlist.vnum}"
-							aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">
-							<div class="card-body">
+						<div class="col-lg-8 col-md-6 video-info-box">
+							<div class="row video-info-row">
+								<h1 class="video-title" data-toggle="collapse"
+									data-target="#collapse-${vlist.RN}" aria-expanded="false"
+									aria-controls="collapse-${vlist.RN }"
+									onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','titleClick')">
 
-								<div id="videoBox-${vlist.vnum}"
-									class="videoBox video-box-player-${vlist.vnum}">
-									<div id="player-${vlist.vnum}"></div>
-								</div>
-							</div>
-						</div>
-						<div class="collapse comment-${vlist.vnum}"
-							aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">
-							<div class="card-body">
-								<div class="container">
-									<div class="reply-input-group row">
-										<div class="col-md-10">
-											<textarea style="resize: none;" id="replyText-${vlist.bnum}"
-												class="form-control" rows="1" placeholder="댓글을 입력해주세요."></textarea>
-										</div>
-										<div class="col-md-2 reply-input-btn parentBtn">
+									${vlist.vtitle} <span class="badge">조회수 :
+										${vlist.viewcnt} &nbsp;</span>
+								</h1>
+								<h1 class="video-info">
+									작성자 : ${vlist.userid } <span class="badge badge-info"><a
+										href="#">LINK</a></span>
+								</h1>
 
-											<button type="button" name="boardNum-${vlist.bnum }"
-												class="btn btn-dark" onclick="insertReply('${vlist.bnum}')">댓글
-												등록</button>
-										</div>
+
+								<div class="row btn-box-row">
+
+									<div class="btn-comment-box">
+										<button class="btn btn-outline-dark info-inner-btn"
+											id="replyBtn-${vlist.bnum }"
+											onclick="commentBox('${vlist.vnum}','${vlist.bnum }')">
+											댓글 (0)
+											<c:forEach items="${rlist }" var="rlist">
+												<c:if test="${vlist.bnum == rlist.bnum }">
+													<script>
+											$("#replyBtn-"+${vlist.bnum}).html("댓글 ("+${rlist.bnumCnt}+")");
+										</script>
+												</c:if>
+											</c:forEach>
+										</button>
 									</div>
-								</div>
-								<hr>
-								<div class="reply-list-group container">
-									<div id="replyList-${vlist.bnum }"></div>
+
+									<div class="btn-like-box">
+										<button class="btn btn-outline-success info-inner-btn"
+											onclick="judgment('up','${vlist.bnum}')">
+											좋아요 <i class="fas fa-thumbs-up"></i> ${vlist.upcnt }
+										</button>
+										<button class="btn btn-outline-danger info-inner-btn"
+											onclick="judgment('down','${vlist.bnum}')">
+											싫어요 <i class="fas fa-thumbs-down"></i> ${vlist.downcnt }
+										</button>
+									</div>
+
 								</div>
 							</div>
+
 						</div>
 					</div>
 					<!-- /.row -->
 				</div>
+				<!-- card-header -->
+
+				<div id="collapse-${vlist.RN}"
+					class="collapse colllapse-${vlist.vnum}"
+					aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">
+					<div class="card-body">
+
+						<div id="videoBox-${vlist.vnum}"
+							class="videoBox video-box-player-${vlist.vnum}">
+							<div id="player-${vlist.vnum}"></div>
+						</div>
+					</div>
+				</div>
+				<!-- reply  -->
+				<div class="collapse comment-${vlist.vnum}"
+					aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">
+					<div class="card-body">
+						<div class="container">
+							<div class="row reply-input-group">
+								<div class="reply-input col-lg-10">
+									<textarea style="resize: none;" id="replyText-${vlist.bnum}"
+										class="form-control" rows="1" placeholder="댓글을 입력해주세요."></textarea>
+								</div>
+								<div class="reply-input-btn parentBtn col-lg-2">
+
+									<button type="button" name="boardNum-${vlist.bnum }"
+										class="btn btn-dark" onclick="insertReply('${vlist.bnum}')">댓글
+										등록</button>
+								</div>
+							</div>
+						</div>
+						<hr>
+						<div class="reply-list-group container">
+							<div id="replyList-${vlist.bnum }" class="row replyList-row"></div>
+						</div>
+					</div>
+				</div>
+
+
+
 			</div>
 		</c:forEach>
 	</div>
@@ -97,15 +162,12 @@
 
 
 <script type="text/javascript">	
-
+/* 쿠키 생성  */
 $(document).ready(function(){
 	
 	refresh();	
 })
-
-
 	
- 
 function add_cookie(vnum,exdays){
 
 
@@ -246,8 +308,9 @@ function getCookie(cname){
 	}
 }
   
+/* 쿠키 생성  끝 */
 
-
+/* 게시물 클릭  */
 function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 	
 	
@@ -304,7 +367,7 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 			
 				youTube_player = new YT.Player(player, {
 
-					height : '700px',
+					height : '350px',
 					width : '100%',
 					videoId : data.videoId
 
@@ -325,8 +388,9 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 	}
 }
 
+/* 게시물 클릭 끝  */
 
- 
+/* 댓글 등록 */
 function insertReply(bnumData){
 	
 	
@@ -365,6 +429,10 @@ function insertReply(bnumData){
  	
 }
 
+/* 댓글 등록 끝  */
+
+
+/* 댓글 리스트 보기 */
 function replyList(data){
 	//alert(data);
 	var bnum = data;
@@ -377,20 +445,23 @@ function replyList(data){
 			
 			//alert(JSON.stringify(result));
 			var output ="";
+			
 			for (var i in result){
 				
 				if(result[i].rnum == 0){
+					output +=" <div class='row replyOneLine-row'>"
 					output += "<div class='reply-box border rounded-lg' id='reply-"+result[i].rpnum+"' >";
 					output += "<div class='reply-replyer-box'>"+result[i].replyer+"</div>";
-					output += "<div class='reply-text-box'>"+result[i].replyText+"<button class='btn btn-outline-dark reReply' onclick='reCommentBox("+result[i].rpnum+","+result[i].rnum+","+result[i].bnum+",0)'>답글</button></div>";  
+					output += "<div class='reply-text-box'>"+result[i].replyText+"<button class='btn badge btn-outline-dark reReply-Btn' onclick='reCommentBox("+result[i].rpnum+","+result[i].rnum+","+result[i].bnum+",0)'>답글</button></div>";  
 					output +="</div>";																																			
-					output +="<div id='reReply-"+result[i].bnum+"-"+result[i].rpnum+"'></div>"
+					output += "</div>";
+					output +="<div id='reReply-"+result[i].bnum+"-"+result[i].rpnum+"'></div>";
 				}
 				
 				if(result[i].rnum != 0){
-					output +="<div class='reReply-box row'>";
-					output += "<i class='fas fa-level-up-alt fa-rotate-90 fa-2x col-sm-1 reReplyIcon'></i>";
-					output += "<div class='border rounded-lg col-sm reReply-box-child'>";
+					output +="<div class='row reReplyOneLine-row'>";
+					output += "<i class='col-xl-1 reply-icon'> &#10551;</i>";
+					output += "<div class='border rounded-lg col-xl-11 reReply-box-child'>";
 					output += "<div class='reply-replyer-box'>"+result[i].replyer+"</div>";
 					output += "<div class='reply-text-box'>"+result[i].replyText+"</div>"; 
 					output += "</div>";
@@ -410,6 +481,8 @@ function replyList(data){
 	})
 }
 
+
+ 
 function commentBox(vnum,bnum){
 	
 	var cmShowChk =$(".comment-"+vnum).hasClass("show");
@@ -425,41 +498,21 @@ function commentBox(vnum,bnum){
 	
 }
 
+/* 댓글 리스트 보기 끝  */
 
-
-function viewCntUp(bnum){
-	
-	$.ajax({
-		
-		url : "viewCntUp.do",
-		data : {
-				"bnum" : bnum
-			},
-		dataType:"text",
-		success : function(data){
-			
-			
-			
-		},error :function(){
-			alert("error");
-		}
-	})
-}
-
+/* 대댓글 입력 창*/ 
 function reCommentBox(rpnum ,rnum,bnum ,rnum){
 	
 	//alert(rnum);
-	var output ="<div class='reReplyContainer reReply-"+bnum+"-"+rpnum+"'>"
-		output+="<div class='reply-input-group row'>"
-		
-		output+="<div class='col-md-10'>"
-		output+="<textarea  style='resize: none;' id='replyText-"+bnum+"-"+rpnum+"' class='form-control'  rows='1' placeholder='답글을 입력해주세요.'></textarea>"
+		var output ="";
+		output="<div class='row reply-input-group reReply-input-group'>";	
+		output+="<div class='col-lg-9'>" 
+			output+="<textarea  style='resize: none;' id='replyText-"+bnum+"-"+rpnum+"' class='form-control'  rows='1' placeholder='답글을 입력해주세요.'></textarea>"
 		output+="</div>"
-		output+="<div class='col-md-2 reply-input-btn'>"
-		
-		output+="<button type='button' name='boardNum-"+bnum+"' class='btn btn-outline-secondary' onclick='insertReReply("+bnum+","+rpnum+")'>답글 등록</button>"
-		output+="<button type='button' class='btn btn-outline-secondary' onclick ='cancel("+rpnum+","+bnum+")'>취소</button>"
-		output+="</div></div></div>"
+		output+="<div class='col-lg-3 reReply-input-btn'>"
+			output+="<button type='button' name='boardNum-"+bnum+"' class='btn btn-outline-secondary' onclick='insertReReply("+bnum+","+rpnum+")'>답글 등록</button>"
+			output+="<button type='button' class='btn btn-outline-secondary' onclick ='cancel("+rpnum+","+bnum+")'>취소</button>"
+		output+="</div></div>"
 	  
 		if(rnum == 0){
 			
@@ -470,129 +523,17 @@ function reCommentBox(rpnum ,rnum,bnum ,rnum){
 			
 		}
 }
-
-function gnameClick(gnum){
-	
-
-	$(".genreBtn").each(function(){
-		
-	 	var btnClick = 	$(this).hasClass("genreClick");	
-	 	if(btnClick==true){
-	 		
-	 		$(this).removeClass("genreClick");
-	 		$(this).css("background-color","");
-			$(this).css("color", "#55279a");
-	 		
-	 	}
-	})	
-	
-	$("#genre-"+gnum).css("background-color", "#55279a5e");
-	$("#genre-"+gnum).css("color", "#fff");
-	$("#genre-"+gnum).addClass("genreClick");
-	
-	//var con = "${pagingMap.con}";
-	//alert(con);
-	condition();
-}
-
-function pageAnchor(data , gnum , con ,nowPage, startPage, lastPage){
-					//next , 0 , bnum ,  1 , 10
-	var cntPerPage = 10;
-	var startPrev = Number(startPage)-1;
-	var startNext = Number(startPage)+1;
-
-	//alert(lastPage);
-	switch(data){
-		case "prev" :
-			//alert("prev"); 
-			if(nowPage != 1){
-				//alert("1페이지 아님");
-				
-				$(".search-container").load("mainView.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #search-nav");
-				$("#main-content").load("mainView.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #accordion");
-			}
-			break;
-	
-		case "next" :
-			if(nowPage != lastPage){
-				//alert("다름");
-				$(".search-container").load("mainView.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #search-nav");
-				$("#main-content").load("mainView.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #accordion");
-				
-			}
-			if(nowPage == lastPage){
-				//alert("같음");
-			}
-			break;
-	
-	}
-}
-
-function condition(){
-	
-	var clickCon = false;
-	var clickGenre = false;
-	var con = "";
-	var gnum = "";
-	$(".conBtn").each(function(){
-		
-		var btnClick = 	$(this).hasClass("conClick");	
-	 	if(btnClick==true){
-	 		
-	 		//alert("컨디션클릭된것있음");
-	 		clickCon= true;
-	 		con = $(this).attr("id");
-	 		
-	 		if(con=="allCon"){
-	 			
-	 			location.href="mainView.do";
-	 			
-	 		}
-	 	}
-	})
-	$(".genreBtn").each(function(){
-		
-		var btnClick = 	$(this).hasClass("genreClick");	
-	 	if(btnClick==true){
-	 		
-	 		//alert("장르클릭된것있음");
-	 		clickGenre= true
-	 		var gstr = $(this).attr("id");
-	 		var gArray = gstr.split("-");
-	 		gnum = gArray[1];
-	 	}
-	})
-	
-	if(clickCon ==true && clickGenre == true){
-		//alert("컨디션 o ,장르 o");
-		//alert(con+","+gnum);
-		$(".search-container").load("mainView.do?con="+con+"&gnum="+gnum+" #search-nav");
-		$("#main-content").load("mainView.do?con="+con+"&gnum="+gnum+" #accordion");
-	}else if(clickCon == true && clickGenre == false){
-		
-		//alert("컨디션 o ,장르 x");
-		//alert(con+","+gnum);
-		
-		$(".search-container").load("mainView.do?con="+con+" #search-nav");
-		$("#main-content").load("mainView.do?con="+con+" #accordion");
-	}else if(clickCon == false && clickGenre == true ){
-		//alert("컨디션 x ,장르 o");
-		//alert(con+","+gnum);
-		$(".search-container").load("mainView.do?gnum="+gnum+" #search-nav");
-		$("#main-content").load("mainView.do?gnum="+gnum+" #accordion");
-		
-	}else{
-		//alert("X");
-	}
-};
+/* 대댓글 입력 창 끝*/ 
 
 
+/* 대댓글 입력 취소  */
 function cancel(rpnum, bnum){
 	
-	$(".reReply-"+bnum+"-"+rpnum).replaceWith("<div id='reReply-"+bnum+"-"+rpnum+"></div>");
+	$("#reReply-"+bnum+"-"+rpnum).children().replaceWith("");
 }
+/* 대댓글 입력 취소 끝 */
 
-
+/* 대댓글 입력  */
 function insertReReply(bnumData, rpnumData){
 	
 	var gui = "${gui}";
@@ -629,6 +570,180 @@ function insertReReply(bnumData, rpnumData){
 		}
 	})
 }
+/* 대댓글 입력 끝 */
+
+
+
+/* 조회수 카운트 */
+function viewCntUp(bnum){
+	
+	$.ajax({
+		
+		url : "viewCntUp.do",
+		data : {
+				"bnum" : bnum
+			},
+		dataType:"text",
+		success : function(data){
+			
+			
+			
+		},error :function(){
+			alert("error");
+		}
+	})
+}
+/* 조회수 카운트 끝*/
+ 
+
+/* 장르 클릭 */
+function gnameClick(gnum){
+	
+
+	$(".genreBtn").each(function(){
+		
+	 	var btnClick = 	$(this).hasClass("genreClick");	
+	 	if(btnClick==true){
+	 		
+	 		$(this).removeClass("genreClick");
+	 		$(this).css("background-color","");
+			$(this).css("color", "#55279a");
+	 		
+	 	}
+	})	
+	
+	$("#genre-"+gnum).css("background-color", "#55279a5e");
+	$("#genre-"+gnum).css("color", "#fff");
+	$("#genre-"+gnum).addClass("genreClick");
+	
+	//alert(con);
+	condition();
+}
+/* 장르 클릭 끝  */
+
+/* 리스트 기준 클릭  */
+$(".conBtn").on("click",function(){
+		
+	$(".conBtn").each(function(){
+		
+	 	var btnClick = 	$(this).hasClass("conClick");
+	 	if(btnClick==true){
+	 		
+	 		$(this).removeClass("conClick");
+	 		$(this).css("background-color","#fff");
+	 	}
+	})	
+	
+	$(this).css("background-color", "#ffc107");
+	$(this).addClass("conClick");
+	
+	condition();
+})
+/* 리스트 기준 클릭  끝*/
+
+/* 보는 기준에 따라 리스트 출력  */
+function condition(){
+	
+	var clickCon = false;
+	var clickGenre = false;
+	var con = "";
+	var gnum = "";
+	
+	$(".conBtn").each(function(){
+		
+		var btnClick = 	$(this).hasClass("conClick");	
+	 	
+		if(btnClick==true){
+	 		
+	 		//alert("컨디션클릭된것있음");
+	 		clickCon= true;
+	 		
+	 		con = $(this).attr("id");
+	 		
+	 		if(con=="allCon"){
+	 			
+	 			location.href="mainView.do";
+	 			
+	 		}
+	 	}
+	})
+	
+	$(".genreBtn").each(function(){
+		
+		var btnClick = 	$(this).hasClass("genreClick");	
+	 	if(btnClick==true){
+	 		
+	 		//alert("장르클릭된것있음");
+	 		clickGenre= true
+	 		var gstr = $(this).attr("id");
+	 		var gArray = gstr.split("-");
+	 		gnum = gArray[1];
+	 	}
+	})
+	
+	if(clickCon ==true && clickGenre == true){
+		//alert("컨디션 o ,장르 o");
+		//alert(con+","+gnum);
+		$(".paging-btn").load("mainView.do?con="+con+"&gnum="+gnum+" #paging-btn-group");
+		$("#main-content").load("mainView.do?con="+con+"&gnum="+gnum+" #accordion");
+	}else if(clickCon == true && clickGenre == false){
+		
+		//alert("컨디션 o ,장르 x");
+		//alert(con+","+gnum);
+		
+		$(".paging-btn").load("mainView.do?con="+con+" #paging-btn-group");
+		$("#main-content").load("mainView.do?con="+con+" #accordion");
+	}else if(clickCon == false && clickGenre == true ){
+		//alert("컨디션 x ,장르 o");
+		//alert(con+","+gnum);
+		$(".paging-btn").load("mainView.do?gnum="+gnum+" #paging-btn-group");
+		$("#main-content").load("mainView.do?gnum="+gnum+" #accordion");
+		
+	}else{
+		//alert("X");
+	}
+};
+
+
+/* 보는 기준에따라 리스트 출력 끝 */
+
+/* 페이징 */
+function pageAnchor(data , gnum , con ,nowPage, startPage, lastPage){
+					//next , 0 , bnum ,  1 , 10
+	var cntPerPage = 10;
+	var startPrev = Number(startPage)-1;
+	var startNext = Number(startPage)+1;
+	
+	 //alert(data+","+gnum+","+ con+","+nowPage+","+startPage+lastPage ); 
+	//alert(lastPage);
+	switch(data){
+		case "prev" :
+			//alert("prev"); 
+			if(nowPage != 1){
+				//alert("1페이지 아님");
+				
+				$(".paging-btn").load("mainView.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+"  #paging-btn-group");							
+				$("#main-content").load("mainView.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #accordion");
+			}
+			break;
+	
+		case "next" :
+			if(nowPage != lastPage){
+				//alert("다름");
+				$(".paging-btn").load("mainView.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+"  #paging-btn-group");
+				$("#main-content").load("mainView.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #accordion");
+				
+			}
+			if(nowPage == lastPage){
+				//alert("같음");
+			}
+			break;
+	
+	}
+}
+
+/* 페이징 끝  */
+
 
 function judgment(judg ,bnum){
 	

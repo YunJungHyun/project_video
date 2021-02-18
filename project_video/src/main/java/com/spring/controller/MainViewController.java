@@ -57,7 +57,9 @@ public class MainViewController {
 			Model model
 			) {
 		System.out.println("[mainView.do]");
-
+		
+		/* System.out.println("nowPage : "+nowPage); */
+		
 		if(gnum== null || gnum.equals("0") ) {
 			gnum= "";
 		}
@@ -97,7 +99,7 @@ public class MainViewController {
 			 
 			 pagingVO.setCon("bnum");
 		}
-		//System.out.println("pagingVO :  "+pagingVO.toString());
+		System.out.println("pagingVO :  "+pagingVO.toString());
 
 		//장르
 		List<GenreVO> glist= genreService.getAllGenre();
@@ -111,6 +113,7 @@ public class MainViewController {
 		map.put("nowPage", Integer.toString(pagingVO.getNowPage()));
 		map.put("cntPerPage", Integer.toString(pagingVO.getCntPerPage()));
 		map.put("con",pagingVO.getCon());
+		
 		
 		if(pagingVO.getGnum()=="") {
 			map.put("gnum", "0");

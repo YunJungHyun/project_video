@@ -9,15 +9,20 @@ a {
 	color: #000;
 }
 
+ul {
+	list-style: none;
+	padding-left: 0px;
+}
+
 .navbar {
 	background-color: #55279a;
 }
 
-.navbar-brand{
-	
+.navbar-brand {
 	font-size: 25.5px;
-    font-weight: 700;
+	font-weight: 700;
 }
+
 .btn-outline {
 	font-weight: bold;
 	letter-spacing: 1px;
@@ -25,7 +30,6 @@ a {
 
 .mainContainer {
 	padding-top: 4rem;
-	
 }
 
 .left-menuBox {
@@ -35,9 +39,38 @@ a {
 	border-right: 1px solid #dfdfdf;
 }
 
+.search-box{
+	
+	margin-top : 1.5rem;
+	
+}
+
+.search-form{
+	display: flex;
+	flex-direction: row;
+}
+
+.search-input{
+	
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+    border: 1px solid;
+    padding: 5px;
+}
+
+.search-btn{
+	
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border: 1px solid;
+    text-align: center;
+    padding: 0px;
+}
+
 .mainBox {
 	/* height: calc(100vh - 4rem); */
 	/* 	display :  none;  */
+	
 }
 
 .main-content {
@@ -45,21 +78,34 @@ a {
 	
 }
 
-.search-box {
+.paging-box {
 	display: flex;
+	flex-direction: row;
+	padding-left: 15px;
+	margin-top: 1.5rem;
 }
 
-.search-group {
+
+.paging-btn {
 	padding-right: 0px;
+	float :right;
 }
 
 .con-btn-group {
 	padding-left: 0px;
 }
 
+#paging-btn-group > button, #paging-btn-group > span{
+	
+    width: 3rem;
+    height: 3rem;
+    line-height: 2;
+}
+
 .con-btn-group {
 	align-self: flex-end;
-	font-size: 14px;
+	font-size: 18px;
+	font-weight: bold;
 }
 
 .genre-box {
@@ -67,18 +113,146 @@ a {
 	justify-content: center;
 }
 
-
 .genre-box>button {
 	margin: 0px 2px 0px 2px;
 }
-.card-header >div {
-	
-	width : 100%;
+
+.card-header {
+	height: 9rem;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
-.video-img-box > img {
-	
-	max-width:100%;
-	height:auto;
-	padding :0px;
-	
+
+.card-header>.row {
+	margin: 0px;
+	height: 100%;
+}
+
+.card-header>div {
+	width: 100%;
+}
+
+.video-img-box {
+	text-align: center;
+	border-right: 1px dashed #dfdfdf;
+}
+
+.video-img-box>img {
+	max-width: 100%;
+	height: auto;
+	padding: 0px;
+}
+
+.video-title {
+	font-size: 1.3rem;
+	border-bottom: 1px solid;
+	text-indent: 1rem;
+	font-weight: bold;
+	padding: 0.3rem;
+}
+
+.badge {
+	float: right;
+}
+
+.info-group {
+	margin: 0px;
+	border: 1px solid;
+	margin-bottom: 8px;
+}
+
+.info-group>li {
+	text-indent: 1rem;
+	font-weight: bold;
+	padding: 3px;
+}
+
+.video-info {
+	font-size: 1rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	font-weight: bold;
+}
+
+.btn-box-row {
+	padding-left: 1rem;
+	padding-right: 1rem;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.video-info-box {
+	height: inherit;
+}
+
+.video-info-row {
+	flex-direction: column;
+	justify-content: space-around;
+	padding-left: 15px;
+	padding-right: 15px;
+	height: inherit;
+}
+
+.info-inner-btn {
+	font-size: 0.8rem;
+	font-weight: bold;
+}
+
+.
+.reply-input-group {
+	flex-direction: row;
+	margin: 0px;
+}
+
+.replyList-row {
+	flex-direction: column;
+	padding-right: 15px;
+	padding-left: 15px;
+	flex-wrap: nowrap;
+}
+
+.reReplyOneLine-row {
+	flex-direction: row;
+	margin: 0px;
+	margin-top: 0.3rem;
+}
+
+.replyOneLine-row {
+	flex-direction: column;
+	padding-right: 15px;
+	padding-left: 15px;
+	flex-wrap: nowrap;
+	margin-top: 0.5rem;
+}
+
+.reply-replyer-box {
+	padding: 5px 1rem 5px 1rem;
+	font-weight: bold;
+}
+
+.reply-icon {
+	font-size: 2rem;
+	font-weight: bold;
+	text-align: center;
+}
+
+.reply-text-box {
+	padding: 5px 1rem 5px 1rem;
+	text-indent: 0.5rem;
+}
+
+.reReply-Btn {
+	font-size: smaller;
+}
+
+.reReply-input-group {
+	padding: 10px;
+}
+
+.reReply-input-btn {
+	padding-left: 0px;
+}
+
+.reReply-input-btn>button:nth-child(2) {
+	margin-left: 0.3rem;
 }
