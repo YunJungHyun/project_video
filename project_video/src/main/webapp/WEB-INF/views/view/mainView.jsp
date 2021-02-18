@@ -246,7 +246,7 @@ $.ajax ({
 					i = l;
 				}
 				output+="<div class='carousel-item'>";
-				output+="<ul class='recentlyView-box list-group'>";
+				output+="<div class='recentlyView-box'>";
 				
 				for( i ; i < length ; i++){
 					
@@ -258,10 +258,10 @@ $.ajax ({
 					
 					if(k < l+3){
 							
-						output+="<li class='list-group-item'>";
+						output+="<div class='recentlyView'>";
 						output+="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>";
-						output+="<label>"+vtitle+"</label>";				
-						output+="</li>";
+						output+="<label class='slide-item-title'>"+vtitle+"</label>";				
+						output+="</div>";
 				
 						k++;
 					}else{
@@ -271,7 +271,7 @@ $.ajax ({
 					}
 				}
 				
-				output +="</ul>";
+				output +="</div>";
 				output +="</div>";
 			}
 			

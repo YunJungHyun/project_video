@@ -30,26 +30,6 @@
 </div>
 
 <script type="text/javascript">
-	
-	$(".carousel-control-up").on("click",function(){
-		
-		if($(".slide-body").children().first().hasClass("active")){
-			
-			$(".carousel-control-up").removeAttr("href");
-		}else{
-			
-			$(".carousel-control-up").attr("href","#nav-slide");
-		}
-	})
-	$(".carousel-control-down").on("click",function(){
-		
-		if($(".slide-body").children().last().hasClass("active")){
-			
-			$(".carousel-control-down").removeAttr("href");
-		}else{
-			
-			$(".carousel-control-down").attr("href","#nav-slide");
-		}
-	})
+
 	
 </script>
