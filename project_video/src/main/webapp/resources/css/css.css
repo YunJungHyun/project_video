@@ -295,19 +295,17 @@ ul {
 }
 
 .carousel-control-up{
-	top :0;
+	top :1rem;
 }
-.carousel-control-down{
-	bottom :0;
-}
+
 
 #nav-slide{
 	height: 34rem;
     
 }
 .slide-body{
-	
-	height: 30rem;
+	height : fit-content;
+	max-height: 30rem;
     top: 2rem;
 }
 
@@ -321,7 +319,7 @@ ul {
     flex-direction: column;
     justify-content: space-around;
     height: 100%;
-    padding: 1rem;
+    padding: 2rem;
 }
 
 .vert .carousel-item-next.carousel-item-left,

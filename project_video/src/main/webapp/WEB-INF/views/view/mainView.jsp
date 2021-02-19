@@ -73,8 +73,11 @@
 										${vlist.viewcnt} &nbsp;</span>
 								</h1>
 								<h1 class="video-info">
-									작성자 : ${vlist.userid } <span class="badge badge-info"><a
-										href="#">LINK</a></span>
+									작성자 : ${vlist.userid } 
+									<span class="badge">
+										<a href="#"><i class="far fa-star"></i></a>
+									</span>
+									
 								</h1>
 
 
@@ -103,6 +106,11 @@
 										<button class="btn btn-outline-danger info-inner-btn"
 											onclick="judgment('down','${vlist.bnum}')">
 											싫어요 <i class="fas fa-thumbs-down"></i> ${vlist.downcnt }
+										</button>
+										
+										<button class="btn btn-outline-warning info-inner-btn"
+											onclick="favorites('${gui.unum}','${vlist.bnum }')">
+											 <i class="far fa-star"></i>
 										</button>
 									</div>
 
@@ -162,6 +170,25 @@
 
 
 <script type="text/javascript">	
+/* 즐겨 찾기  */
+function favorites(unum, bnum){
+	
+	//alert(unum +","+bnum);
+	
+	if(unum == ""){
+		
+		alert("로그인 후 이용해주세요.");
+		return false;
+	}
+	else{
+		
+		alert("즐겨찾기 등록되었습니다.");
+	}
+	
+}
+
+
+/* 즐겨 찾기 끝  */
 /* 쿠키 생성  */
 $(document).ready(function(){
 	
