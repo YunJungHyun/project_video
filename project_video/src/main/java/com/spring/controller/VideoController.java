@@ -39,7 +39,7 @@ public class VideoController {
 			
 			) {
 		
-		System.out.println("videoVO.getGnum :" +videoVO.getGnum());
+		//System.out.println("videoVO.getGnum :" +videoVO.getGnum());
 //		System.out.println("videoVO.getVurl() :" + videoVO.getVurl());
 //		System.out.println("videoVO.getVtitle() :" + videoVO.getVtitle());
 //		System.out.println("videoVO.getVpw() :" + videoVO.getVpw());
@@ -65,12 +65,12 @@ public class VideoController {
 		
 	}
 	
-	@RequestMapping(value="rightMenuList.do" ,method=RequestMethod.GET)
+	@RequestMapping(value="recentlyList.do" ,method=RequestMethod.GET)
 	@ResponseBody
-	public Map<String,Object> rightMenuList(
+	public Map<String,Object> recentlyList(
 			@RequestParam (value="cookie" , required= false) String cookie
 			) {
-		System.out.println("cookie : "+cookie);
+		//System.out.println("cookie : "+cookie);
 		List<VideoVO> list = new ArrayList<VideoVO>();
 		
 		String[] cArray= cookie.split("&");
@@ -79,7 +79,7 @@ public class VideoController {
 			
 			//System.out.println("cArray.length :"+cArray[i].length());
 			int vnum =Integer.parseInt(cArray[i].substring(1,cArray[i].length()-1));
-			System.out.println("vnum : "+ vnum);
+			//System.out.println("vnum : "+ vnum);
 		
 			VideoVO videoVO= videoService.getOneVideo(vnum);
 			

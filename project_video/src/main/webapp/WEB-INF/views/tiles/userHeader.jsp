@@ -27,7 +27,7 @@
 						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu">
 							<button type="button" class="dropdown-item">나의 회원 정보</button>
-							<button type="button" class="dropdown-item">내가 작성한 게시글</button>
+							<button type="button" class="dropdown-item" onclick="myBoard()">내가 작성한 게시글</button>
 							<button type="button" class="dropdown-item logoutBtn">로그아웃</button>
 						</div>
 					</div>
@@ -100,6 +100,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+		
 		$("#videoReg").on("click" , function(){
 			
 			var queryString = $("form[name=videoRegForm]").serialize() ;
@@ -140,4 +141,9 @@
 			
 		})
 	})
+	
+	function myBoard(){
+		
+		window.location.href="myBoard.do";
+	}
 </script>

@@ -1,7 +1,9 @@
 package com.spring.controller;
 
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,7 @@ public class UserController {
 	public String login(UserVO userVO,
 			RedirectAttributes rttr,
 			HttpServletRequest request
+			,HttpServletResponse response
 			) {
 
 		System.out.println("[login.do]");
@@ -38,8 +41,21 @@ public class UserController {
 		UserVO gui = userService.getUserInfo(userVO);
 
 		//System.out.println("result : "+ gui.toString());
-
-
+		
+//		Cookie[] cookies =request.getCookies();
+//		
+//		System.out.println("cookies :"+cookies);
+//		
+//		if(cookies != null) {
+//			
+//			for (int i=0 ; i < cookies.length ; i++) {
+//				
+//				cookies[i].setMaxAge(0);
+//				
+//				response.addCookie(cookies[i]);
+//			}
+//		}
+ 
 		if(gui ==null) {
 			System.out.println("gui없음");
 			rttr.addFlashAttribute("message","loginFail");

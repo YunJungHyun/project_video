@@ -1,6 +1,7 @@
 package com.spring.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -56,6 +57,15 @@ public class BoardDAOImpl implements BoardDAO {
 	public int viewCntUp(String bnum) {
 		int result =sqlSession.update(Namespace+".viewCntUp",bnum);
 		
+		
+		return result;
+	}
+	
+	@Override
+	public VideoVO getFavlist(String favArray) {
+		System.out.println(favArray);
+		
+		VideoVO result = sqlSession.selectOne(Namespace+".getFavlist", favArray);
 		
 		return result;
 	}

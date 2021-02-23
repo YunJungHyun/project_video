@@ -38,7 +38,10 @@
 		UPDATE boards SET viewcnt = viewcnt + 1 WHERE bnum=#{bnum}
 	</update>
 	
+	<select id="getFavlist" resultType="VideoVO" parameterType="String">
 	
+		SELECT vnum,vtitle,vurl FROM videos WHERE vnum = (SELECT vnum FROM boards WHERE bnum=#{favArray})
+	</select>
 	
 </mapper>
 

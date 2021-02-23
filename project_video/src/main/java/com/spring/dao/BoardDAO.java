@@ -1,6 +1,7 @@
 package com.spring.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.spring.vo.BoardVO;
 import com.spring.vo.VideoVO;
@@ -18,6 +19,8 @@ public interface BoardDAO {
 	int updateDownCnt(int bnum);
 
 	int viewCntUp(String bnum);
+
+	VideoVO getFavlist(String favArray);
 
 
 }

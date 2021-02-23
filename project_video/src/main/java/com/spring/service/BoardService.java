@@ -1,5 +1,7 @@
 package com.spring.service;
 
+import java.util.Map;
+
 import com.spring.vo.BoardVO;
 import com.spring.vo.VideoVO;
 
@@ -16,6 +18,8 @@ public interface BoardService {
 	int updateDownCnt(int bnum);
 
 	int viewCntUp(String bnum);
+
+	VideoVO getFavlist(String favArray);
 
 	
 }

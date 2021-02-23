@@ -1,6 +1,7 @@
 package com.spring.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -50,5 +51,11 @@ public class BoardServiceImpl implements BoardService{
 	public int viewCntUp(String bnum) {
 		// TODO Auto-generated method stub
 		return boardDAO.viewCntUp(bnum);
+	}
+
+	@Override
+	public VideoVO getFavlist(String favArray) {
+		// TODO Auto-generated method stub
+		return boardDAO.getFavlist(favArray);
 	}
 }

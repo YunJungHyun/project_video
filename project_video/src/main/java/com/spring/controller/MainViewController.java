@@ -20,9 +20,11 @@ import com.spring.service.GenreService;
 import com.spring.service.ReplyService;
 import com.spring.service.UserService;
 import com.spring.service.VideoService;
+import com.spring.vo.BoardVO;
 import com.spring.vo.GenreVO;
 import com.spring.vo.PagingVO;
 import com.spring.vo.ReplyVO;
+import com.spring.vo.UserVO;
 import com.spring.vo.VideoVO;
 
 @Controller
@@ -137,6 +139,12 @@ public class MainViewController {
 		return "view/mainView.page";
 	}
 
-
+	
+	@RequestMapping(value="myBoard.do")
+	public String myBoard() {
+		System.out.println("안녕");
+		
+		return "view/userInfo/myBoard.page";
+	}
 
 }

@@ -224,12 +224,13 @@ function favorites(unum, bnum ,chk){
 }
 
 
+
 /* 즐겨 찾기 끝  */
 /* 쿠키 생성  */
 $(document).ready(function(){
 	
-	refresh();	
-	
+	refresh();
+
 })
 	
 function add_cookie(vnum,exdays){
@@ -277,17 +278,105 @@ function setCookie( cmap , exdays){
 
 function refresh(){
 	//alert("refresh");
+
+	var gui = "${gui}";
+	
+if(gui ==""){
+	
+	$("#guiNone").css("display","block");
+	$("#favNone").css("display","none");
+	$("#f-nav-slide").css("display","none");
+	
+	
+}else{
+	
+	if("${gui.favorites}" == ""){
+		
+		$("#guiNone").css("display","none");
+		$("#favNone").css("display","block");
+		$("#f-nav-slide").css("display","none");
+	}else{
+		
+		$("#guiNone").css("display","none");
+		$("#favNone").css("display","none");
+		$("#f-nav-slide").css("display","block");
+		
+		$.ajax({
+			
+			url : "favList.do",
+			type : "get",
+			dataType :"json",
+			data:{
+				
+				"fav" : "${gui.favorites}"
+			},
+			success : function(data){
+				
+				var length = data.length
+				
+				var output ="";
+				var k = 0;
+				var i = 0;
+				var l =0;
+				
+				for(var j=0; j < Math.ceil(length/3); j++){
+					
+					if(k>0){
+						i=l;
+					}
+					
+					output+="<div class='carousel-item'>";
+					output+="<div class='favView-box'>";
+					for(i ; i <length ;i++){
+						
+						var vurl = data[i].vurl;
+						var vtitle =data[i].vtitle;
+						var videoIdArray=vurl.split("/");
+						var videoId = videoIdArray[3];
+					
+						if(k< l+3){
+							
+						
+						output+="<div class='favView'>";
+						output+="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>";
+						output+="<span class='slide-item-title'>"+vtitle+"</span>";				
+						output+="</div>";
+							k++;
+						}else{
+							
+							l+=3;
+							break;
+						}
+					}
+					output +="</div>";
+					output +="</div>";
+					
+				}
+
+				$(".f-slide-body").html(output);
+				$(".f-slide-body").children().first().addClass("active");
+				
+			},error : function(){
+				alert("error");
+			}
+			
+		})
+	}
+}
+
+	
 if(document.cookie==""){ 
 	//alert("쿠키없음");
 	
 	$("#recentlyNone").css("display","block");
 	$("#nav-slide").css("display","none");
 }else{
+	
 	$("#recentlyNone").css("display","none");
 	$("#nav-slide").css("display","block");
 $.ajax ({
 		
-		url : "rightMenuList.do",
+		url : "recentlyList.do",
 		type :"GET",
 		data :{
 			

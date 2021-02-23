@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="search-box">
 	<form class="my-4 search-form">
@@ -24,7 +26,27 @@
 		<div id="menu-1" class="collapse" aria-labelledby="menu-head-1"
 			data-parent="#left-menu-accodion">
 			<div class="card-body">
-				<h1>body</h1>
+
+				<div id="guiNone">로그인 후 이용가능합니다.</div>
+				<div id="favNone">즐겨찾기한 게시물이 없습니다.</div>
+				<div id="f-nav-slide" class="carousel vert slide "
+					data-ride="carousel" data-interval="false">
+
+					<a class="carousel-control-up " href="#f-nav-slide" role="button"
+						data-slide="prev" id="favUp"> <span
+						class="fas fa-angle-up  fa-2x" aria-hidden="true"></span> <span
+						class="sr-only">Previous</span>
+					</a>
+
+					<div class="carousel-inner f-slide-body"></div>
+
+					<a class="carousel-control-down" href="#f-nav-slide" role="button"
+						data-slide="next" id="favDown"> <span
+						class="fas fa-angle-down fa-2x" aria-hidden="true"></span> <span
+						class="sr-only">Next</span>
+					</a>
+				</div>
+
 			</div>
 		</div>
 	</div>
@@ -37,8 +59,8 @@
 				최근 본 영상</a>
 
 		</div>
-		<div id="menu-2" class="collapse recently-slide" aria-labelledby="menu-head-2"
-			data-parent="#left-menu-accodion">
+		<div id="menu-2" class="collapse recently-slide"
+			aria-labelledby="menu-head-2" data-parent="#left-menu-accodion">
 			<div class="card-body">
 
 				<div id="recentlyNone">
@@ -48,17 +70,19 @@
 				<div id="nav-slide" class="carousel vert slide" data-ride="carousel"
 					data-interval="false">
 
-					<a class="carousel-control-up" href="#nav-slide" role="button"
-						data-slide="prev"> <span class="fas fa-angle-up  fa-2x"
-						aria-hidden="true"></span> <span class="sr-only">Previous</span>
+					<a class="carousel-control-up " href="#nav-slide" role="button"
+						data-slide="prev" id="recenUp"> <span
+						class="fas fa-angle-up  fa-2x" aria-hidden="true"></span> <span
+						class="sr-only">Previous</span>
 					</a>
 
 					<!-- Wrapper for slides -->
 					<div class="carousel-inner slide-body"></div>
 
 					<a class="carousel-control-down" href="#nav-slide" role="button"
-						data-slide="next"> <span class="fas fa-angle-down fa-2x"
-						aria-hidden="true"></span> <span class="sr-only">Next</span>
+						data-slide="next" id="recenDown"> <span
+						class="fas fa-angle-down fa-2x" aria-hidden="true"></span> <span
+						class="sr-only">Next</span>
 					</a>
 
 				</div>
@@ -74,24 +98,50 @@
 
 <script type="text/javascript">
 	$(".carousel-control-up").on("click", function() {
-	
-			//alert("hi");
-		if ($(".slide-body").children().first().hasClass("active")) {
 
-			$(".carousel-control-up").removeAttr("href");
-		} else {
+		var up = $(this).attr("id");
 
-			$(".carousel-control-up").attr("href", "#nav-slide");
+		if (up == "favUp") {
+			if ($(".f-slide-body").children().first().hasClass("active")) {
+
+				$(this).removeAttr("href");
+			} else {
+
+				$(this).attr("href", "#f-nav-slide");
+			}
+		} else if (up == "recenUp") {
+			if ($(".slide-body").children().first().hasClass("active")) {
+
+				$(this).removeAttr("href");
+			} else {
+
+				$(this).attr("href", "#nav-slide");
+			}
 		}
 	})
 	$(".carousel-control-down").on("click", function() {
 
-		if ($(".slide-body").children().last().hasClass("active")) {
+		var down = $(this).attr("id");
+		if (down == "favDown") {
+			
+			if ($(".f-slide-body").children().last().hasClass("active")) {
 
-			$(".carousel-control-down").removeAttr("href");
-		} else {
+				$(this).removeAttr("href");
+			} else {
 
-			$(".carousel-control-down").attr("href", "#nav-slide");
+				$(this).attr("href", "#f-nav-slide");
+			}
+			
+
+		} else if (down == "recenDown") {
+
+			if ($(".slide-body").children().last().hasClass("active")) {
+
+				$(this).removeAttr("href");
+			} else {
+
+				$(this).attr("href", "#nav-slide");
+			}
 		}
 	})
 </script>

@@ -1,6 +1,9 @@
 package com.spring.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.spring.service.BoardService;
 import com.spring.service.VideoService;
 import com.spring.vo.BoardVO;
+import com.spring.vo.VideoVO;
 
 @Controller
 public class BoardController {
@@ -94,4 +98,32 @@ public class BoardController {
 		
 	}
 	
+	
+	@RequestMapping(value="favList.do")
+	@ResponseBody
+	public List<VideoVO> favList(
+			
+			@RequestParam(value="fav" , required =false) String fav
+			
+			) {
+		//System.out.println("fav : " +fav);
+		
+		String[] favArray = fav.split("/");
+		List<VideoVO> fvlist = new ArrayList<VideoVO>();
+		
+		for(int i = 0 ; i < favArray.length ; i++) {
+			
+			//System.out.println(i+"="+favArray[i]);
+			
+			if(!favArray[i].equals("")) {
+				VideoVO	videoVO = boardService.getFavlist(favArray[i]);
+				//System.out.println(videoVO.toString());
+				fvlist.add(videoVO);
+			} 
+		} 
+		Collections.reverse(fvlist);
+		//System.out.println(fvlist.size());
+		return fvlist ;
+
+	}
 }

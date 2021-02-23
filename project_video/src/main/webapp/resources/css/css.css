@@ -294,16 +294,15 @@ ul {
     transition: opacity .15s ease;
 }
 
-.carousel-control-up{
-	top :1rem;
-}
 
 
 #nav-slide{
 	height: 34rem;
     
 }
-.slide-body{
+
+
+.slide-body {
 	height : fit-content;
 	max-height: 30rem;
     top: 2rem;
@@ -319,8 +318,10 @@ ul {
     flex-direction: column;
     justify-content: space-around;
     height: 100%;
-    padding: 2rem;
+    padding-bottom: 2rem
 }
+
+
 
 .vert .carousel-item-next.carousel-item-left,
 .vert .carousel-item-prev.carousel-item-right {
@@ -341,10 +342,7 @@ ul {
 }
 
 
-.recently-slide > .card-body{
-	
-	padding :0px;
-}
+
 
 .slide-item-title{
 	font-size: 1rem;
@@ -353,7 +351,34 @@ ul {
     padding: 0.5rem;
 }
 
-.recentlyView > img{
+.recentlyView > img {
+	max-width: 100%;
+	height: auto;
+	padding: 0.5rem;
+	
+}
+.favView-box{
+	
+	display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    padding-bottom: 2rem
+}
+
+#f-nav-slide {
+	
+	height :34rem;
+	
+}
+
+.f-slide-body {
+	height : fit-content;
+	max-height: 30rem;
+    top: 2rem;
+}
+
+.favView > img {
 	max-width: 100%;
 	height: auto;
 	padding: 0.5rem;
