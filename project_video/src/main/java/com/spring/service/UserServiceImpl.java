@@ -25,4 +25,17 @@ public class UserServiceImpl implements UserService {
 			// TODO Auto-generated method stub
 			return userDAO.getUserInfo(userVO);
 		}
+		
+		
+		@Override
+		public int updateFav(UserVO userVO) {
+		// TODO Auto-generated method stub
+			return userDAO.updateFav(userVO);
+		}
+		
+		@Override
+		public int updateFavRelease(UserVO userVO) {
+		// TODO Auto-generated method stub
+		return userDAO.updateFavRelease(userVO);
+		}
 }

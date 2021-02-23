@@ -9,6 +9,25 @@ public class UserVO {
 	private String uemail;
 	private String uphn;
 	
+	private String favorites;
+	private String fbnum; //즐겨찾기 등록될때 사용
+	
+	
+	
+	
+	public String getFbnum() {
+		return fbnum;
+	}
+	public void setFbnum(String fbnum) {
+		this.fbnum = fbnum;
+	}
+	public String getFavorites() {
+		return favorites; 
+	}
+	public void setFavorites(String favorites) {
+		this.favorites = favorites;
+	}
+	
 	public int getUnum() {
 		return unum;
 	}
@@ -45,11 +64,10 @@ public class UserVO {
 	public void setUphn(String uphn) {
 		this.uphn = uphn;
 	}
-	
 	@Override
 	public String toString() {
 		return "UserVO [unum=" + unum + ", userid=" + userid + ", userpw=" + userpw + ", uname=" + uname + ", uemail="
-				+ uemail + ", uphn=" + uphn + "]";
+				+ uemail + ", uphn=" + uphn + ", favorites=" + favorites + "]";
 	}
 	
 	

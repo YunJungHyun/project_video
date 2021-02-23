@@ -16,6 +16,18 @@
 		SELECT * FROM users WHERE userid = #{userid} and userpw =#{userpw}
 	</select>
 	
+	
+	<update id="updateFavRelease">
+		
+		
+			UPDATE users SET favorites =  REPLACE(favorites,#{fbnum} ,'') WHERE unum =#{unum};
+	</update>
+	<update id="updateFav">
+		
+		
+			UPDATE users SET favorites=CONCAT(favorites , #{fbnum} ) WHERE unum =#{unum}
+	</update>
+	
 </mapper>
 
  

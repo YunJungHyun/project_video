@@ -29,7 +29,7 @@
 		</div>
 	</div>
 
-	
+
 
 </div>
 
@@ -73,11 +73,10 @@
 										${vlist.viewcnt} &nbsp;</span>
 								</h1>
 								<h1 class="video-info">
-									작성자 : ${vlist.userid } 
-									<span class="badge">
-										<a href="#"><i class="far fa-star"></i></a>
+									작성자 : ${vlist.userid } <span class="badge badge-info"> <a
+										href="#">LINK</a>
 									</span>
-									
+
 								</h1>
 
 
@@ -107,11 +106,21 @@
 											onclick="judgment('down','${vlist.bnum}')">
 											싫어요 <i class="fas fa-thumbs-down"></i> ${vlist.downcnt }
 										</button>
-										
-										<button class="btn btn-outline-warning info-inner-btn"
-											onclick="favorites('${gui.unum}','${vlist.bnum }')">
-											 <i class="far fa-star"></i>
+									
+									<c:set value="/${vlist.bnum }/" var="fbnum"/>
+									
+									<c:if test="${fn:contains(gui.favorites,fbnum)}">
+										<button class="btn btn-outline-warning info-inner-btn fbtn-${vlist.bnum }"
+											onclick="favorites('${gui.unum}','${vlist.bnum }','true')">
+											<i class="fas fa-star"></i>
 										</button>
+									</c:if>
+									<c:if test="${not fn:contains(gui.favorites,fbnum)}">
+										<button class="btn btn-outline-warning info-inner-btn fbtn-${vlist.bnum }"
+											onclick="favorites('${gui.unum}','${vlist.bnum }','false')">
+											<i class="far fa-star"></i>
+										</button>
+									</c:if>
 									</div>
 
 								</div>
@@ -170,8 +179,8 @@
 
 
 <script type="text/javascript">	
-/* 즐겨 찾기  */
-function favorites(unum, bnum){
+/* 즐겨찾기  */
+function favorites(unum, bnum ,chk){
 	
 	//alert(unum +","+bnum);
 	
@@ -182,7 +191,34 @@ function favorites(unum, bnum){
 	}
 	else{
 		
-		alert("즐겨찾기 등록되었습니다.");
+		$.ajax({
+			
+			url : "favorites.do",
+			data : {
+				
+				"bnum" : bnum,
+				"chk" : chk
+			},
+			type : "POST",
+			dataType : "TEXT",
+			success : function(data){
+				if(data == "add"){
+					
+					alert("즐겨찾기 추가되었습니다.");
+				}else{
+					
+					alert("즐겨찾기 해제되었습니다.");
+					
+				}
+				window.location.href="mainView.do";
+				
+				
+			},error : function(){
+				alert("error");
+			}
+				
+		})
+		
 	}
 	
 }
@@ -193,6 +229,7 @@ function favorites(unum, bnum){
 $(document).ready(function(){
 	
 	refresh();	
+	
 })
 	
 function add_cookie(vnum,exdays){

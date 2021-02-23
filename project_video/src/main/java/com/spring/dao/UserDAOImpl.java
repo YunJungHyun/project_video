@@ -29,5 +29,18 @@ public class UserDAOImpl implements UserDAO{
 		UserVO result =(UserVO) sqlSession.selectOne(Namespace+".getUserInfo", userVO);
 		return result;
 	}
-
+	
+	@Override
+	public int updateFav(UserVO userVO) {
+		
+		int result = sqlSession.update(Namespace+".updateFav",userVO);
+		return result;
+	}
+	
+	@Override
+	public int updateFavRelease(UserVO userVO) {
+	
+		int result = sqlSession.update(Namespace+".updateFavRelease",userVO);
+		return result;
+	}
 }

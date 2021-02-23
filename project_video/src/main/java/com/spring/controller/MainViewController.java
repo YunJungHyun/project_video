@@ -99,7 +99,7 @@ public class MainViewController {
 			 
 			 pagingVO.setCon("bnum");
 		}
-		System.out.println("pagingVO :  "+pagingVO.toString());
+		//System.out.println("pagingVO :  "+pagingVO.toString());
 
 		//장르
 		List<GenreVO> glist= genreService.getAllGenre();
