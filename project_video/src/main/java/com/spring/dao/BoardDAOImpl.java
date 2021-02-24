@@ -63,10 +63,18 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	@Override
 	public VideoVO getFavlist(String favArray) {
-		System.out.println(favArray);
+		//System.out.println(favArray);
 		
 		VideoVO result = sqlSession.selectOne(Namespace+".getFavlist", favArray);
 		
+		return result;
+	}
+	
+	@Override
+	public int myBoardTotalCnt(String unum) {
+		
+		System.out.println("unum : "+unum);
+		int result = sqlSession.selectOne(Namespace+".myBoardTotalCnt",unum);
 		return result;
 	}
 }

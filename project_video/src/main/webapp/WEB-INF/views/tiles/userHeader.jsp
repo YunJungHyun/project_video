@@ -2,9 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
 	<div class="container">
-		<a class="navbar-brand" href="#">YOONPLAYER</a>
+		<a class="navbar-brand" href="mainView.do">YOONPLAYER</a>
 
 
 
@@ -27,7 +28,7 @@
 						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu">
 							<button type="button" class="dropdown-item">나의 회원 정보</button>
-							<button type="button" class="dropdown-item" onclick="myBoard()">내가 작성한 게시글</button>
+							<button type="button" class="dropdown-item" onclick="myBoard(${gui.unum })">내가 작성한 게시글</button>
 							<button type="button" class="dropdown-item logoutBtn">로그아웃</button>
 						</div>
 					</div>
@@ -142,8 +143,15 @@
 		})
 	})
 	
-	function myBoard(){
+	function myBoard(unum){
+		var gui = "${gui}";
 		
-		window.location.href="myBoard.do";
+		if( gui == ""){
+	 		
+	 		alert("로그인 후 이용해주세요.");
+	 		return false;
+	 	}
+		//alert(unum);
+		window.location.href="myVideo.do?unum="+unum;
 	}
 </script>

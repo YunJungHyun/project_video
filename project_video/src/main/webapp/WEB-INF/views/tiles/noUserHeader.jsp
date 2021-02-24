@@ -4,7 +4,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
 	<div class="container">
-		<a class="navbar-brand" href="#">YOONPLAYER</a>
+		<a class="navbar-brand" href="mainView.do">YOONPLAYER</a>
 
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbar-menu" aria-controls="navbar-menu"

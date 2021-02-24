@@ -26,8 +26,21 @@
 					) C
 					WHERE RN BETWEEN #{start} AND #{end}
 					
-
+ 
 			
+	</select>
+	
+	<select id="getMyVideo" resultType="videoVO">
+	
+	SELECT * FROM(
+		SELECT ROW_NUMBER() over (ORDER BY bnum DESC ) AS RN ,bnum ,B.vnum ,B.unum ,B.gnum ,B.userid ,vurl , vtitle , A.upcnt, A.downcnt, A.viewcnt 
+					FROM boards A INNER JOIN videos B 
+						ON A.vnum = B.vnum 
+						 
+						AND B.unum = #{unum}
+					) C
+					WHERE RN BETWEEN #{start} AND #{end}
+	
 	</select>
 	
 	<select id="getOneVideo" resultType="videoVO">

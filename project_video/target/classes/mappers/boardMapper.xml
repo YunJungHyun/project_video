@@ -24,7 +24,13 @@
 			ON A.vnum =B.vnum	
 			WHERE B.gnum LIKE CONCAT(#{gnum},'%')		
 	</select>
-	
+	<select id ="myBoardTotalCnt" parameterType="String" resultType="int">
+		
+		SELECT COUNT(*) FROM boards A inner JOIN videos B 
+			ON A.vnum =B.vnum	
+			WHERE B.unum =#{unum}		
+	</select>
+	 
 	
 	<update id="updateUpCnt">
 		UPDATE boards SET upcnt = upcnt + 1 WHERE bnum = #{bnum}

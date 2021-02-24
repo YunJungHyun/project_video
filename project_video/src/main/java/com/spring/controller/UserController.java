@@ -73,11 +73,18 @@ public class UserController {
 
 	@RequestMapping(value="logout.do")
 	public String logout(
-			RedirectAttributes rttr
+			RedirectAttributes rttr,
+			HttpServletRequest request
 			) {
 
 		System.out.println("[logout.do]");
-		session.invalidate();
+		
+		
+		if(request.isRequestedSessionIdValid()) {
+			session.invalidate();
+			
+		}
+		
 		rttr.addFlashAttribute("message", "logoutSuccess");
 		return "redirect:/mainView.do";
 	}

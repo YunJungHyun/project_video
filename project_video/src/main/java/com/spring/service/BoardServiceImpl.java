@@ -58,4 +58,10 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardDAO.getFavlist(favArray);
 	}
+	
+	@Override
+	public int myBoardTotalCnt(String unum) {
+		// TODO Auto-generated method stub
+		return boardDAO.myBoardTotalCnt(unum);
+	}
 }

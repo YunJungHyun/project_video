@@ -34,4 +34,10 @@ public class VideoServiceImpl implements VideoService{
 		return videoDAO.getOneVideo(vnum);
 	}
 	
+	@Override
+	public List<VideoVO> getMyVideo(PagingVO pagingVO) {
+		// TODO Auto-generated method stub
+		return videoDAO.getMyVideo(pagingVO);
+	}
+	
 }

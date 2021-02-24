@@ -60,6 +60,7 @@ public class MainViewController {
 			) {
 		System.out.println("[mainView.do]");
 		
+		
 		/* System.out.println("nowPage : "+nowPage); */
 		
 		if(gnum== null || gnum.equals("0") ) {
@@ -105,27 +106,27 @@ public class MainViewController {
 
 		//장르
 		List<GenreVO> glist= genreService.getAllGenre();
-
+			
+	
 		//등록한동영상 정보
 		List<VideoVO> vlist = videoService.getAllList(pagingVO);
-			 
-		//System.out.println(vlist.toString());
-		//페이지 세션
+	
+		//System.out.println(vlist.size()); 
+
 		Map<String, String> map = new HashMap<String,String>();
+		//페이지 세션
 		map.put("nowPage", Integer.toString(pagingVO.getNowPage()));
 		map.put("cntPerPage", Integer.toString(pagingVO.getCntPerPage()));
 		map.put("con",pagingVO.getCon());
-		
+		 
 		
 		if(pagingVO.getGnum()=="") {
 			map.put("gnum", "0");
 		}else {
 			map.put("gnum", pagingVO.getGnum());
 		}
-		session =request.getSession(true);
-		session.setAttribute("pagingMap", map);
-		
-		
+		session =request.getSession(true); 
+		session.setAttribute("pagingMap", map);	
 		
 		//댓글 갯수가져오기
 		List<ReplyVO> rlist =replyService.getReplyCnt();
@@ -138,13 +139,56 @@ public class MainViewController {
 		
 		return "view/mainView.page";
 	}
+	
+	
+	@RequestMapping(value="myVideo.do")
+	public String myVideo(
+			PagingVO pagingVO,
+			@RequestParam(value="nowPage", required= false) String nowPage,
+			@RequestParam(value="cntPerPage", required= false) String cntPerPage,
+			@RequestParam(value="unum", required=true) String unum,
+			Model model,
+			HttpServletRequest request
+			) {
+		int total = boardService.myBoardTotalCnt(unum);
+		
+		 
+		//System.out.println("total : "+total);
+		
+		if(nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage="10";
+		}else if(nowPage == null) {
+			nowPage ="1";
+		}else if(cntPerPage==null) {
+			cntPerPage ="10";
+		}
+		
+		pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		
+		//System.out.println("nowPage : "+nowPage);
+		//System.out.println("pagingVO.lastPage : "+pagingVO.getLastPage());
+
+		pagingVO.setUnum(Integer.parseInt(unum));
+		List<VideoVO> myVlist = videoService.getMyVideo(pagingVO);
+		
+		//System.out.println("myVlist.size() :"+myVlist.size());
+		Map<String, String> map = new HashMap<String,String>();
+		
+		//페이지 세션
+		map.put("nowPage", Integer.toString(pagingVO.getNowPage()));
+		map.put("cntPerPage", Integer.toString(pagingVO.getCntPerPage()));
+		
+		session =request.getSession(true); 
+		session.setAttribute("PagingMap", map);	
+		
+		model.addAttribute("pagingVO",pagingVO);
+		model.addAttribute("vlist", myVlist);
+		
+		return "view/userInfo/myVideo.page";
+	}
 
 	
-	@RequestMapping(value="myBoard.do")
-	public String myBoard() {
-		System.out.println("안녕");
-		
-		return "view/userInfo/myBoard.page";
-	}
+	
 
 }

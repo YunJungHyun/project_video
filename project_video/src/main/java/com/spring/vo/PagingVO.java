@@ -13,6 +13,14 @@ public class PagingVO {
 		//리스트 보는 조건 선택
 		private String con;
 		
+		//나의 게시물 볼때
+		private int unum;
+		
+
+		public void setUnum(int unum) {
+			this.unum = unum;
+		}
+
 		public PagingVO() {
 			
 		}
@@ -58,6 +66,19 @@ public class PagingVO {
 		public void calcStartEnd(int nowPage, int cntPerPage) {
 			setEnd(nowPage * cntPerPage);
 			setStart(getEnd() - cntPerPage + 1);
+		}
+		
+		
+		public int getCntPage() {
+			return cntPage;
+		}
+
+		public void setCntPage(int cntPage) {
+			this.cntPage = cntPage;
+		}
+
+		public int getUnum() {
+			return unum;
 		}
 		
 		public int getNowPage() {
