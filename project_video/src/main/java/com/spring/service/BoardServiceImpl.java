@@ -64,4 +64,10 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardDAO.myBoardTotalCnt(unum);
 	}
+	
+	@Override
+	public int boardDelete(String vnum) {
+		// TODO Auto-generated method stub
+		return boardDAO.boardDelete(vnum);
+	}
 }

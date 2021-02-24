@@ -14,6 +14,10 @@ public interface VideoService {
 	VideoVO getOneVideo(int vnum);
 
 	List<VideoVO> getMyVideo(PagingVO pagingVO);
+
+	int myVideoUpdate(VideoVO videoVO);
+
+	int videoDelete(String vnum);
 	
 	
 	

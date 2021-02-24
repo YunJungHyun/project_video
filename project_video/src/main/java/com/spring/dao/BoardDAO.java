@@ -23,6 +23,8 @@ public interface BoardDAO {
 	VideoVO getFavlist(String favArray);
 
 	int myBoardTotalCnt(String unum);
+
+	int boardDelete(String vnum);
 	
 
 

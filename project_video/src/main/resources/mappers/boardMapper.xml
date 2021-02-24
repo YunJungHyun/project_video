@@ -49,6 +49,11 @@
 		SELECT vnum,vtitle,vurl FROM videos WHERE vnum = (SELECT vnum FROM boards WHERE bnum=#{favArray})
 	</select>
 	
+	<delete id="boardDelete">
+		
+		DELETE FROM boards WHERE vnum=#{vnum}
+	</delete>	
 </mapper>
+
 
  

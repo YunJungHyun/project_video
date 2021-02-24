@@ -172,6 +172,9 @@ public class MainViewController {
 		pagingVO.setUnum(Integer.parseInt(unum));
 		List<VideoVO> myVlist = videoService.getMyVideo(pagingVO);
 		
+		//장르
+		List<GenreVO> glist= genreService.getAllGenre();
+		
 		//System.out.println("myVlist.size() :"+myVlist.size());
 		Map<String, String> map = new HashMap<String,String>();
 		
@@ -184,6 +187,7 @@ public class MainViewController {
 		
 		model.addAttribute("pagingVO",pagingVO);
 		model.addAttribute("vlist", myVlist);
+		model.addAttribute("glist", glist);
 		
 		return "view/userInfo/myVideo.page";
 	}

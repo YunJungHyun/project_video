@@ -27,7 +27,7 @@
 							class="sr-only">(current)</span>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu">
-							<button type="button" class="dropdown-item">나의 회원 정보</button>
+							<button type="button" class="dropdown-item" >나의 회원 정보</button>
 							<button type="button" class="dropdown-item" onclick="myBoard(${gui.unum })">내가 작성한 게시글</button>
 							<button type="button" class="dropdown-item logoutBtn">로그아웃</button>
 						</div>
@@ -45,7 +45,7 @@
 
 	</div>
 </nav>
-
+<!-- 나의 회원 정보 modal  -->
 
 <!-- Modal -->
 <div class="modal fade" id="videoRegFormModal" tabindex="-1"

@@ -21,5 +21,7 @@ public interface BoardService {
 
 	int myBoardTotalCnt(String unum);
 
+	int boardDelete(String vnum);
+
 	
 }

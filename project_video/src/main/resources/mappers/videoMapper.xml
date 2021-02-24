@@ -19,7 +19,7 @@
 			
 		
 	SELECT * FROM(
-		SELECT ROW_NUMBER() over (ORDER BY ${con} DESC ) AS RN ,bnum ,B.vnum ,B.unum ,B.gnum ,B.userid ,vurl , vtitle , A.upcnt, A.downcnt, A.viewcnt 
+		SELECT ROW_NUMBER() over (ORDER BY ${con} DESC ) AS RN ,bnum ,B.vnum ,B.unum ,B.gnum ,B.userid ,vurl , vtitle ,vpw, A.upcnt, A.downcnt, A.viewcnt 
 					FROM boards A INNER JOIN videos B 
 						ON A.vnum = B.vnum 
 						WHERE B.gnum LIKE CONCAT( #{gnum}, '%') 
@@ -29,11 +29,11 @@
  
 			
 	</select>
-	
+	 
 	<select id="getMyVideo" resultType="videoVO">
 	
 	SELECT * FROM(
-		SELECT ROW_NUMBER() over (ORDER BY bnum DESC ) AS RN ,bnum ,B.vnum ,B.unum ,B.gnum ,B.userid ,vurl , vtitle , A.upcnt, A.downcnt, A.viewcnt 
+		SELECT ROW_NUMBER() over (ORDER BY bnum DESC ) AS RN ,bnum ,B.vnum ,B.unum ,B.gnum ,B.userid ,vurl , vtitle, vpw,  A.upcnt, A.downcnt, A.viewcnt 
 					FROM boards A INNER JOIN videos B 
 						ON A.vnum = B.vnum 
 						 
@@ -45,8 +45,15 @@
 	
 	<select id="getOneVideo" resultType="videoVO">
 		SELECT * FROM videos WHERE vnum =#{vnum}
-	</select>
+	</select> 
 	
+	<update id="myVideoUpdate" >
+		UPDATE videos SET vurl=#{vurl} , vtitle=#{vtitle}, vpw =#{vpw}, gnum=#{gnum} WHERE vnum= #{vnum} AND unum =#{unum}
+	</update>
+	 
+	 <delete id="videoDelete">
+	 	DELETE FROM videos WHERE vnum = #{vnum};
+	 </delete>
 </mapper>
 
  

@@ -1,5 +1,7 @@
 package com.spring.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.service.BoardService;
 import com.spring.service.VideoService;
+import com.spring.vo.UserVO;
 import com.spring.vo.VideoVO;
 
 @Controller
@@ -29,7 +32,7 @@ public class VideoController {
 	@Inject
 	BoardService boardService;
 	
-	
+	HttpSession session;
 	
 	@RequestMapping(value="videoReg.do", method=RequestMethod.POST)
 	@ResponseBody
@@ -95,5 +98,53 @@ public class VideoController {
 		map.put("mlist", list);
 		
 		return map;
+	}
+	
+	@RequestMapping(value="myVideoUpdate.do")
+	@ResponseBody
+	public void myVideoUpdate(
+			
+			VideoVO videoVO,
+			HttpSession session
+			) {
+		
+		try {
+			String vurl = URLDecoder.decode(videoVO.getVurl(),"UTF-8");
+			String vtitle =  URLDecoder.decode(videoVO.getVtitle(),"UTF-8");
+			String vpw =  URLDecoder.decode(videoVO.getVpw(),"UTF-8");
+			
+			videoVO.setVurl(vurl);
+			videoVO.setVtitle(vtitle);
+			videoVO.setVpw(vpw);
+		
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		UserVO gui = (UserVO) session.getAttribute("gui");
+		
+		videoVO.setUnum(gui.getUnum());
+		
+		int result = videoService.myVideoUpdate(videoVO);
+		System.out.println("result : " +result);
+		//boardService.myBoardUpdate(videoVO);
+		
+	}
+	
+	@RequestMapping(value="videoDelete.do")
+	@ResponseBody
+	public void videoDelete(
+			@RequestParam(value="vnum" ,required=false) String vnum
+			) {
+		
+		
+		int resultVideo = videoService.videoDelete(vnum);
+		int resultBoard = boardService.boardDelete(vnum);
+		
+		
+		System.out.println("resultVideo : "+resultVideo);
+		System.out.println("resultBoard : "+resultBoard);
+	
 	}
 }

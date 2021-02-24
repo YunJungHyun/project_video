@@ -40,4 +40,15 @@ public class VideoServiceImpl implements VideoService{
 		return videoDAO.getMyVideo(pagingVO);
 	}
 	
+	@Override
+	public int myVideoUpdate(VideoVO videoVO) {
+		// TODO Auto-generated method stub
+		return videoDAO.myVideoUpdate(videoVO);
+	}
+	
+	@Override
+	public int videoDelete(String vnum) {
+		// TODO Auto-generated method stub
+		return videoDAO.videoDelete(vnum);
+	}
 }

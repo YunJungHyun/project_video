@@ -73,8 +73,14 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int myBoardTotalCnt(String unum) {
 		
-		System.out.println("unum : "+unum);
+		//System.out.println("unum : "+unum);
 		int result = sqlSession.selectOne(Namespace+".myBoardTotalCnt",unum);
+		return result;
+	}
+	
+	@Override
+	public int boardDelete(String vnum) {
+		int result = sqlSession.delete(Namespace+".boardDelete",vnum);
 		return result;
 	}
 }

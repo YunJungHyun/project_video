@@ -15,6 +15,10 @@ public interface VideoDAO {
 
 	List<VideoVO> getMyVideo(PagingVO pagingVO);
 
+	int myVideoUpdate(VideoVO videoVO);
+
+	int videoDelete(String vnum);
+
 	 
 
 } 
