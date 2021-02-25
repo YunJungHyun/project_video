@@ -10,4 +10,4 @@
 
 <% response.sendRedirect(request.getContextPath()+"mainView.do"); %>
 </body>
-</html>
+</html> 

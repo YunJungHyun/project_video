@@ -6,7 +6,7 @@
 
 <div class="paging-box">
 	
-	
+
 	<div class="col-lg-4 con-btn-group">
 		<a href="#" class="conBtn" id="allCon">전체보기</a> 
 		<a href="#" class="conBtn" id="latestCon">최신</a> 
@@ -44,7 +44,7 @@
 
 <div class="main-content" id="main-content">
 	<div class="accordion" id="accordion">
-
+		
 		<c:forEach items="${vlist}" var="vlist">
 			<div class="card body-card">
 				<div class="card-header body-card-header" id="heading-${vlist.RN }">

@@ -208,7 +208,7 @@ function setCookie( cmap , exdays){
 function refresh(){
 	//alert("refresh");
 
-	var gui = "${gui}";
+var gui = "${gui}";
 	
 if(gui ==""){
 	
@@ -219,7 +219,7 @@ if(gui ==""){
 	
 }else{
 	
-	if("${gui.favorites}" == ""){
+	if("${gui.favorites}" == "/"){
 		
 		$("#guiNone").css("display","none");
 		$("#favNone").css("display","block");
@@ -257,24 +257,37 @@ if(gui ==""){
 					output+="<div class='carousel-item'>";
 					output+="<div class='favView-box'>";
 					for(i ; i <length ;i++){
-						
-						var vurl = data[i].vurl;
-						var vtitle =data[i].vtitle;
-						var videoIdArray=vurl.split("/");
-						var videoId = videoIdArray[3];
-					
-						if(k< l+3){
+						if(data[i] ==null){
+							if(k< l+3){
+							output+="<div class='favView'>";
+							output+="<img src='resources/img/no-video.png'>";
+							output+="<span class='slide-item-title'>삭제된 게시물 입니다.</span>";				
+							output+="</div>";
+								k++;
+							}else{
 							
-						
-						output+="<div class='favView'>";
-						output+="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>";
-						output+="<span class='slide-item-title'>"+vtitle+"</span>";				
-						output+="</div>";
-							k++;
+								l+=3;
+								break;
+							}
 						}else{
+							var vurl = data[i].vurl;
+							var vtitle =data[i].vtitle;
+							var videoIdArray=vurl.split("/");
+							var videoId = videoIdArray[3];
+					
+							if(k< l+3){
 							
-							l+=3;
-							break;
+						
+							output+="<div class='favView'>";
+							output+="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>";
+							output+="<span class='slide-item-title'>"+vtitle+"</span>";				
+							output+="</div>";
+								k++;
+							}else{
+							
+								l+=3;
+								break;
+							}
 						}
 					}
 					output +="</div>";

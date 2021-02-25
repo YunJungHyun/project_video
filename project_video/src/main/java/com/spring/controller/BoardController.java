@@ -117,10 +117,13 @@ public class BoardController {
 			
 			if(!favArray[i].equals("")) {
 				VideoVO	videoVO = boardService.getFavlist(favArray[i]);
-				//System.out.println(videoVO.toString());
+				
 				fvlist.add(videoVO);
 			} 
 		} 
+		
+		System.out.println(fvlist.toString());
+		
 		Collections.reverse(fvlist);
 		//System.out.println(fvlist.size());
 		return fvlist ;

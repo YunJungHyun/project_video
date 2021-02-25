@@ -1,5 +1,7 @@
 package com.spring.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,14 +15,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.service.BoardService;
 import com.spring.service.GenreService;
 import com.spring.service.ReplyService;
 import com.spring.service.UserService;
 import com.spring.service.VideoService;
-import com.spring.vo.BoardVO;
 import com.spring.vo.GenreVO;
 import com.spring.vo.PagingVO;
 import com.spring.vo.ReplyVO;
@@ -56,6 +56,7 @@ public class MainViewController {
 			@RequestParam(value="gnum", required= false) String gnum,
 			@RequestParam(value="con", required= false) String con,
 			HttpServletRequest request,
+			HttpSession session,
 			Model model
 			) {
 		System.out.println("[mainView.do]");
@@ -130,8 +131,7 @@ public class MainViewController {
 		
 		//댓글 갯수가져오기
 		List<ReplyVO> rlist =replyService.getReplyCnt();
-
-
+		
 		model.addAttribute("pagingVO",pagingVO);
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("glist", glist);

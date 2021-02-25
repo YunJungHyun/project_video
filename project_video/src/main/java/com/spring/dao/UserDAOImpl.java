@@ -43,4 +43,6 @@ public class UserDAOImpl implements UserDAO{
 		int result = sqlSession.update(Namespace+".updateFavRelease",userVO);
 		return result;
 	}
+
+
 }

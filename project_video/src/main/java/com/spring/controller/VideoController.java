@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.service.BoardService;
+import com.spring.service.UserService;
 import com.spring.service.VideoService;
 import com.spring.vo.UserVO;
 import com.spring.vo.VideoVO;
@@ -31,6 +32,8 @@ public class VideoController {
 	
 	@Inject
 	BoardService boardService;
+	@Inject
+	UserService userService;
 	
 	HttpSession session;
 	
