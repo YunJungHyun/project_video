@@ -16,6 +16,9 @@ public class PagingVO {
 		//나의 게시물 볼때
 		private int unum;
 		
+		//즐겨찾기 게시물 볼떄
+		private String[] fav;
+		
 
 		public void setUnum(int unum) {
 			this.unum = unum;
@@ -151,6 +154,16 @@ public class PagingVO {
 
 		public void setCon(String con) {
 			this.con = con;
+		}
+
+		
+
+		public String[] getFav() {
+			return fav;
+		}
+
+		public void setFav(String[] fav) {
+			this.fav = fav;
 		}
 
 		@Override

@@ -1,14 +1,12 @@
 package com.spring.dao;
 
-import java.util.List;
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.spring.vo.BoardVO;
+import com.spring.vo.UserVO;
 import com.spring.vo.VideoVO;
 
 @Repository
@@ -83,6 +81,8 @@ public class BoardDAOImpl implements BoardDAO {
 		int result = sqlSession.delete(Namespace+".boardDelete",vnum);
 		return result;
 	}
+	
+	
 }
 
  

@@ -27,7 +27,9 @@
 		
 			UPDATE users SET favorites=CONCAT(favorites , #{fbnum} ) WHERE unum =#{unum}
 	</update>
-	
+	<update id="emtyDelete">
+		UPDATE users SET favorites= #{favorites} where unum= #{unum}
+	</update>
 </mapper>
 
  

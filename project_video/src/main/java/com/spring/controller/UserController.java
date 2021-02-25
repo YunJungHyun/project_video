@@ -1,7 +1,6 @@
 package com.spring.controller;
 
 import javax.inject.Inject;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -131,7 +130,7 @@ public class UserController {
 
 			int result =userService.updateFavRelease(userVO);
 			UserVO gui = userService.getUserInfo(userVO);
-			System.out.println(gui.toString());
+			//System.out.println(gui.toString());
 			if(result==1) {
 				session.setAttribute("gui", gui);
 				favResult="release";
@@ -155,5 +154,38 @@ public class UserController {
 		return favResult;
 
 	}
-
+	
+	@RequestMapping("emptyDelete.do")
+	@ResponseBody
+	public void emptyDelete(
+			@RequestParam(value="favNum", required=true) String favNum,
+			HttpSession session
+			) {
+		
+		UserVO gui = (UserVO)session.getAttribute("gui");
+		int num =Integer.parseInt(favNum);
+		
+		String favList=gui.getFavorites();
+		System.out.println(favList);
+		
+		String[] flArray = favList.split("/");
+		String[] reFlArray = new String[flArray.length];
+		
+		for(int i =0 ; i <flArray.length ; i++) {
+			
+			reFlArray[flArray.length-1-i]= flArray[i];
+			//System.out.println("flArray : "+flArray[i]);
+			
+			
+		}
+		String dFavNum = reFlArray[num];
+		
+		String newFavorites =favList.replace(dFavNum+'/', "");
+		
+		System.out.println("newFavorites :"+newFavorites);
+		gui.setFavorites(newFavorites);
+		int result =userService.emtyDelete(gui);
+	
+		System.out.println("result : " + result);
+	}
 }

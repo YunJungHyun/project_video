@@ -1,7 +1,6 @@
 package com.spring.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -132,8 +131,8 @@ public class MainViewController {
 		//댓글 갯수가져오기
 		List<ReplyVO> rlist =replyService.getReplyCnt();
 		
-		model.addAttribute("pagingVO",pagingVO);
 		model.addAttribute("rlist", rlist);
+		model.addAttribute("pagingVO",pagingVO);
 		model.addAttribute("glist", glist);
 		model.addAttribute("vlist", vlist);
 		
@@ -184,7 +183,11 @@ public class MainViewController {
 		
 		session =request.getSession(true); 
 		session.setAttribute("PagingMap", map);	
+		//댓글 갯수가져오기
+		List<ReplyVO> rlist =replyService.getReplyCnt();
 		
+		model.addAttribute("rlist", rlist);
+
 		model.addAttribute("pagingVO",pagingVO);
 		model.addAttribute("vlist", myVlist);
 		model.addAttribute("glist", glist);
@@ -193,6 +196,86 @@ public class MainViewController {
 	}
 
 	
+	
+	@RequestMapping(value="myFavVideo.do")
+	public String myFavVideo(
+			PagingVO pagingVO,
+			@RequestParam(value="nowPage", required= false) String nowPage,
+			@RequestParam(value="cntPerPage", required= false) String cntPerPage,
+			Model model,
+			HttpServletRequest request,
+			HttpSession session
+			) {
+		UserVO gui = (UserVO)session.getAttribute("gui");
+		int unum = gui.getUnum();
+		String favorites =gui.getFavorites();
+		
+		//System.out.println("favorites :" +favorites);
+		String[] fArray = favorites.split("/");
+		
+		String[] fav = new String[fArray.length-1] ;
+		int total = 0 ;
+
+		for(int i = 0 ; i < fArray.length ; i++ ) {
+			
+			if(!fArray[i].equals("")) {
+				total+=1;
+				fav[i-1]= fArray[i]; 
+			} 	
+		}
+		//System.out.println("fArray :"+Arrays.toString(fArray));
+		System.out.println("fav : "+ Arrays.toString(fav));
+		//System.out.println("total : "+total);
+		
+		if(nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage="10";
+		}else if(nowPage == null) {
+			nowPage ="1";
+		}else if(cntPerPage==null) {
+			cntPerPage ="10";
+		}
+		
+		pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		
+		//System.out.println("nowPage : "+nowPage);
+		//System.out.println("pagingVO.lastPage : "+pagingVO.getLastPage());
+
+		pagingVO.setUnum(unum);
+		
+		pagingVO.setFav(fav);
+		
+				
+		List<VideoVO> fvList = videoService.getMyFavVideo(pagingVO);
+		
+		
+		System.out.println("fvList.size() :" +fvList.size());
+		//System.out.println("fvList.toString() :" +fvList.toString());
+		
+		//장르
+		List<GenreVO> glist= genreService.getAllGenre();
+		
+		//System.out.println("myVlist.size() :"+myVlist.size());
+		Map<String, String> map = new HashMap<String,String>();
+		
+		//페이지 세션
+		map.put("nowPage", Integer.toString(pagingVO.getNowPage()));
+		map.put("cntPerPage", Integer.toString(pagingVO.getCntPerPage()));
+		
+		session =request.getSession(true); 
+		session.setAttribute("PagingMap", map);	
+		//댓글 갯수가져오기
+		List<ReplyVO> rlist =replyService.getReplyCnt();
+		
+		model.addAttribute("rlist", rlist);
+
+		model.addAttribute("pagingVO",pagingVO);
+		//model.addAttribute("vlist", fvList);
+		model.addAttribute("glist", glist);
+		
+		return "view/userInfo/myFavVideo.page";
+	}
+
 	
 
 }

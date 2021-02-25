@@ -158,4 +158,49 @@
 			}
 		}
 	})
+	
+	$(document).on("click", ".emptyBoard", function(){
+		
+		
+		var emptyId = $(this).attr("id");
+		var eArray = emptyId.split("-");
+		var favNum=eArray[1];
+		
+		var con = confirm("즐겨찾기 목록에서 삭제하시겠습니까?");
+	
+		if(con == true){
+			$.ajax({
+				
+				url : "emptyDelete.do",
+				type : "post",
+				data : {
+					"favNum" : favNum
+				},success : function(){
+					alert("해당 게시물이 즐겨찾기 목록에서 삭제되었습니다.");
+					window.location.href="mainView.do";
+				},error : function(){
+					alert("error");
+				}
+			})
+		}
+	})
+	
+	$(document).on("click", ".favBoard", function(){
+		var favId =$(this).attr("id");
+		var fArray = favId.split("-");
+		var favNum=fArray[1];
+	
+		myFavList(favNum);
+	})
+	
+	function myFavList(favNum){
+		var gui = "${gui}";
+		if( gui == ""){
+	 		
+	 		alert("로그인 후 이용해주세요.");
+	 		return false;
+	 	}
+		//alert(unum);
+		window.location.href="myFavVideo.do?favNum="+favNum;
+	}
 </script>

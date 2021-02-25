@@ -18,6 +18,8 @@ public interface VideoService {
 	int myVideoUpdate(VideoVO videoVO);
 
 	int videoDelete(String vnum);
+
+	List<VideoVO> getMyFavVideo(PagingVO pagingVO);
 	
 	
 	

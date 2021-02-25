@@ -51,4 +51,10 @@ public class VideoServiceImpl implements VideoService{
 		// TODO Auto-generated method stub
 		return videoDAO.videoDelete(vnum);
 	}
+	
+	@Override
+	public List<VideoVO> getMyFavVideo(PagingVO pagingVO) {
+		// TODO Auto-generated method stub
+		return videoDAO.getMyFavVideo(pagingVO);
+	}
 }

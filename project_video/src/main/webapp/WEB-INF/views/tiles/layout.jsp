@@ -259,7 +259,7 @@ if(gui ==""){
 					for(i ; i <length ;i++){
 						if(data[i] ==null){
 							if(k< l+3){
-							output+="<div class='favView'>";
+							output+="<div class='favView emptyBoard' id='empty-"+i+"'>";
 							output+="<img src='resources/img/no-video.png'>";
 							output+="<span class='slide-item-title'>삭제된 게시물 입니다.</span>";				
 							output+="</div>";
@@ -278,7 +278,7 @@ if(gui ==""){
 							if(k< l+3){
 							
 						
-							output+="<div class='favView'>";
+							output+="<div class='favView favBoard' id='fav-"+i+"'>";
 							output+="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>";
 							output+="<span class='slide-item-title'>"+vtitle+"</span>";				
 							output+="</div>";
@@ -568,8 +568,8 @@ function replyList(data){
 					output += "<div class='reply-replyer-box'>"+result[i].replyer;
 					
 					if(result[i].replyer == userid){
-						output += "<button class='btn badge'>삭제</button>"
-						output += "<button class='btn badge'>수정</button>"
+						output += "<button class='btn badge'>삭제</button>";
+						output += "<button class='btn badge'>수정</button>";
 					}
 					output +="</div>";
 					output += "<div class='reply-text-box'>"+result[i].replyText+"<button class='btn badge btn-outline-dark reReply-Btn' onclick='reCommentBox("+result[i].rpnum+","+result[i].rnum+","+result[i].bnum+",0)'>답글</button></div>";  
@@ -585,8 +585,8 @@ function replyList(data){
 					output += "<div class='reply-replyer-box'>"+result[i].replyer;
 					
 					if(result[i].replyer == userid){
-						output += "<button class='btn badge'>삭제</button>"
-						output += "<button class='btn badge'>수정</button>"
+						output += "<button class='btn badge'>삭제</button>";
+						output += "<button class='btn badge'>수정</button>";
 					}
 					output += "</div>";
 					output += "<div class='reply-text-box'>"+result[i].replyText+"</div>"; 
@@ -837,7 +837,7 @@ function condition(){
 function pageAnchor(data ,view , gnum , con ,nowPage, startPage, lastPage){
 					//next , 0 , bnum ,  1 , 10
 
-	
+	 
 	var cntPerPage = 10;
 	var startPrev = Number(startPage)-1;
 	var startNext = Number(startPage)+1;
@@ -900,6 +900,35 @@ function pageAnchor(data ,view , gnum , con ,nowPage, startPage, lastPage){
 
 	}
 		
+	}else if (view =="favVideo"){
+		
+		switch(data){
+		case "prev" :
+			//alert("prev"); 
+			if(nowPage != 1){
+			//alert("1페이지 아님");
+			
+			$(".myFav-paging-btn").load("myFavVideo.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&unum="+unum +"  #myFav-paging-btn-group");							
+			$("#myFav-content").load("myFavVideo.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&unum="+unum +" #myFav-accordion");
+		}else{
+			alert(nowPage);
+		}
+		break;
+ 
+		case "next" :
+		if(nowPage != lastPage){
+			//alert("다름");
+			$(".myFav-paging-btn").load("myFavVideo.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&unum="+unum +"  #myFav-paging-btn-group");
+			$("#myFav-content").load("myFavVideo.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&unum="+unum +" #myFav-accordion");
+			
+		}
+		if(nowPage == lastPage){
+			//alert("같음");
+		}
+		break;
+
+	}
+		
 	}
 }
 
@@ -950,4 +979,6 @@ function judgment(judg ,bnum){
 }
 
 
+
+ 
 </script>

@@ -122,7 +122,7 @@ public class BoardController {
 			} 
 		} 
 		
-		System.out.println(fvlist.toString());
+		//System.out.println(fvlist.toString());
 		
 		Collections.reverse(fvlist);
 		//System.out.println(fvlist.size());

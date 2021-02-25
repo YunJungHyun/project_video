@@ -17,7 +17,12 @@
 	<dependencies>
 
 		<!-- +ADD DEPENDENCY -->
-
+		<!-- Sql Log -->
+		<dependency>
+			<groupId>org.lazyluke</groupId>
+			<artifactId>log4jdbc-remix</artifactId>
+			<version>0.2.7</version>
+		</dependency>
 		<!-- MySQL -->
 		<!-- MySQL 라이브러리 -->
 		<dependency>

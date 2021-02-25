@@ -1,6 +1,7 @@
 package com.spring.service;
 
 import com.spring.vo.BoardVO;
+import com.spring.vo.UserVO;
 import com.spring.vo.VideoVO;
 
 public interface BoardService {
@@ -22,6 +23,7 @@ public interface BoardService {
 	int myBoardTotalCnt(String unum);
 
 	int boardDelete(String vnum);
+
 
 	
 }

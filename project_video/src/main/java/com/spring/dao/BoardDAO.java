@@ -1,9 +1,7 @@
 package com.spring.dao;
 
-import java.util.List;
-import java.util.Map;
-
 import com.spring.vo.BoardVO;
+import com.spring.vo.UserVO;
 import com.spring.vo.VideoVO;
 
 public interface BoardDAO {
@@ -25,6 +23,7 @@ public interface BoardDAO {
 	int myBoardTotalCnt(String unum);
 
 	int boardDelete(String vnum);
+
 	
 
 

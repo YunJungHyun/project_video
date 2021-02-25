@@ -11,4 +11,6 @@ public interface UserService {
 	public int updateFav(UserVO userVO);
 
 	public int updateFavRelease(UserVO userVO);
+
+	public int emtyDelete(UserVO gui);
 }

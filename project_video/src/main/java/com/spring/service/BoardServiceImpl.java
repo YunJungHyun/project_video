@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.dao.BoardDAO;
 import com.spring.vo.BoardVO;
+import com.spring.vo.UserVO;
 import com.spring.vo.VideoVO;
 
 @Service
@@ -70,4 +71,6 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		return boardDAO.boardDelete(vnum);
 	}
+	
+	
 }
