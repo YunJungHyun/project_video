@@ -336,6 +336,8 @@ $.ajax ({
 		
 			for(var j=0; j < length/3 ;j++){
 				
+				
+				
 				if(k>0){
 					
 					i = l;
@@ -343,8 +345,23 @@ $.ajax ({
 				output+="<div class='carousel-item'>";
 				output+="<div class='recentlyView-box'>";
 				
+				
 				for( i ; i < length ; i++){
 					
+					
+					if(data.mlist[i] ==null){
+						if(k< l+3){
+						output+="<div class='recentlyView'>";
+						output+="<img src='resources/img/no-video.png'>";
+						output+="<span class='slide-item-title'>삭제된 게시물 입니다.</span>";				
+						output+="</div>";
+							k++;
+						}else{
+						
+							l+=3;
+							break;
+						}
+					}else{
 					var vurl = data.mlist[i].vurl;
 					var vtitle =data.mlist[i].vtitle;
 					var videoIdArray=vurl.split("/");
@@ -363,6 +380,7 @@ $.ajax ({
 						
 						l+=3;
 						break;
+					}
 					}
 				}
 				
@@ -531,7 +549,8 @@ function insertReply(bnumData){
 function replyList(data){
 	//alert(data);
 	var bnum = data;
-	
+	var userid = "${gui.userid}";
+	//alert(userid);
 	$.ajax({
 		type:"get",
 		url : "replyList.do?bnum="+bnum,
@@ -546,7 +565,13 @@ function replyList(data){
 				if(result[i].rnum == 0){
 					output +=" <div class='row replyOneLine-row'>"
 					output += "<div class='reply-box border rounded-lg' id='reply-"+result[i].rpnum+"' >";
-					output += "<div class='reply-replyer-box'>"+result[i].replyer+"</div>";
+					output += "<div class='reply-replyer-box'>"+result[i].replyer;
+					
+					if(result[i].replyer == userid){
+						output += "<button class='btn badge'>삭제</button>"
+						output += "<button class='btn badge'>수정</button>"
+					}
+					output +="</div>";
 					output += "<div class='reply-text-box'>"+result[i].replyText+"<button class='btn badge btn-outline-dark reReply-Btn' onclick='reCommentBox("+result[i].rpnum+","+result[i].rnum+","+result[i].bnum+",0)'>답글</button></div>";  
 					output +="</div>";																																			
 					output += "</div>";
@@ -555,9 +580,15 @@ function replyList(data){
 				
 				if(result[i].rnum != 0){
 					output +="<div class='row reReplyOneLine-row'>";
-					output += "<i class='col-xl-1 reply-icon'> &#10551;</i>";
-					output += "<div class='border rounded-lg col-xl-11 reReply-box-child'>";
-					output += "<div class='reply-replyer-box'>"+result[i].replyer+"</div>";
+					output += "<i class='col-xl-1 col-lg-1 reply-icon'> &#10551;</i>";
+					output += "<div class='border rounded-lg col-xl-11 col-lg-11 reReply-box-child'>";
+					output += "<div class='reply-replyer-box'>"+result[i].replyer;
+					
+					if(result[i].replyer == userid){
+						output += "<button class='btn badge'>삭제</button>"
+						output += "<button class='btn badge'>수정</button>"
+					}
+					output += "</div>";
 					output += "<div class='reply-text-box'>"+result[i].replyText+"</div>"; 
 					output += "</div>";
 					output += "</div>";
