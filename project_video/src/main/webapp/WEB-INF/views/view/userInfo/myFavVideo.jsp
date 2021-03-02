@@ -4,7 +4,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="paging-box">
-
+	
+	<input type="hidden" id="favNum"  value="${favNum }"/>
 
 	<div class="col-lg-4 con-btn-group">
 		<h4>즐겨찾기한 게시물</h4>
@@ -34,7 +35,7 @@
 
 		<c:forEach items="${vlist}" var="vlist">
 			<div class="card body-card">
-				<div class="card-header body-card-header" id="heading-${vlist.RN }">
+				<div class="card-header body-card-header" id="heading-${vlist.RN}">
 					<div class="row">
 						<div class="col-lg-4  col-md-6 align-self-center video-img-box"
 							data-toggle="collapse" data-target="#collapse-${vlist.RN}"
@@ -43,7 +44,7 @@
 							<c:set var="strArray" value="${fn:split(vlist.vurl,'/')}" />
 							<c:forEach items="${strArray }" var="videoId" varStatus="g">
 								<c:if test="${g.count == 3}">
-									<img src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg"
+									<img src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg" id="thum-${vlist.RN}"
 										onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','imgClick')">
 								</c:if>
 							</c:forEach>
@@ -164,7 +165,23 @@
 
 
 <script type="text/javascript">
-	
+	$(document).ready(function(){
+		
+		var favNum=	$("#favNum").val();
+		
+		$(".card-header").each(function(){
+			
+			var headerId = $(this).attr("id");
+			var hArray =headerId.split("-");
+			var hid =hArray[1]-1;
+			
+			if(hid == favNum){
+				
+				$("#thum-"+hArray[1]).trigger("click");
+			}
+		})
+		
+	})
 	
 </script>
 

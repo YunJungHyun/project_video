@@ -17,7 +17,8 @@ public class PagingVO {
 		private int unum;
 		
 		//즐겨찾기 게시물 볼떄
-		private String[] fav;
+		private String fav;
+		private String[] favArray;
 		
 
 		public void setUnum(int unum) {
@@ -157,13 +158,21 @@ public class PagingVO {
 		}
 
 		
-
-		public String[] getFav() {
+		
+		public String getFav() {
 			return fav;
 		}
 
-		public void setFav(String[] fav) {
+		public void setFav(String fav) {
 			this.fav = fav;
+		}
+		
+		public String[] getFavArray() {
+			return favArray;
+		}
+
+		public void setFavArray(String[] favArray) {
+			this.favArray = favArray;
 		}
 
 		@Override

@@ -56,12 +56,6 @@ public class VideoDAOImpl implements VideoDAO {
 	@Override
 	public int myVideoUpdate(VideoVO videoVO) {
 		
-		System.out.println("videoVO.vnum():"+videoVO.getVnum());
-		System.out.println("videoVO.getVurl():"+videoVO.getVurl());
-		System.out.println("videoVO.getUnum():"+videoVO.getUnum());
-		System.out.println("videoVO.getTitle():"+videoVO.getVtitle());
-		System.out.println("videoVO.getVpw():"+videoVO.getVpw());
-		System.out.println("videoVO.getGnum():"+videoVO.getGnum());
 		
 		int result = sqlSession.update(Namespace+".myVideoUpdate", videoVO);
 		return result;

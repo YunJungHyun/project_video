@@ -167,13 +167,23 @@ function add_cookie(vnum,exdays){
 
 	var cmap = "{"+vnum+"}";
 	setCookie(cmap,exdays);
-	
+	/*	 if(gui == ""){
+		var cmap ="none";
+		cmap += "{"+vnum+"}";
+		setCookie(cmap,exdays);
+	}else{
+		
+		var cmap =gui;
+		cmap += "{"+vnum+"}";
+		setCookie(cmap,exdays);
+	} */
 
 	$("#vnum").val(document.cookie);
 }
 
 function setCookie( cmap , exdays){
 	
+	//cookie가 있는지
 	var chk = document.cookie.indexOf(cmap);
 	
 	if(exdays!=""){
@@ -184,7 +194,8 @@ function setCookie( cmap , exdays){
 		
 		var expires="";
 	}			
-	//alert(chk);  
+	alert(chk);  
+	alert(document.cookie); 
 	if(chk == -1){
 		
 		if(document.cookie ==""){
@@ -193,7 +204,6 @@ function setCookie( cmap , exdays){
 		}else{
 			document.cookie += "&"+cmap+expires+"; path=/";
 		}
-		//alert(document.cookie);
 	}else{
 		
 	
@@ -316,7 +326,7 @@ if(document.cookie==""){
 	
 	$("#recentlyNone").css("display","none");
 	$("#nav-slide").css("display","block");
-$.ajax ({
+	$.ajax ({
 		
 		url : "recentlyList.do",
 		type :"GET",
@@ -370,7 +380,7 @@ $.ajax ({
 					
 					if(k < l+3){
 							
-						output+="<div class='recentlyView'>";
+						output+="<div class='recentlyView recentlyBoard' id='recently-"+i+"'>";
 						output+="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>";
 						output+="<span class='slide-item-title'>"+vtitle+"</span>";				
 						output+="</div>";

@@ -200,7 +200,22 @@
 	 		alert("로그인 후 이용해주세요.");
 	 		return false;
 	 	}
-		//alert(unum);
+		//alert(favNum);
 		window.location.href="myFavVideo.do?favNum="+favNum;
+	}
+	
+	$(document).on("click", ".recentlyBoard", function(){
+		var recentlyId =$(this).attr("id");
+		var rArray = recentlyId.split("-");
+		var reNum=rArray[1];
+		
+		//alert(reNum);
+		myRecentlyList(favNum);
+	})
+	
+	function myRecentlyList(reNum){
+		
+		//alert(favNum);
+		window.location.href="myRecentlyVideo.do?reNum="+reNum;
 	}
 </script>

@@ -57,15 +57,16 @@
 	 
 	 <select id="getMyFavVideo" parameterType="videoVO" resultType="videoVO">
 		
+		
 		<![CDATA[
 		 SELECT * FROM(
-		SELECT ROW_NUMBER() over (ORDER BY bnum DESC ) AS RN ,bnum ,B.vnum ,B.unum ,B.gnum ,B.userid ,vurl , vtitle, vpw,  A.upcnt, A.downcnt, A.viewcnt 
+		SELECT ROW_NUMBER() over (ORDER BY FIELD(bnum, ]]><foreach collection="favArray" item="favNum" separator=",">${favNum}</foreach><![CDATA[) ) AS RN ,bnum ,B.vnum ,B.unum ,B.gnum ,B.userid ,vurl , vtitle, vpw,  A.upcnt, A.downcnt, A.viewcnt 
 					FROM boards A INNER JOIN videos B 
 						ON A.vnum = B.vnum 
-						AND A.bnum REGEXP ('^]]><foreach collection="fav" item="favNum" separator="$|^">${favNum}</foreach><![CDATA[$')		 
+						AND A.bnum REGEXP (#{fav})		 
 					) C
 					WHERE RN BETWEEN #{start} AND #{end}		
-			]]> 
+			]]>
 	 </select>
 </mapper>
 

@@ -1,6 +1,7 @@
 package com.spring.controller;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -204,28 +206,38 @@ public class MainViewController {
 			@RequestParam(value="cntPerPage", required= false) String cntPerPage,
 			Model model,
 			HttpServletRequest request,
-			HttpSession session
+			HttpSession session,
+			@RequestParam(value="favNum" , required=false) String favNum
 			) {
 		UserVO gui = (UserVO)session.getAttribute("gui");
 		int unum = gui.getUnum();
 		String favorites =gui.getFavorites();
 		
-		//System.out.println("favorites :" +favorites);
+		System.out.println("favorites :" +favNum);
 		String[] fArray = favorites.split("/");
 		
-		String[] fav = new String[fArray.length-1] ;
+		String fav = "^";
+		String[] favArray= new String[fArray.length-1];
 		int total = 0 ;
-
+		
 		for(int i = 0 ; i < fArray.length ; i++ ) {
 			
 			if(!fArray[i].equals("")) {
 				total+=1;
-				fav[i-1]= fArray[i]; 
+				favArray[fArray.length-i-1] = fArray[i];
+				
+				if(i != fArray.length-1) {		
+					fav += fArray[i] +"$|^";
+				}else {
+					
+					fav += fArray[i]+"$";
+				}
+				
 			} 	
 		}
-		//System.out.println("fArray :"+Arrays.toString(fArray));
-		System.out.println("fav : "+ Arrays.toString(fav));
-		//System.out.println("total : "+total);
+		
+		System.out.println("favArray : " +Arrays.toString(favArray));
+		System.out.println("total : "+total);
 		
 		if(nowPage == null && cntPerPage == null) {
 			nowPage = "1";
@@ -240,9 +252,9 @@ public class MainViewController {
 		
 		//System.out.println("nowPage : "+nowPage);
 		//System.out.println("pagingVO.lastPage : "+pagingVO.getLastPage());
-
+	
 		pagingVO.setUnum(unum);
-		
+		pagingVO.setFavArray(favArray);
 		pagingVO.setFav(fav);
 		
 				
@@ -268,14 +280,20 @@ public class MainViewController {
 		List<ReplyVO> rlist =replyService.getReplyCnt();
 		
 		model.addAttribute("rlist", rlist);
-
+		model.addAttribute("favNum" ,favNum);
 		model.addAttribute("pagingVO",pagingVO);
-		//model.addAttribute("vlist", fvList);
+		model.addAttribute("vlist", fvList);
 		model.addAttribute("glist", glist);
 		
 		return "view/userInfo/myFavVideo.page";
 	}
-
 	
+	
+	@RequestMapping(value="myRecentlyVideo.do")
+	public String myRecentlyVideo() {
+		
+		
+		return "view/userInfo/myFavVideo.page";
+	}
 
 }

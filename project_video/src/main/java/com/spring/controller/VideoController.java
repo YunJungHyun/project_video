@@ -76,7 +76,7 @@ public class VideoController {
 	public Map<String,Object> recentlyList(
 			@RequestParam (value="cookie" , required= false) String cookie
 			) {
-		//System.out.println("cookie : "+cookie);
+		System.out.println("cookie : "+cookie);
 		List<VideoVO> list = new ArrayList<VideoVO>();
 		
 		String[] cArray= cookie.split("&");
