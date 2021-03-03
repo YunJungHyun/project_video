@@ -83,12 +83,13 @@
 	</div>
 	<div class="container mainContainer">
 
-		<div class="row">
+		<div class="row"> 
 
 			<div class="left-menuBox col-lg-3">
+				<input type="hidden" id="cookie">
 				<tiles:insertAttribute name="left-menu" />
 			</div>
-
+ 
 			<div class="mainBox col-lg-9">
 				<tiles:insertAttribute name="body" />
 			</div>
@@ -108,114 +109,182 @@
 
 
 <script type="text/javascript">	
-/* 즐겨찾기  */
-function favorites(unum, bnum ,chk){
+
+/* 쿠키 생성  */
+function add_cookie(vnum){
 	
-	//alert(unum +","+bnum);
+	//alert("add_cookie : " +vnum);
 	
-	if(unum == ""){
+	$.ajax({
 		
-		alert("로그인 후 이용해주세요.");
-		return false;
-	}
-	else{
-		
-		$.ajax({
+		url : "setCookie.do",
+		data : {
 			
-			url : "favorites.do",
-			data : {
-				
-				"bnum" : bnum,
-				"chk" : chk
-			},
-			type : "POST",
-			dataType : "TEXT",
-			success : function(data){
-				if(data == "add"){
-					
-					alert("즐겨찾기 추가되었습니다.");
-				}else{
-					
-					alert("즐겨찾기 해제되었습니다.");
-					
-				}
-				window.location.href="mainView.do";
-				
-				
-			},error : function(){
-				alert("error");
-			}
-				
-		})
+			"vnum" : vnum
 		
-	}
-	
+		},
+		success:function(){
+			
+			recentlyRefresh();
+		},error:function(){
+			
+			
+		}
+		
+		
+	})
 }
 
-
-
-/* 즐겨 찾기 끝  */
-/* 쿠키 생성  */
 $(document).ready(function(){
 	
-	refresh();
-
+	favRefresh();
+	recentlyRefresh();
 })
 	
-function add_cookie(vnum,exdays){
-
-
-	var cmap = "{"+vnum+"}";
-	setCookie(cmap,exdays);
-	/*	 if(gui == ""){
-		var cmap ="none";
-		cmap += "{"+vnum+"}";
-		setCookie(cmap,exdays);
-	}else{
-		
-		var cmap =gui;
-		cmap += "{"+vnum+"}";
-		setCookie(cmap,exdays);
-	} */
-
-	$("#vnum").val(document.cookie);
-}
-
-function setCookie( cmap , exdays){
+function recentlyRefresh(){
 	
-	//cookie가 있는지
-	var chk = document.cookie.indexOf(cmap);
-	
-	if(exdays!=""){
-		var day = new Date();
-		day.setTime(day.getTime() + (exdays * 24 * 60 * 60 * 1000));
-		var expires="; expires="+date.toGMTString();
-	}else{
+	var userid ="${gui.userid}";
+	if(userid == ""){
 		
-		var expires="";
-	}			
-	alert(chk);  
-	alert(document.cookie); 
-	if(chk == -1){
-		
-		if(document.cookie ==""){
-			document.cookie +=cmap+expires+"; path=/"; 
-		
-		}else{
-			document.cookie += "&"+cmap+expires+"; path=/";
-		}
-	}else{
-		
-	
-		document.cookie = 	document.cookie.replace(cmap+"&",""); 
-		document.cookie += "&"+cmap+expires+"; path=/";
+		userid ="none";
 	}
 	
-	refresh();
-	
+	if(document.cookie.indexOf(userid)== -1){ 
+		//alert("쿠키없음");
+		$("#recentlyNone").css("display","block");
+		$("#nav-slide").css("display","none");
+	}else{
+		
+		$("#recentlyNone").css("display","none");
+		$("#nav-slide").css("display","block");
+		
+		var userid ="${gui.userid}";
+		
+		if(userid ==""){
+			
+			userid="none";
+		}
+		
+		if(document.cookie.indexOf(userid) != -1){
+			//alert(document.cookie);
+			var cookie ="";
+			
+			if(document.cookie.indexOf(";") != -1){
+				var cookieArray = document.cookie.split(";");
+				
+				for( var  i = 0 ; i < cookieArray.length ;i++){ 
+					
+					var chk = cookieArray[i].includes(userid);
+					
+					if(chk == true ){
+						
+						var updateArray = cookieArray[i].replace(userid+"=","");
+						var updateArray2 = updateArray.replace(";","");
+						cookie = updateArray2.split("%2C");
+						
+					}  
+					
+				}
+			
+			}else{
+				
+				var updateArray = document.cookie.replace(userid+"=","");
+				cookie = updateArray.split("%2C");	
+			}
+			 //cookie 값이 한번에 안넘어가서 hidden input으로 받은다음 value를 넘겨줌
+			$("#cookie").val(cookie);
+			
+			var cookie = $("#cookie").val();
+			alert(cookie);
+			$.ajax ({
+				
+				url : "recentlyList.do",
+				type :"GET",
+				data :{
+					
+					"cookie" : cookie 
+				},
+				dataType:"json",
+				success : function(data){
+					//	var x =data;
+					var length = data.mlist.length;
+					//alert(length);
+					var output="";
+					var k =0;
+					var i =0;
+					var l =0;
+				
+					for(var j=0; j < length/3 ;j++){
+						
+						
+						
+						if(k>0){
+							
+							i = l;
+						}
+						output+="<div class='carousel-item'>";
+						output+="<div class='recentlyView-box'>";
+						
+						
+						for( i ; i < length ; i++){
+							
+							
+							if(data.mlist[i] ==null){
+								if(k< l+3){
+								output+="<div class='recentlyView'>";
+								output+="<img src='resources/img/no-video.png'>";
+								output+="<span class='slide-item-title'>삭제된 게시물 입니다.</span>";				
+								output+="</div>";
+									k++;
+								}else{
+								
+									l+=3;
+									break;
+								}
+							}else{
+							var vurl = data.mlist[i].vurl;
+							var vtitle =data.mlist[i].vtitle;
+							var videoIdArray=vurl.split("/");
+							var videoId = videoIdArray[3];
+							
+							
+							if(k < l+3){
+									
+								output+="<div class='recentlyView recentlyBoard' id='recently-"+i+"'>";
+								output+="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>";
+								output+="<span class='slide-item-title'>"+vtitle+"</span>";				
+								output+="</div>";
+						
+								k++;
+							}else{
+								
+								l+=3;
+								break;
+							}
+							}
+						}
+						
+						output +="</div>";
+						output +="</div>";
+					}
+					
+					$(".slide-body").html(output);
+					$(".slide-body").children().first().addClass("active");
+					
+					
+					//alert($(".carousel-item").length);
+				},error : function(){
+					alert("error");
+				}
+			})
+		}
+
+	}
+
 }
 
-function refresh(){
+
+function favRefresh(){
 	//alert("refresh");
 
 var gui = "${gui}";
@@ -231,7 +300,7 @@ if(gui ==""){
 	
 	if("${gui.favorites}" == "/"){
 		
-		$("#guiNone").css("display","none");
+		$("#guiNone").css("display","none"); 
 		$("#favNone").css("display","block");
 		$("#f-nav-slide").css("display","none");
 	}else{
@@ -316,98 +385,7 @@ if(gui ==""){
 	}
 }
 
-	
-if(document.cookie==""){ 
-	//alert("쿠키없음");
-	
-	$("#recentlyNone").css("display","block");
-	$("#nav-slide").css("display","none");
-}else{
-	
-	$("#recentlyNone").css("display","none");
-	$("#nav-slide").css("display","block");
-	$.ajax ({
-		
-		url : "recentlyList.do",
-		type :"GET",
-		data :{
-			
-			"cookie" :document.cookie
-		},
-		dataType:"json",
-		success : function(data){
-			//	var x =data;
-			var length = data.mlist.length;
-			//alert(length);
-			var output="";
-			var k =0;
-			var i =0;
-			var l =0;
-		
-			for(var j=0; j < length/3 ;j++){
-				
-				
-				
-				if(k>0){
-					
-					i = l;
-				}
-				output+="<div class='carousel-item'>";
-				output+="<div class='recentlyView-box'>";
-				
-				
-				for( i ; i < length ; i++){
-					
-					
-					if(data.mlist[i] ==null){
-						if(k< l+3){
-						output+="<div class='recentlyView'>";
-						output+="<img src='resources/img/no-video.png'>";
-						output+="<span class='slide-item-title'>삭제된 게시물 입니다.</span>";				
-						output+="</div>";
-							k++;
-						}else{
-						
-							l+=3;
-							break;
-						}
-					}else{
-					var vurl = data.mlist[i].vurl;
-					var vtitle =data.mlist[i].vtitle;
-					var videoIdArray=vurl.split("/");
-					var videoId = videoIdArray[3];
-					
-					
-					if(k < l+3){
-							
-						output+="<div class='recentlyView recentlyBoard' id='recently-"+i+"'>";
-						output+="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>";
-						output+="<span class='slide-item-title'>"+vtitle+"</span>";				
-						output+="</div>";
-				
-						k++;
-					}else{
-						
-						l+=3;
-						break;
-					}
-					}
-				}
-				
-				output +="</div>";
-				output +="</div>";
-			}
-			
-			$(".slide-body").html(output);
-			$(".slide-body").children().first().addClass("active");
-			
-			
-			//alert($(".carousel-item").length);
-		},error : function(){
-			alert("error");
-		}
-	})
-	}
+
 }
 
 
@@ -505,9 +483,9 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 		})
 		
 		viewCntUp(bnum);
-		/* 쿠키적용 함수  */
 		
-		add_cookie(vnum ,"");
+		/* 쿠키적용 함수  */
+		add_cookie(vnum);
 	}
 }
 
@@ -988,7 +966,53 @@ function judgment(judg ,bnum){
 	
 }
 
+/* 즐겨찾기  */
+function favorites(unum, bnum ,chk){
+	
+	//alert(unum +","+bnum);
+	
+	if(unum == ""){
+		
+		alert("로그인 후 이용해주세요.");
+		return false;
+	}
+	else{
+		
+		$.ajax({
+			
+			url : "favorites.do",
+			data : {
+				
+				"bnum" : bnum,
+				"chk" : chk
+			},
+			type : "POST",
+			dataType : "TEXT",
+			success : function(data){
+				if(data == "add"){
+					
+					alert("즐겨찾기 추가되었습니다.");
+				}else{
+					
+					alert("즐겨찾기 해제되었습니다.");
+					
+				}
+				window.location.href="mainView.do";
+				
+				
+			},error : function(){
+				alert("error");
+			}
+				
+		})
+		
+	}
+	
+}
 
+
+
+/* 즐겨 찾기 끝  */
 
  
 </script>

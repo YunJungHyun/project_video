@@ -1,6 +1,7 @@
 package com.spring.controller;
 
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,7 +32,8 @@ public class UserController {
 			HttpServletRequest request
 			,HttpServletResponse response
 			) {
-
+	
+		//System.out.println("cookie.getValue() :" +cookie.getValue());
 		System.out.println("[login.do]");
 
 		System.out.println("userVO.getUserid() : "+userVO.getUserid() );
