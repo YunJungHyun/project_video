@@ -14,7 +14,7 @@
 	</insert>
 	
 	<select id="getOneBoard" resultType="boardVO">
-	
+	 
 		SELECT * FROM boards WHERE vnum=#{vnum}
 	</select>
 	
@@ -22,7 +22,7 @@
 		
 		SELECT COUNT(*) FROM boards A inner JOIN videos B 
 			ON A.vnum =B.vnum	
-			WHERE B.gnum LIKE CONCAT(#{gnum},'%')		
+			WHERE B.gnum LIKE CONCAT( #{gnum}, '%') AND B.vtitle LIKE CONCAT('%',#{searchTxt},'%')
 	</select>
 	<select id ="myBoardTotalCnt" parameterType="String" resultType="int">
 		

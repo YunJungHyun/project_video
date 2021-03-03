@@ -10,7 +10,7 @@ public interface BoardService {
 
 	BoardVO getOneBoard(String vnum);
 
-	int boardTotalCnt(String gnum);
+	int boardTotalCnt(String gnum,String searchTxt);
  
 	int updateUpCnt(int bnum);
 

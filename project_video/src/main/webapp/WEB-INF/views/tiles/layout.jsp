@@ -19,8 +19,10 @@
 	crossorigin="anonymous">
 
 <!-- 내가 설정한 css  -->
-<link type="text/css" rel="stylesheet"
-	href="<c:url value='resources/css/css.css'/>" />
+<link type="text/css" rel="stylesheet" media="screen and (min-width:992px)" href="<c:url value='resources/css/lgcss.css'/>" />
+<link type="text/css" rel="stylesheet" media="screen and (min-width:768px) and (max-width:991px)" href="<c:url value='resources/css/mcss.css'/>" />
+<link type="text/css" rel="stylesheet" media="screen and (min-width:576px) and (max-width:767px)" href="<c:url value='resources/css/scss.css'/>" />
+<link type="text/css" rel="stylesheet" media="screen and (max-width:575px)" href="<c:url value='resources/css/excss.css'/>" />
 
 
 <!-- icon  -->
@@ -85,7 +87,7 @@
 
 		<div class="row"> 
 
-			<div class="left-menuBox col-lg-3">
+			<div class="left-menuBox col-lg-3 ">
 				<input type="hidden" id="cookie">
 				<tiles:insertAttribute name="left-menu" />
 			</div>
@@ -825,7 +827,7 @@ function condition(){
 /* 보는 기준에따라 리스트 출력 끝 */
 
 /* 페이징 */
-function pageAnchor(data ,view , gnum , con ,nowPage, startPage, lastPage){
+function pageAnchor(data ,view ,searchTxt ,gnum , con ,nowPage, startPage, lastPage){
 					//next , 0 , bnum ,  1 , 10
 
 	 
@@ -841,19 +843,19 @@ function pageAnchor(data ,view , gnum , con ,nowPage, startPage, lastPage){
 		switch(data){
 			case "prev" :
 				//alert("prev"); 
-				if(nowPage != 1){
+				if(nowPage != 1){ 
 				//alert("1페이지 아님");
-				
-				$(".paging-btn").load("mainView.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+"  #paging-btn-group");							
-				$("#main-content").load("mainView.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #accordion");
+				 
+				$(".paging-btn").load("mainView.do?search="+searchTxt+"&nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+"  #paging-btn-group");							
+				$("#main-content").load("mainView.do?search="+searchTxt+"&nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #accordion");
 			}
 			break;
 	
 		case "next" :
 			if(nowPage != lastPage){
 				//alert("다름");
-				$(".paging-btn").load("mainView.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+"  #paging-btn-group");
-				$("#main-content").load("mainView.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #accordion");
+				$(".paging-btn").load("mainView.do?search="+searchTxt+"&nowPage="+startNext+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+"  #paging-btn-group");
+				$("#main-content").load("mainView.do?search="+searchTxt+"&nowPage="+startNext+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #accordion");
 				
 			}
 			if(nowPage == lastPage){
@@ -1011,7 +1013,7 @@ function judgment(judg ,bnum){
 			if(data == 'down'){
 				
 				alert("해당 게시물을 싫어합니다.");
-			} 
+			}  
 			if(${pagingMap.gnum}==0){
 				window.location.href="mainView.do?nowPage="+${pagingMap.nowPage}+"&cntPerPage="+${pagingMap.cntPerPage};
 			}else{

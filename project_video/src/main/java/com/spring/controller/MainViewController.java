@@ -56,20 +56,25 @@ public class MainViewController {
 			@RequestParam(value="cntPerPage", required= false) String cntPerPage,
 			@RequestParam(value="gnum", required= false) String gnum,
 			@RequestParam(value="con", required= false) String con,
+			@RequestParam(value="search",required=false) String searchTxt,
 			HttpServletRequest request,
 			HttpSession session,
 			Model model
 			) {
 		System.out.println("[mainView.do]");
-
-
+		//System.out.println("searchTxt :" +searchTxt);
+		
 		/* System.out.println("nowPage : "+nowPage); */
 
 		if(gnum== null || gnum.equals("0") ) {
 			gnum= "";
 		}
-
-		int total = boardService.boardTotalCnt(gnum);
+		if(searchTxt == null) {
+			searchTxt ="";
+		}
+		
+		
+		int total = boardService.boardTotalCnt(gnum,searchTxt);
 
 		if(nowPage == null && cntPerPage == null) {
 			nowPage = "1";
@@ -82,7 +87,10 @@ public class MainViewController {
 		pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 
 		pagingVO.setGnum(gnum);
+		pagingVO.setSearchTxt(searchTxt);
 
+		
+		
 		if(con != null) {
 			switch (con) {
 
@@ -120,6 +128,7 @@ public class MainViewController {
 		map.put("nowPage", Integer.toString(pagingVO.getNowPage()));
 		map.put("cntPerPage", Integer.toString(pagingVO.getCntPerPage()));
 		map.put("con",pagingVO.getCon());
+		map.put("searchTxt",pagingVO.getSearchTxt());
 
 
 		if(pagingVO.getGnum()=="") {

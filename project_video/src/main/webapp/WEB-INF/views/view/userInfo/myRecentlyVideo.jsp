@@ -11,21 +11,7 @@
 		<h4>최근 본 게시물</h4>
 	</div>
 
-	<div class="myRecently-paging-btn  col-lg-auto ml-auto">
-		<div id="myRecently-paging-btn-group" class="btn-group" role="group"
-			aria-label="Basic example">
-
-			<button id="prev" type="button" class="btn btn-secondary"
-				onclick="pageAnchor('prev','recentlyVideo','','','${PagingMap.nowPage}','${pagingVO.startPage}','${pagingVO.lastPage}')">
-				<i class="fas fa-caret-left"></i>
-			</button>
-			<span class="btn btn-secondary"><b>${pagingVO.nowPage}</b></span>
-			<button id="next" type="button" class="btn btn-secondary"
-				onclick="pageAnchor('next','recentlyVideo','','','${PagingMap.nowPage}','${pagingVO.startPage}','${pagingVO.lastPage }')">
-				<i class="fas fa-caret-right"></i>
-			</button>
-		</div>
-	</div>
+	
 </div>
 
 
@@ -166,6 +152,15 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		var userid ="${gui.userid}";
+		if(userid == ""){
+			
+			userid ="none";
+		}
+		if(document.cookie.indexOf(userid) == -1){
+			//alert("hi");
+			window.location.href="mainView.do";
+		}
 		
 		var reNum=	$("#reNum").val();
 		

@@ -18,12 +18,12 @@
 		<div id="paging-btn-group" class="btn-group" role="group"
 			aria-label="Basic example">
 			<button id="prev" type="button" class="btn btn-secondary"
-				onclick="pageAnchor('prev','','${pagingMap.gnum}','${pagingMap.con}','${pagingMap.nowPage}','${pagingVO.startPage}','${pagingVO.lastPage}')">
+				onclick="pageAnchor('prev','','${pagingMap.searchTxt }','${pagingMap.gnum}','${pagingMap.con}','${pagingMap.nowPage}','${pagingVO.startPage}','${pagingVO.lastPage}')">
 				<i class="fas fa-caret-left"></i>
 			</button>
 			<span class="btn btn-secondary"><b>${pagingVO.nowPage}</b></span>
 			<button id="next" type="button" class="btn btn-secondary"
-				onclick="pageAnchor('next','','${pagingMap.gnum}','${pagingMap.con }','${pagingMap.nowPage}','${pagingVO.startPage}','${pagingVO.lastPage }')">
+				onclick="pageAnchor('next','','${pagingMap.searchTxt }','${pagingMap.gnum}','${pagingMap.con }','${pagingMap.nowPage}','${pagingVO.startPage}','${pagingVO.lastPage }')">
 				<i class="fas fa-caret-right"></i>
 			</button>
 		</div>

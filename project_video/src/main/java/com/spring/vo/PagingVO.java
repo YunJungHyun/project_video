@@ -24,6 +24,9 @@ public class PagingVO {
 		private String recently;
 		private String[] recentlyArray;
 		
+		//검색어
+		private String searchTxt;
+		
 		public void setUnum(int unum) {
 			this.unum = unum;
 		}
@@ -194,6 +197,16 @@ public class PagingVO {
 
 		public void setRecentlyArray(String[] recentlyArray) {
 			this.recentlyArray = recentlyArray;
+		}
+
+		
+		
+		public String getSearchTxt() {
+			return searchTxt;
+		}
+
+		public void setSearchTxt(String searchTxt) {
+			this.searchTxt = searchTxt;
 		}
 
 		@Override

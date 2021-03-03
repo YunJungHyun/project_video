@@ -1,12 +1,14 @@
 package com.spring.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.spring.vo.BoardVO;
-import com.spring.vo.UserVO;
 import com.spring.vo.VideoVO;
 
 @Repository
@@ -34,8 +36,13 @@ public class BoardDAOImpl implements BoardDAO {
 	} 
 	
 	@Override
-	public int boardTotalCnt(String gnum) {
-		 int result = sqlSession.selectOne(Namespace+".boardTotalCnt",gnum);
+	public int boardTotalCnt(String gnum,String searchTxt) {
+		
+			Map<String,String> map = new HashMap<String, String>();
+			map.put("gnum", gnum);
+			map.put("searchTxt", searchTxt);
+			
+		 int result = sqlSession.selectOne(Namespace+".boardTotalCnt", map);
 		return result;
 	}
 	

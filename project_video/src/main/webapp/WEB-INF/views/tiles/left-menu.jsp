@@ -5,14 +5,15 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="search-box">
 	<form class="my-4 search-form">
-
-		<input class="col-lg-10 search-input" type="search"
-			placeholder="영상 제목 입력해주세요.">
-		<button class="search-btn col-lg-2">
+		<input id="search" name="search" class="col-lg-10 search-input" type="search"
+			placeholder="영상 제목을 입력해주세요.">
+		<button class="search-btn col-lg-2" type="submit">
 			<i class="fas fa-search"></i>
 		</button>
 	</form>
 </div>
+
+
 <div class="accordion" id="left-menu-accodion">
 
 	<div class="card">
