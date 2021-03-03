@@ -57,4 +57,10 @@ public class VideoServiceImpl implements VideoService{
 		// TODO Auto-generated method stub
 		return videoDAO.getMyFavVideo(pagingVO);
 	}
+	
+	@Override
+	public List<VideoVO> getMyRecentlyVideo(PagingVO pagingVO) {
+		// TODO Auto-generated method stub
+		return videoDAO.getMyRecentlyVideo(pagingVO);
+	}
 }

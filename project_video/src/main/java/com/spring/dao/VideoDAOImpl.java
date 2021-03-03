@@ -74,4 +74,10 @@ public class VideoDAOImpl implements VideoDAO {
 		List<VideoVO> result =sqlSession.selectList(Namespace+".getMyFavVideo",pagingVO);
 		return result;
 	}
+	
+	@Override
+	public List<VideoVO> getMyRecentlyVideo(PagingVO pagingVO) {
+		List<VideoVO> result = sqlSession.selectList(Namespace+".getMyRecentlyVideo",pagingVO);
+		return result;
+	}
 }

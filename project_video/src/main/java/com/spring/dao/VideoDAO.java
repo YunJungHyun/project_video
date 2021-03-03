@@ -21,6 +21,8 @@ public interface VideoDAO {
 
 	List<VideoVO> getMyFavVideo(PagingVO pagingVO);
 
+	List<VideoVO> getMyRecentlyVideo(PagingVO pagingVO);
+
 	 
 
 } 

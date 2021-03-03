@@ -20,7 +20,10 @@ public class PagingVO {
 		private String fav;
 		private String[] favArray;
 		
-
+		//최근 본 게시물 볼때
+		private String recently;
+		private String[] recentlyArray;
+		
 		public void setUnum(int unum) {
 			this.unum = unum;
 		}
@@ -173,6 +176,24 @@ public class PagingVO {
 
 		public void setFavArray(String[] favArray) {
 			this.favArray = favArray;
+		}
+		
+		
+
+		public String getRecently() {
+			return recently;
+		}
+
+		public void setRecently(String recently) {
+			this.recently = recently;
+		}
+
+		public String[] getRecentlyArray() {
+			return recentlyArray;
+		}
+
+		public void setRecentlyArray(String[] recentlyArray) {
+			this.recentlyArray = recentlyArray;
 		}
 
 		@Override

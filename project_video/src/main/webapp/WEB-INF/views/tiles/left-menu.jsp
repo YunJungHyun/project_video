@@ -73,7 +73,7 @@
 				최근 본 영상</a>
 
 		</div>
-		<div id="menu-2" class="collapse recently-slide"
+		<div id="menu-2" class="collapse recently-slide "
 			aria-labelledby="menu-head-2" data-parent="#left-menu-accodion">
 			<div class="card-body">
 
@@ -210,12 +210,14 @@
 		var reNum=rArray[1];
 		
 		//alert(reNum);
-		myRecentlyList(favNum);
+		myRecentlyList(reNum);
 	})
 	
 	function myRecentlyList(reNum){
-		
-		//alert(favNum);
-		window.location.href="myRecentlyVideo.do?reNum="+reNum;
+		var cookie =$("#cookie").val();
+		//alert(reNum+","+cookie);
+		window.location.href="myRecentlyVideo.do?reNum="+reNum+"&cookie="+cookie;
 	}
+	
+	
 </script>

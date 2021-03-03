@@ -349,9 +349,9 @@ ul {
 	max-width: 100%;
 	height: auto;
 	padding: 0.5rem;
-}
+} 
 
-#my-content, #myFav-content {
+#my-content, #myFav-content, #myRecently-content {
 	margin-top: 1.5rem;
 }
 

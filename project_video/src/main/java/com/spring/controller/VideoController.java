@@ -94,9 +94,9 @@ public class VideoController {
 		for(int i = 0 ; i < cArray.length ;i++) {
 
 			
-			System.out.println("cArray.length :"+cArray[i].length());
+			//System.out.println("cArray.length :"+cArray[i].length());
 			int vnum =Integer.parseInt(cArray[i]);
-			System.out.println("vnum : "+ vnum);
+			//System.out.println("vnum : "+ vnum);
 
 			VideoVO videoVO= videoService.getOneVideo(vnum);
 
@@ -173,7 +173,7 @@ public class VideoController {
 			) throws UnsupportedEncodingException {
 
 		System.out.println("[setCookie.do]");
-
+		System.out.println("vnum :"+vnum);
 		UserVO gui = (UserVO)session.getAttribute("gui");
 		String userid = null;
 
@@ -197,21 +197,17 @@ public class VideoController {
 				}
 			}
 			if(equalsValueCnt != 0){ // 같은 값을 넣으려고 할 때의 처리
-				System.out.println("sumValue : "+sumValue);
+				System.out.println("sumValue : "+sumValue); 
 				String newSumValue ="";
-				String[] sumstr =sumValue.split(",");
 				
-				for (int i =0 ; i <sumstr.length ;i++) {
+				System.out.println("sumValue.contains() :"+sumValue.contains(vnum+",") );
+				if(sumValue.contains(vnum+",")) {
 					
-					if(sumstr[i].equals(vnum)) {
-						sumstr[i] = "";
-					}
-					
-					newSumValue+=sumstr[i]+","; 
+					sumValue=sumValue.replaceAll(vnum+"," ,"");
+					System.out.println("sumValue result:" +sumValue); 
+					sumValue+=vnum;
 				}
-				System.out.println("newSumValue : "+newSumValue );
-				String x =newSumValue.replaceFirst(",", "");
-				sumValue = x+vnum;
+				//System.out.println("sumValue result : "+sumValue );
 				
 			}else{
 				sumValue += vnum;
