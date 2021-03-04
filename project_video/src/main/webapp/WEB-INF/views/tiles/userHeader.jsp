@@ -8,27 +8,37 @@
 		<a class="navbar-brand" href="mainView.do">YOONPLAYER</a>
 
 
+		<div class="dropdown">
+			<button class="navbar-toggler" type="button" id="dropdownMenuButton"
+				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			aria-controls="navbar-menu" data-target="#navbar-menu"
-			aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
 
-			<span class="navbar-toggler-icon"></span>
-		</button>
-
-
+			</button>
+			<div class="dropdown-menu dropdown-menu-right right-hamburger"
+				aria-labelledby="dropdownMenuButton">
+				<a class="dropdown-item" href="#">나의 회원 정보</a> 
+				<a class="dropdown-item" href="#">내가 작성한 게시글</a>
+				<hr>
+				<a class="dropdown-item" href="#">게시물 등록</a>
+				<a class="dropdown-item" href="#">오늘 본 동영상</a>
+				<a class="dropdown-item" href="#">즐겨 찾기한 동영상</a>
+				<hr>
+				<a class="dropdown-item logoutBtn" href="#">로그아웃</a>
+			</div>
+ 
+		</div>
 		<div class="collapse navbar-collapse" id="navbar-menu">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item ">
 
 					<div class="dropdown active">
 						<a class="nav-link  btn btn-outline" href="#"
-							data-toggle="dropdown" data-target=""> 내 정보<span
-							class="sr-only">(current)</span>
-						</a>
+							data-toggle="dropdown" data-target=""> 내 정보 </a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenu">
-							<button type="button" class="dropdown-item" >나의 회원 정보</button>
-							<button type="button" class="dropdown-item" onclick="myBoard(${gui.unum })">내가 작성한 게시글</button>
+							<button type="button" class="dropdown-item">나의 회원 정보</button>
+							<button type="button" class="dropdown-item"
+								onclick="myBoard(${gui.unum })">내가 작성한 게시글</button>
 							<button type="button" class="dropdown-item logoutBtn">로그아웃</button>
 						</div>
 					</div>

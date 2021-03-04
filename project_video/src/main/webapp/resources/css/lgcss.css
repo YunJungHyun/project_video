@@ -1,27 +1,10 @@
 @charset "UTF-8";
 
-a:hover {
-	text-decoration: none;
-}
-
-a {
-	text-decoration: none;
-	color: #000;
-}
-
-ul {
-	list-style: none;
-	padding-left: 0px;
-}
-
 .navbar {
-	background-color: #55279a;
+	background-color: #55279ae0;
 }
 
-.navbar-brand {
-	font-size: 25.5px;
-	font-weight: 700;
-}
+
 
 .btn-outline {
 	font-weight: bold;

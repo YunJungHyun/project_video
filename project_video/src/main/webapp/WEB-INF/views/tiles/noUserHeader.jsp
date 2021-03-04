@@ -6,21 +6,26 @@
 	<div class="container">
 		<a class="navbar-brand" href="mainView.do">YOONPLAYER</a>
 
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbar-menu" aria-controls="navbar-menu"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button> 
-		<div class="collapse navbar-collapse" id="navbar-menu">
+		<div class="dropdown">
+			<button class="navbar-toggler" type="button" id="dropdownMenuButton"
+				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="dropdown-menu dropdown-menu-right right-hamburger" aria-labelledby="dropdownMenuButton">
+				<a class="dropdown-item" href="#">오늘 본 동영상</a> 
+				<hr>
+				<a class="dropdown-item" href="#" data-toggle="modal" data-target="#loginFormModal">로그인</a>
+			</div> 
+		</div> 
+		<div class="collapse navbar-collapse">
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item active"><a class="nav-link btn btn-outline navbtn" href="#"
-					data-toggle="modal" data-target="#loginFormModal">LOGIN <span
-						class="sr-only">(current)
-				</span>
-				</a>
-				</li>
+				<li class="nav-item active"><a
+					class="nav-link btn btn-outline navbtn" href="#"
+					data-toggle="modal" data-target="#loginFormModal">LOGIN </a></li>
 			</ul>
 		</div>
+
+
 	</div>
 </nav>
 

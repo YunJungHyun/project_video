@@ -5,16 +5,14 @@
 
 
 <div class="paging-box">
-	
-
-	<div class="col-lg-4 con-btn-group">
+	<div class="col-lg-4 col-6 con-btn-group">
 		<a href="#" class="conBtn" id="allCon">전체보기</a> 
 		<a href="#" class="conBtn" id="latestCon">최신</a> 
 		<a href="#" class="conBtn" id="viewcnt">조회수</a> 
 		<a href="#" class="conBtn" id="upcnt">좋아요</a>
 	</div>
 
-	<div class="paging-btn  col-lg-auto ml-auto">
+	<div class="paging-btn col-6 col-lg-auto ml-auto">
 		<div id="paging-btn-group" class="btn-group" role="group"
 			aria-label="Basic example">
 			<button id="prev" type="button" class="btn btn-secondary"
@@ -36,7 +34,7 @@
 <div class="genre-container my-3">
 	<div class="genre-box col-12">
 		<c:forEach items="${glist }" var="glist">
-			<button class="btn btn-outline-secondary genreBtn col-lg-2"
+			<button class="btn btn-outline-secondary genreBtn col-lg-2 col-2"
 				id="genre-${glist.gnum }" onclick="gnameClick('${glist.gnum}')">${glist.gname}</button>
 		</c:forEach>
 	</div>
@@ -49,7 +47,7 @@
 			<div class="card body-card">
 				<div class="card-header body-card-header" id="heading-${vlist.RN }">
 					<div class="row">
-						<div class="col-lg-4  col-md-6 align-self-center video-img-box"
+						<div class="col-lg-4 align-self-center video-img-box"
 							data-toggle="collapse" data-target="#collapse-${vlist.RN}"
 							aria-expanded="false" aria-controls="collapse-${vlist.RN}">
 
@@ -61,8 +59,11 @@
 								</c:if>
 							</c:forEach>
 						</div>
-
-						<div class="col-lg-8 col-md-6 video-info-box">
+						
+						 
+						<!--header info box  -->
+						<div class="col-lg-8 video-info-box">
+							
 							<div class="row video-info-row">
 								<h1 class="video-title" data-toggle="collapse"
 									data-target="#collapse-${vlist.RN}" aria-expanded="false"
@@ -76,7 +77,6 @@
 									작성자 : ${vlist.userid } <span class="badge badge-info"> <a
 										href="#">LINK</a>
 									</span>
-
 								</h1>
 
 
@@ -125,8 +125,8 @@
 
 								</div>
 							</div>
-
-						</div>
+							<!-- / header info box  -->
+						</div>	
 					</div>
 					<!-- /.row -->
 				</div>
