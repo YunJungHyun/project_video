@@ -472,6 +472,7 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 				
 				$(".video-box-player-"+vnum).addClass("open");
 				
+				
 				//타이틀을 클릭해서 이벤트가 발생했다면 댓글창을 같이 보여준다.
 				 if(co=="titleClick"){
 					//alert("titleClick");
@@ -1085,5 +1086,18 @@ function favorites(unum, bnum ,chk){
 
 /* 즐겨 찾기 끝  */
 
+/* 화면 작을때 댓글 클릭  */
+	$(document).on("click", ".reply-cnt", function(){
+	
+		//alert("hi");
+		var replyId =$(this).attr("id");
+		
+		var reArray =replyId.split("-");
+		
+		var bnum = reArray[2];
+		var vnum =reArray[3];
+		
+		commentBox(vnum, bnum);
+	})
  
 </script>

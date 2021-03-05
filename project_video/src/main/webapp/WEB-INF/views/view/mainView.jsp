@@ -79,15 +79,20 @@
 										</div>
 										
 										<div class="reply-cnt" id="reply-cnt-${vlist.bnum}-${vlist.vnum}">	
-											<i class="far fa-comment-dots"></i> 0
-											${vlist.bnum}
+										
+											<i class="far fa-comment-dots"></i> 
+											<c:set var="i" value="0" />
+											<c:set var="sz" value="${fn:length(rlist) }" />
+											
 											<c:forEach items="${rlist}" var="rlist"> 
-												
 												<c:if test="${vlist.bnum == rlist.bnum }">
-												
-													<script>
-													$("#reply-cnt-"+${vlist.bnum}+"-"+${vlist.vnum}).html("<i class='far fa-comment-dots'></i> ${rlist.bnumCnt}");
-													</script>
+													${rlist.bnumCnt}
+												</c:if>
+												<c:if test="${vlist.bnum != rlist.bnum }">
+													<c:set var="i" value="${i+1 }" />
+													<c:if test="${sz == i }">
+														0
+													</c:if>
 												</c:if>
 											</c:forEach>
 										</div>
@@ -97,9 +102,30 @@
 											
 											<div class="dropdown-menu v-dropup">
 												<ul class="v-dropup-ul">
-													<li class=" v-dropup-li"><button class="btn btn-outline-warning ">즐겨찾기 <i class="far fa-star"></i></button></li>
-													<li class=" v-dropup-li"><button class="btn btn-outline-success ">좋아요 <i class="far fa-thumbs-up"></i> ${vlist.upcnt}</button></li>
-													<li class=" v-dropup-li"><button class="btn btn-outline-danger ">싫어요 <i class="far fa-thumbs-down"></i> ${vlist.downcnt }</button></li>
+													<li class=" v-dropup-li">
+														<c:set value="/${vlist.bnum }/" var="fbnum"/>
+														<c:if test="${ fn:contains(gui.favorites,fbnum)}">
+															<button class="btn btn-outline-warning" onclick="favorites('${gui.unum}','${vlist.bnum }','true')">
+																즐겨찾기 <i class="fas fa-star"></i>
+															</button>
+														</c:if>
+														<c:if test="${not fn:contains(gui.favorites,fbnum)}">
+															<button class="btn btn-outline-warning " onclick="favorites('${gui.unum}','${vlist.bnum }','false')">즐겨찾기 <i class="far fa-star"></i></button>
+														</c:if>
+													</li>
+													<li class=" v-dropup-li">
+														
+															<button class="btn btn-outline-success" onclick="judgment('up','${vlist.bnum}')">좋아요 
+																<i class="far fa-thumbs-up"></i> ${vlist.upcnt}
+															</button>
+														
+														
+													</li>
+													<li class=" v-dropup-li">
+														<button class="btn btn-outline-danger" onclick="judgment('down','${vlist.bnum}')">싫어요 
+															<i class="far fa-thumbs-down"></i> ${vlist.downcnt }
+														</button>
+													</li>
 												</ul>
 											</div>
 										</div>
@@ -203,15 +229,4 @@
 
 <script type="text/javascript">
 
-	$(".reply-cnt").on("click",function(){
-		
-		var replyId =$(this).attr("id");
-		
-		var reArray =replyId.split("-");
-		
-		var bnum = reArray[2];
-		var vnum =reArray[3];
-		
-		commentBox(vnum, bnum);
-	})
 </script>
