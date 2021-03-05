@@ -564,7 +564,7 @@ function replyList(data){
 			for (var i in result){
 				
 				if(result[i].rnum == 0){
-					output +=" <div class='row replyOneLine-row'>"
+					output +=" <div class='replyOneLine-row'>"
 					output += "<div class='reply-box border rounded-lg' id='reply-"+result[i].rpnum+"' >";
 					output += "<div class='reply-replyer-box'>"+result[i].replyer;
 					
@@ -580,9 +580,9 @@ function replyList(data){
 				}
 				
 				if(result[i].rnum != 0){
-					output +="<div class='row reReplyOneLine-row'>";
-					output += "<i class='col-xl-1 col-lg-1 reply-icon'> &#10551;</i>";
-					output += "<div class='border rounded-lg col-xl-11 col-lg-11 reReply-box-child'>";
+					output +="<div class='reReplyOneLine-row'>";
+					output += "<i class='col-lg-1 col-1 reply-icon'> &#10551;</i>";
+					output += "<div class='border rounded-lg col-lg-11 col-11 reReply-box-child'>";
 					output += "<div class='reply-replyer-box'>"+result[i].replyer;
 					
 					if(result[i].replyer == userid){
@@ -632,13 +632,13 @@ function reCommentBox(rpnum ,rnum,bnum ,rnum){
 	
 	//alert(rnum);
 		var output ="";
-		output="<div class='row reply-input-group reReply-input-group'>";	
-		output+="<div class='col-lg-9'>" 
+		output="<div class='row reReply-input-group'>";	
+		output+="<div class='col-lg-9 col-8 reReply-input'>" 
 			output+="<textarea  style='resize: none;' id='replyText-"+bnum+"-"+rpnum+"' class='form-control'  rows='1' placeholder='답글을 입력해주세요.'></textarea>"
 		output+="</div>"
-		output+="<div class='col-lg-3 reReply-input-btn'>"
-			output+="<button type='button' name='boardNum-"+bnum+"' class='btn btn-outline-secondary' onclick='insertReReply("+bnum+","+rpnum+")'>답글 등록</button>"
-			output+="<button type='button' class='btn btn-outline-secondary' onclick ='cancel("+rpnum+","+bnum+")'>취소</button>"
+		output+="<div class='col-lg-3 col-4 reReply-input-btn'>"
+			output+="<button type='button' name='boardNum-"+bnum+"' class='btn btn-outline-secondary reReply-btn col-7' onclick='insertReReply("+bnum+","+rpnum+")'>답글 입력</button>"
+			output+="<button type='button' class='btn btn-outline-secondary col-5' onclick ='cancel("+rpnum+","+bnum+")'>취소</button>"
 		output+="</div></div>"
 	  
 		if(rnum == 0){

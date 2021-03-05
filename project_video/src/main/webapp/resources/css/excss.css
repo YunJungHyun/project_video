@@ -91,32 +91,139 @@
 	padding-left: 1rem;
 }
 
-.v-dropup{
+.v-dropup {
 	border: none;
 	padding: 0px;
 	background-color: initial;
-	top : -0.5rem;
+	top: -0.5rem;
 }
 
-.v-dropup-ul{
-	
+.v-dropup-ul {
 	margin: 0px;
 	text-align: center;
 }
 
-.v-dropup-li{
+.v-dropup-li {
 	background-color: initial;
 }
 
-.v-dropup-li > button{
-	
-	background-color:#fff;
-	width :7rem;
+.v-dropup-li>button {
+	background-color: #fff;
+	width: 7rem;
 }
-.card-body{
-	
-	padding :0;
+
+.card-body {
+	padding: 0;
 }
+
+.reply-input-group {
+	padding: 0.5rem 0.5rem;
+}
+
+.reply-hr {
+	margin-top: 0px;
+}
+
+.reply-input {
+	padding-left: 0px;
+	padding-right: 0.25rem;
+}
+
+.reply-input-btn {
+	padding-left: 0.25px;
+	padding-right: 0rem;
+}
+
+.reply-input-btn>button {
+	padding: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+.reply-list-group {
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	display: flex;
+	flex-direction: column;
+}
+
+.replyOneLine-row{
+	
+	width :100%;
+	margin: 0px;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 0.3rem;
+}
+
+.reply-box {
+	
+	width : 100%;
+	padding: 0.5rem;
+}
+
+.reReplyOneLine-row{
+	
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 0.3rem;
+}
+
+.reply-icon{
+	padding-left :0px;
+	padding-right :0.5rem;
+	font-size : 2rem;
+	text-align: right;
+}
+
+.reply-replyer-box{
+	
+	
+	font-weight :bold;
+	font-size : 1rem;
+	padding-bottom: 0.25rem;
+}
+
+.reply-text-box{
+
+	font-size : 1rem;
+	padding-top: 0.25rem;
+}
+
+.reReply-Btn{
+	
+	float: right;
+	padding: 0.25rem;
+    font-weight: unset;
+    width: 2.5rem;
+    height: 1.5rem;
+}
+
+.reReply-input-group{
+	
+	width: 100%;
+    margin: 0px;
+    margin-bottom: 0.25rem;
+}
+
+.reReply-input{
+	padding-left:0px;
+	padding-right : 0.25rem;
+}
+
+.reReply-input-btn{
+	padding : 0px;
+	
+}
+
+
+.reReply-input-btn > button {
+	padding :0px;
+	height : 100%;
+	
+}
+
+
 /* 
 .video-info-row > * {
 	

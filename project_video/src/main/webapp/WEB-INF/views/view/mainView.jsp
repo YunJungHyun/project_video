@@ -175,21 +175,20 @@
 					<div class="card-body">
 						<div class="container">
 							<div class="row reply-input-group">
-								<div class="reply-input col-lg-10">
+								<div class="reply-input col-lg-10 col-10">
 									<textarea style="resize: none;" id="replyText-${vlist.bnum}"
 										class="form-control" rows="1" placeholder="댓글을 입력해주세요."></textarea>
 								</div>
-								<div class="reply-input-btn parentBtn col-lg-2">
+								<div class="reply-input-btn parentBtn col-lg-2 col-2">
 
 									<button type="button" name="boardNum-${vlist.bnum }"
-										class="btn btn-dark" onclick="insertReply('${vlist.bnum}')">댓글
-										등록</button>
+										class="btn btn-dark" onclick="insertReply('${vlist.bnum}')">댓글 입력</button>
 								</div>
 							</div>
 						</div>
-						<hr>
+						<hr class="reply-hr">
 						<div class="reply-list-group container">
-							<div id="replyList-${vlist.bnum }" class="row replyList-row"></div>
+							<div id="replyList-${vlist.bnum }" class="replyList-row"></div>
 						</div>
 					</div>
 				</div>
