@@ -141,7 +141,7 @@ public class MainViewController {
 
 		//댓글 갯수가져오기
 		List<ReplyVO> rlist =replyService.getReplyCnt();
-
+	
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("pagingVO",pagingVO);
 		model.addAttribute("glist", glist);

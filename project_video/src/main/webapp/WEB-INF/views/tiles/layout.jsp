@@ -110,24 +110,17 @@
 
 <script type="text/javascript">	
 
-$(window).resize(function(){
-	
-	var width_size = window.outerWidth;
-	
-	if(width_size <= 991){
-	
-	}
-})
+
 
 $(document).ready(function(){
 	
 	favRefresh();
 	recentlyRefresh();
 	var width =screen.width;
-	if(width <= 991){ 
+	/* if(width <= 991){ 
 		
-		
-	}
+		$(".v-writer").html("<i class='fas fa-user-edit'></i>")
+	} */
 })
 	
 

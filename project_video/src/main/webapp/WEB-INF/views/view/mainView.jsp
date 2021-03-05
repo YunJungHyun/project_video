@@ -64,23 +64,49 @@
 						<!--header info box  -->
 						<div class="col-lg-8 video-info-box">
 							
-							<div class="row video-info-row">
-								<h1 class="video-title" data-toggle="collapse"
-									data-target="#collapse-${vlist.RN}" aria-expanded="false"
-									aria-controls="collapse-${vlist.RN }"
-									onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','titleClick')">
+							<div class="row">
+								<div class="video-info-row">
+									<div class="video-title" data-toggle="collapse"
+										data-target="#collapse-${vlist.RN}" aria-expanded="false"
+										aria-controls="collapse-${vlist.RN }"
+										onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','titleClick')">
+										<span class="v-title">${vlist.vtitle}</span> 	
+									</div>
+									<div class="video-info badge">
+										
+										<div class="view-cnt">	
+											<i class="far fa-eye"></i> ${vlist.viewcnt}
+										</div>
+										
+										<div class="reply-cnt" id="reply-cnt-${vlist.bnum}-${vlist.vnum}">	
+											<i class="far fa-comment-dots"></i> 0
+											${vlist.bnum}
+											<c:forEach items="${rlist}" var="rlist"> 
+												
+												<c:if test="${vlist.bnum == rlist.bnum }">
+												
+													<script>
+													$("#reply-cnt-"+${vlist.bnum}+"-"+${vlist.vnum}).html("<i class='far fa-comment-dots'></i> ${rlist.bnumCnt}");
+													</script>
+												</c:if>
+											</c:forEach>
+										</div>
+										
+										<div class="tool-box dropup">
+											<i class="fas fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+											
+											<div class="dropdown-menu v-dropup">
+												<ul class="v-dropup-ul">
+													<li class=" v-dropup-li"><button class="btn btn-outline-warning ">즐겨찾기 <i class="far fa-star"></i></button></li>
+													<li class=" v-dropup-li"><button class="btn btn-outline-success ">좋아요 <i class="far fa-thumbs-up"></i> ${vlist.upcnt}</button></li>
+													<li class=" v-dropup-li"><button class="btn btn-outline-danger ">싫어요 <i class="far fa-thumbs-down"></i> ${vlist.downcnt }</button></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
 
-									${vlist.vtitle} <span class="badge">조회수 :
-										${vlist.viewcnt} &nbsp;</span>
-								</h1>
-								<h1 class="video-info">
-									작성자 : ${vlist.userid } <span class="badge badge-info"> <a
-										href="#">LINK</a>
-									</span>
-								</h1>
-
-
-								<div class="row btn-box-row">
+								<div class="btn-box-row">
 
 									<div class="btn-comment-box">
 										<button class="btn btn-outline-dark info-inner-btn"
@@ -176,4 +202,17 @@
 </div>
 
 
+<script type="text/javascript">
 
+	$(".reply-cnt").on("click",function(){
+		
+		var replyId =$(this).attr("id");
+		
+		var reArray =replyId.split("-");
+		
+		var bnum = reArray[2];
+		var vnum =reArray[3];
+		
+		commentBox(vnum, bnum);
+	})
+</script>
