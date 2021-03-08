@@ -19,11 +19,20 @@
 	crossorigin="anonymous">
 
 <!-- 내가 설정한 css  -->
-<link type="text/css" rel="stylesheet" href="<c:url value='resources/css/css.css'/>" />
-<link type="text/css" rel="stylesheet" media="screen and (min-width:992px)" href="<c:url value='resources/css/lgcss.css'/>" />
-<link type="text/css" rel="stylesheet" media="screen and (min-width:768px) and (max-width:991px)" href="<c:url value='resources/css/mcss.css'/>" />
-<link type="text/css" rel="stylesheet" media="screen and (min-width:576px) and (max-width:767px)" href="<c:url value='resources/css/scss.css'/>" />
-<link type="text/css" rel="stylesheet" media="screen and (max-width:575px)" href="<c:url value='resources/css/excss.css'/>" />
+<link type="text/css" rel="stylesheet"
+	href="<c:url value='resources/css/css.css'/>" />
+<link type="text/css" rel="stylesheet"
+	media="screen and (min-width:992px)"
+	href="<c:url value='resources/css/lgcss.css'/>" />
+<link type="text/css" rel="stylesheet"
+	media="screen and (min-width:768px) and (max-width:991px)"
+	href="<c:url value='resources/css/mcss.css'/>" />
+<link type="text/css" rel="stylesheet"
+	media="screen and (min-width:576px) and (max-width:767px)"
+	href="<c:url value='resources/css/scss.css'/>" />
+<link type="text/css" rel="stylesheet"
+	media="screen and (max-width:575px)"
+	href="<c:url value='resources/css/excss.css'/>" />
 
 <!-- icon  -->
 <link rel="stylesheet"
@@ -83,13 +92,13 @@
 	</div>
 	<div class="container mainContainer">
 
-		<div class="row"> 
+		<div class="row">
 
 			<div class="left-menuBox col-lg-3 ">
 				<input type="hidden" id="cookie">
 				<tiles:insertAttribute name="left-menu" />
 			</div>
- 
+
 			<div class="mainBox col-lg-9">
 				<tiles:insertAttribute name="body" />
 			</div>
@@ -109,20 +118,143 @@
 
 
 <script type="text/javascript">	
-
-
-
 $(document).ready(function(){
 	
-	favRefresh();
-	recentlyRefresh();
+	var userid = "${gui.userid}";
 	var width =screen.width;
-	/* if(width <= 991){ 
-		
-		$(".v-writer").html("<i class='fas fa-user-edit'></i>")
-	} */
-})
 	
+	if(userid == ""){
+		userid="none";
+		//alert(userid);
+	}
+	
+	
+	favRefresh(userid,width);
+	
+
+})
+/* 화면 크기 조절  */
+$(window).resize(function(){
+	
+	
+	var userid = "${gui.userid}";
+	var width =screen.width;
+	if(userid == ""){
+		userid="none";
+		//alert(userid);
+	}
+	
+	favRefresh(userid,width);
+	
+})
+
+
+/*즐겨찾기 새로고침 */
+function favRefresh(userid, width){
+	//alert(userid+","+width);
+	
+	var favList ="${gui.favorites}";
+	if(width <= 991){
+		
+		if(favList =="/"){
+			
+			$("#favoritesNone-sm").css("display" ,"block");
+		
+		}else{
+			
+			$("#favoritesNone-sm").css("display" ,"none");
+			
+			$.ajax({
+				
+				url : "favList.do",
+				type : "get",
+				dataType :"json",
+				data:{
+					
+					"fav" : favList
+				},
+				success : function(data){
+					var length = data.length
+					
+					
+					var output ="";
+					var h = 0;
+					
+					var i = 0;
+					
+					var j =0;
+					var k =0;
+					var l =0;
+					
+					output += "<div id='favorites-sm-slide' class='carousel slide' data-ride='carousel' data-interval='false'>"
+					
+					output +="<div class='carousel-inner'>"
+					
+					for(i ; i <Math.ceil(length/3); i++){
+						output+="<div class='carousel-item'>";
+							output+="<div class='favList'>";
+							for(j ; j <length;j++){
+								
+								var vurl = data[j].vurl;
+								var vtitle =data[j].vtitle;
+								var videoIdArray=vurl.split("/");
+								var videoId = videoIdArray[3];
+								
+								if(k < l+3){
+									output +="<div class='favList-item col-4'>"
+									output +="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>"
+									output +="<span class='favList-name'>"+vtitle+"</span>";
+									output +="</div>"
+									k++;
+								}else{
+									
+									l+=3;
+									break;
+								}
+								
+							}
+							output+="</div>";
+						output+="</div>";
+					}
+					
+					output +="</div>";
+					
+					output += "<ol class='carousel-indicators'>"
+					for(h ; h <Math.ceil(length/3); h++){
+							output+= "<li data-target='#favorites-sm-slide' data-slide-to='"+h+"' class='active'>";
+							
+						} 
+					output +="</ol>";
+					
+					output+="<a class='carousel-control-prev' href='#favorites-sm-slide' role='button' data-slide='prev'>"
+					output+="<span class='carousel-control-prev-icon' aria-hidden='true'></span>";
+					output+="<span class='sr-only'>Previous</span>";
+					output+="</a>";
+					
+					output+="<a class='carousel-control-next' href='#favorites-sm-slide' role='button' data-slide='next'>"
+					output+="<span class='carousel-control-next-icon' aria-hidden='true'></span>";
+					output+="<span class='sr-only'>Next</span>";
+					output+="</a>";
+					
+					output +="</div>";
+					
+					
+					
+					
+					$(".favorites-sm").html(output);
+					$(".carousel-inner").children().first().addClass("active");
+					
+				},error : function(){
+					alert("error");
+				}
+				
+			})
+			
+			
+		}	
+	}
+	
+}
 
 
 /* 쿠키 생성  */
@@ -297,110 +429,6 @@ function recentlyRefresh(){
 
 }
 
-
-function favRefresh(){
-	//alert("refresh");
-
-var gui = "${gui}";
-	
-if(gui ==""){
-	
-	$("#guiNone").css("display","block");
-	$("#favNone").css("display","none");
-	$("#f-nav-slide").css("display","none");
-	
-	
-}else{
-	
-	if("${gui.favorites}" == "/"){
-		
-		$("#guiNone").css("display","none"); 
-		$("#favNone").css("display","block");
-		$("#f-nav-slide").css("display","none");
-	}else{
-		
-		$("#guiNone").css("display","none");
-		$("#favNone").css("display","none");
-		$("#f-nav-slide").css("display","block");
-		
-		$.ajax({
-			
-			url : "favList.do",
-			type : "get",
-			dataType :"json",
-			data:{
-				
-				"fav" : "${gui.favorites}"
-			},
-			success : function(data){
-				
-				var length = data.length
-				
-				var output ="";
-				var k = 0;
-				var i = 0;
-				var l =0;
-				
-				for(var j=0; j < Math.ceil(length/3); j++){
-					
-					if(k>0){
-						i=l;
-					}
-					
-					output+="<div class='carousel-item'>";
-					output+="<div class='favView-box'>";
-					for(i ; i <length ;i++){
-						if(data[i] ==null){
-							if(k< l+3){
-							output+="<div class='favView emptyBoard' id='empty-"+i+"'>";
-							output+="<img src='resources/img/no-video.png'>";
-							output+="<span class='slide-item-title'>삭제된 게시물 입니다.</span>";				
-							output+="</div>";
-								k++;
-							}else{
-							
-								l+=3;
-								break;
-							}
-						}else{
-							var vurl = data[i].vurl;
-							var vtitle =data[i].vtitle;
-							var videoIdArray=vurl.split("/");
-							var videoId = videoIdArray[3];
-					
-							if(k< l+3){
-							
-						
-							output+="<div class='favView favBoard' id='fav-"+i+"'>";
-							output+="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>";
-							output+="<span class='slide-item-title'>"+vtitle+"</span>";				
-							output+="</div>";
-								k++;
-							}else{
-							
-								l+=3;
-								break;
-							}
-						}
-					}
-					output +="</div>";
-					output +="</div>";
-					
-				}
-
-				$(".f-slide-body").html(output);
-				$(".f-slide-body").children().first().addClass("active");
-				
-			},error : function(){
-				alert("error");
-			}
-			
-		})
-	}
-}
-
-
-}
 
 
 
@@ -725,23 +753,16 @@ function viewCntUp(bnum){
  
 
 /* 장르 클릭 */
-function gnameClick(gnum){
+function genreClick(gnum){
 	
-
-	$(".genreBtn").each(function(){
-		
+	
+	$(".genreBtn").each(function(){	
 	 	var btnClick = 	$(this).hasClass("genreClick");	
-	 	if(btnClick==true){
-	 		
-	 		$(this).removeClass("genreClick");
-	 		$(this).css("background-color","");
-			$(this).css("color", "#55279a");
-	 		
+	 	if(btnClick==true){	
+	 		$(this).removeClass("genreClick");	
 	 	}
 	})	
 	
-	$("#genre-"+gnum).css("background-color", "#55279a5e");
-	$("#genre-"+gnum).css("color", "#fff");
 	$("#genre-"+gnum).addClass("genreClick");
 	
 	//alert(con);

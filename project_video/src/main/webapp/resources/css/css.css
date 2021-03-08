@@ -3,85 +3,95 @@
 @import
 	url('https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap');
 
-body {
+@font-face{
+	
+	font-family : brandName;
+	src : url("./font/Bazinga-2OLld.ttf") format("truetype");
+	font-style : normal;
+	font-weight:normal;
+} 
+body { 
 	font-family: 'Gothic A1', sans-serif;
 	letter-spacing: 0.05rem;
 }
 
-hr {
-	
-	margin-top : 0.5rem;
-	margin-bottom : 0.5rem;
-}
-a:hover {
-	text-decoration: none;
+.navbar {
+	background-color: #000000e6;
 }
 
-a {
+hr {
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+
+a, a:hover {
 	text-decoration: none;
-	color: #000;
 }
 
 ul {
 	list-style: none;
-	padding-left: 0px;
+	padding : 0px;
 }
 
+/* .mainContainer {
+	
+	display : none;
+} */
+
+/* 브랜드 이름  */
 .navbar-brand {
 	margin: 0px;
-	font-weight: bold;
 	padding: 0rem 0.25rem;
+	font-family: brandName;
+	letter-spacing: 0.1rem;
 }
+/* 브랜드이름 끝  */
 
-.dropdown-menu-right {
-	text-align: left;
-	border: 1px solid #c5c2c9;
-	
-}
-
+/* 네비게이션바 오른쪽 드롭다운 메뉴  */
 .navbar-toggler {
 	padding: 0rem 0.25rem;
 	font-size: 1.5rem;
 	border: none;
 }
 
+.right-hamburger {
+	text-align: left;
+	border: 1px solid #b3b1b5;
+    border-radius: 3px;
+}
+
+.right-hamburger>.dropdown-item {
+	
+	font-size: 1rem;
+	padding: .25rem 0.75rem;
+}
+
+.right-hamburger>hr {
+	margin-top: 0.25rem;
+	margin-bottom: 0.25rem;
+}
+
+
 .navbar-toggler:hover {
-	background-color: #5c26ad;
+	background-color: #00000061;
 }
 
 .navbar-toggler:focus {
 	outline: unset;
 }
 
-.right-hamburger > .dropdown-item{
-	
+.modal-header {
+	padding-bottom: 0.5rem;
+}
+
+.modal-dialog {
+	height: inherit;
+}
+
+.modal-title {
 	font-weight: bold;
-    font-size: 1rem;
-    padding: .25rem 0.75rem;
 }
 
-.right-hamburger > hr{
-	
-	margin-top : 0.25rem;
-	margin-bottom : 0.25rem;
-}
-.modal-header{
-	
-	
-	padding-bottom : 0.5rem;
-}
-.modal-dialog{
-	 
-	height : inherit;
-}
-
-.modal-title{
-	
-	font-weight : bold;
-}
-
-
-.tool-box{
-	
-	display :none;
+.tool-box {
+	display: none;
 }

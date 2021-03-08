@@ -4,7 +4,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
 	<div class="container">
-		<a class="navbar-brand" href="mainView.do">YOONPLAYER</a>
+		<a class="navbar-brand" href="mainView.do">YOON PLAYER</a>
 
 		<div class="dropdown">
 			<button class="navbar-toggler" type="button" id="dropdownMenuButton"
@@ -12,7 +12,8 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="dropdown-menu dropdown-menu-right right-hamburger" aria-labelledby="dropdownMenuButton">
-				<a class="dropdown-item" href="#">오늘 본 동영상</a> 
+				<a class="dropdown-item" href="#">게시물 등록</a>
+				
 				<hr>
 				<a class="dropdown-item" href="#" data-toggle="modal" data-target="#loginFormModal">로그인</a>
 			</div> 
