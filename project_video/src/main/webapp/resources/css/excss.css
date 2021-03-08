@@ -29,8 +29,8 @@ a, a:hover, a:focus {
 }
 
 .genreBtn:hover, .genreBtn:focus, .genreBtn:active {
-	box-shadow: 0 0 0 0.1rem #383d41;
-	background-color: #383d41;
+	box-shadow: 0 0 0 0.1rem #6c757d;
+	background-color: #6c757d;
 	color: #fff;
 }
 
@@ -71,6 +71,7 @@ a, a:hover, a:focus {
 	box-shadow: 0 0 0 0.1rem #383d41;
 	background-color: #383d41;
 	color: #fff;
+	border-radius: .25rem;
 }
 
 .recently {
@@ -84,26 +85,41 @@ a, a:hover, a:focus {
 	font-size: 3vw;
 }
 /*정렬기능 끝*/
-#recentlyNone-sm {
-	display: none;
+
+#recentlyNone-sm, #favoritesNone-sm, #favoritesCollapse, #recentlyCollapse{
+	background-color: #383d41;
+    border-radius: .25rem;
+	
 }
 
-#favoritesNone-sm {
+#recentlyNone-sm, #favoritesNone-sm {
 	display: none;
+	color: #fff;
+	padding: 3vw;
+    font-size: 4vw;
 }
+
 
 /* favSlide */
-#favoritesCollapse {
+#recentlyCollapse,#favoritesCollapse {
 	border-radius: 4px;
 	padding-top: 0.5rem;
 }
 
-.favList {
+.favList ,.recentlyList{
 	display: flex;
 	flex-direction: row;
 }
 
-.favList-item>img {
+.recentlyList-item:hover, .favList-item:hover{
+	
+	transition: transform 1s;
+    filter: brightness(50%);
+    z-index: 1000;
+    
+}
+
+.favList-item>img ,.recentlyList-item>img {
 	max-width: 100%;
 	height: auto;
 	padding: 0.1rem;
@@ -132,18 +148,22 @@ a, a:hover, a:focus {
 	margin-bottom: 0px;
 }
 
-.favList-name {
+.favList-name,.recentlyList-name {
 	color: #fff;
 	overflow: hidden;
+	font-size: 2.5vw;
+	padding: 0px 1vw;
 }
 
 .carousel-indicators li {
 	border-top: 4px solid transparent;
 	border-bottom: 0.5rem solid transparent;
+	width : 4vw;
 }
 /* favSlide 끝 */
 .body-card {
 	border: unset;
+	background-color: #212529;
 }
 
 .paging-box {
@@ -224,6 +244,19 @@ a, a:hover, a:focus {
 .view-cnt, .reply-cnt {
 	padding-left: 0.5rem;
 }
+.video-collapse-body, .reply-collapse-body {
+	background-color: #383d41;
+}
+
+.reply-collapse-body{
+	border-radius: .25rem;
+}
+
+.card-body {
+	padding: 0;
+	color: white;
+	border-radius: 3px;
+}
 /*tool-box  */
 .tool-box {
 	display: inline-block;
@@ -242,26 +275,61 @@ a, a:hover, a:focus {
 
 .v-dropup {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	background-color: #f8f9fa;
+    border-radius: .25rem;
+    
 }
+
+.v-dropup > .btn:hover {
+	
+	background-color:#dee2e6;
+}
+.star{
+	
+	width: 3.5vw;
+}
+
+.fa-thumbs-up{
+	
+	color : #004085;
+	
+}
+
+.fa-thumbs-down{
+	
+	color : #ba0d0d;
+	
+}
+
 
 /* tool-box */
-.collapse-body {
-	background-color: #383d41;
+
+
+.reply-btn,.reReply-badge-btn, .reReply-btn, .reReply-cancle-btn{
+	
+	background-color: #6c757d;
+    color: white;
+}
+.reply-btn:hover,.reReply-badge-btn:hover, .reReply-btn:hover, .reReply-cancle-btn:hover{
+	
+	background-color: #212529;
+    color: white;
 }
 
-.card-body {
-	padding: 0;
-	color: white;
-	border-radius: 3px;
+.reply-btn:focus,.reReply-badge-btn:focus, .reReply-btn:focus, .reReply-cancle-btn:focus{
+	background-color: #212529;
+    color: white;
+	box-shadow: none;
 }
-
+/* 댓글  */
 .reply-input-group {
 	padding: 0.5rem 0.5rem;
 }
 
 .reply-hr {
 	margin-top: 0px;
+	background-color: #fff;
 }
 
 .reply-input {
@@ -295,15 +363,10 @@ a, a:hover, a:focus {
 	margin-bottom: 0.3rem;
 }
 
-.reply-box {
+.reply-box, .reReply-box-child {
 	width: 100%;
 	padding: 0.5rem;
-}
-
-.reReplyOneLine-row {
-	display: flex;
-	flex-direction: row;
-	margin-bottom: 0.3rem;
+	border-bottom : 1px solid #fff;
 }
 
 .reply-icon {
@@ -312,6 +375,7 @@ a, a:hover, a:focus {
 	font-size: 2rem;
 	text-align: right;
 }
+
 
 .reply-replyer-box {
 	font-weight: bold;
@@ -324,18 +388,37 @@ a, a:hover, a:focus {
 	padding-top: 0.25rem;
 }
 
-.reReply-Btn {
+
+.myReply-Update-Btn {
+    float: right;
+    background-color: white;
+    border: 1px solid;
+}
+
+/* 댓글 끝  */
+
+/* 대댓글 */
+.reReplyOneLine-row {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 0.3rem;
+}
+
+
+.reReply-badge-btn {
 	float: right;
 	padding: 0.25rem;
 	font-weight: unset;
 	width: 2.5rem;
 	height: 1.5rem;
+	
 }
 
 .reReply-input-group {
 	width: 100%;
 	margin: 0px;
 	margin-bottom: 0.25rem;
+	
 }
 
 .reReply-input {
@@ -345,12 +428,18 @@ a, a:hover, a:focus {
 
 .reReply-input-btn {
 	padding: 0px;
+	display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 .reReply-input-btn>button {
 	padding: 0px;
 	height: 100%;
+	margin: 0px 0.2vw;
 }
+
+/* 대댓글 끝  */
 
 /* 
 .video-info-row > * {

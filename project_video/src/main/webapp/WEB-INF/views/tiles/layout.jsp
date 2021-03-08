@@ -91,11 +91,10 @@
 		</c:if>
 	</div>
 	<div class="container mainContainer">
+		<input type="hidden" id="cookie">
 
 		<div class="row">
-
 			<div class="left-menuBox col-lg-3 ">
-				<input type="hidden" id="cookie">
 				<tiles:insertAttribute name="left-menu" />
 			</div>
 
@@ -121,7 +120,7 @@
 $(document).ready(function(){
 	
 	var userid = "${gui.userid}";
-	var width =screen.width;
+	var width =document.body.clientWidth;
 	
 	if(userid == ""){
 		userid="none";
@@ -130,7 +129,7 @@ $(document).ready(function(){
 	
 	
 	favRefresh(userid,width);
-	
+	recentlyRefresh(userid,width);
 
 })
 /* 화면 크기 조절  */
@@ -138,13 +137,14 @@ $(window).resize(function(){
 	
 	
 	var userid = "${gui.userid}";
-	var width =screen.width;
+	var width =document.body.clientWidth;
 	if(userid == ""){
 		userid="none";
 		//alert(userid);
 	}
 	
 	favRefresh(userid,width);
+	recentlyRefresh(userid,width);
 	
 })
 
@@ -188,28 +188,45 @@ function favRefresh(userid, width){
 					
 					output += "<div id='favorites-sm-slide' class='carousel slide' data-ride='carousel' data-interval='false'>"
 					
-					output +="<div class='carousel-inner'>"
+					output +="<div class='carousel-inner favorites-inner'>"
 					
 					for(i ; i <Math.ceil(length/3); i++){
 						output+="<div class='carousel-item'>";
 							output+="<div class='favList'>";
 							for(j ; j <length;j++){
 								
-								var vurl = data[j].vurl;
-								var vtitle =data[j].vtitle;
-								var videoIdArray=vurl.split("/");
-								var videoId = videoIdArray[3];
 								
-								if(k < l+3){
-									output +="<div class='favList-item col-4'>"
-									output +="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>"
-									output +="<span class='favList-name'>"+vtitle+"</span>";
-									output +="</div>"
-									k++;
-								}else{
+								if(data[j] ==null){
+									if(k< l+3){
+										output +="<div class='favList-item col-4'>"
+										output +="<img src='resources/img/no-video.png'>"
+										output +="<span class='favList-name'>삭제된 게시물 입니다.</span>";
+										output +="</div>"
+										k++;
+									}else{
 									
-									l+=3;
-									break;
+										l+=3;
+										break;
+									}
+								}else{
+								
+									var vurl = data[j].vurl;
+									var vtitle =data[j].vtitle;
+									var videoIdArray=vurl.split("/");
+									var videoId = videoIdArray[3];
+								
+									if(k < l+3){
+										output +="<div class='favList-item col-4'>"
+										output +="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>"
+										output +="<span class='favList-name'>"+vtitle+"</span>";
+										output +="</div>"
+										k++;
+									}else{
+									
+										l+=3;
+										break;
+									}
+								
 								}
 								
 							}
@@ -242,7 +259,7 @@ function favRefresh(userid, width){
 					
 					
 					$(".favorites-sm").html(output);
-					$(".carousel-inner").children().first().addClass("active");
+					$(".favorites-inner").children().first().addClass("active");
 					
 				},error : function(){
 					alert("error");
@@ -256,71 +273,32 @@ function favRefresh(userid, width){
 	
 }
 
-
-/* 쿠키 생성  */
-function add_cookie(vnum){
+function recentlyRefresh(userid, width){
+	//alert(userid +" , "+ width+" , "+document.cookie);
+	var cookieList =document.cookie;
 	
-	//alert("add_cookie : " +vnum);
 	
-	$.ajax({
-		
-		url : "setCookie.do",
-		data : {
-			
-			"vnum" : vnum
-		
-		},
-		success:function(){
-			
-			recentlyRefresh();
-		
-		},error:function(){
-			
-			
+	if(width<=991){
+		//alert("991이하");
+		if(cookieList.indexOf(userid) == -1){
+			//alert("block");
+			$("#recentlyNone-sm").css("display" ,"block");
 		}
-		
-		
-	})
-}
-
-
-function recentlyRefresh(){
-	
-	var userid ="${gui.userid}";
-	if(userid == ""){
-		
-		userid ="none";
-	}
-	
-	if(document.cookie.indexOf(userid)== -1){ 
-		//alert("쿠키없음");
-		$("#recentlyNone").css("display","block");
-		$("#nav-slide").css("display","none");
-	}else{
-		
-		$("#recentlyNone").css("display","none");
-		$("#nav-slide").css("display","block");
-		
-		var userid ="${gui.userid}";
-		
-		if(userid ==""){
+		else{
 			
-			userid="none";
-		}
-		
-		if(document.cookie.indexOf(userid) != -1){
+			$("#recentlyNone-sm").css("display" ,"none");
 			
 			var cookie ="";
 			
-			if(document.cookie.indexOf(";") != -1){
-				var cookieArray = document.cookie.split(";");
+			if(cookieList.indexOf(";") != -1){
+				var cookieArray = cookieList.split(";");
 				
 				for( var  i = 0 ; i < cookieArray.length ;i++){ 
 					
 					var chk = cookieArray[i].includes(userid);
 					
+					
 					if(chk == true ){
-						
 						var updateArray = cookieArray[i].replace(userid+"=","");
 						var updateArray2 = updateArray.replace(";","");
 						cookie = updateArray2.split("%2C");
@@ -336,12 +314,15 @@ function recentlyRefresh(){
 				cookie = updateArray.split("%2C");	
 				
 			}
+			
+			
 			 //cookie 값이 한번에 안넘어가서 hidden input으로 받은다음 value를 넘겨줌
 			 
 			$("#cookie").val(cookie);
 			
 			var cookie = $("#cookie").val();
-			//alert(cookie);
+			
+			
 			$.ajax ({
 				
 				url : "recentlyList.do",
@@ -354,68 +335,89 @@ function recentlyRefresh(){
 				success : function(data){
 					//	var x =data;
 					var length = data.mlist.length;
-					//alert(length);
-					var output="";
+					
+
+					var output ="";
+					var h = 0;
+					
+					var i = 0;
+					
+					var j =0;
 					var k =0;
-					var i =0;
 					var l =0;
-				
-					for(var j=0; j < length/3 ;j++){
-						
-						
-						
-						if(k>0){
-							
-							i = l;
-						}
+					
+					output += "<div id='recently-sm-slide' class='carousel slide' data-ride='carousel' data-interval='false'>"
+					
+					output +="<div class='carousel-inner recently-inner'>"
+					
+					for(i ; i <Math.ceil(length/3); i++){
 						output+="<div class='carousel-item'>";
-						output+="<div class='recentlyView-box'>";
-						
-						
-						for( i ; i < length ; i++){
-							
-							
-							if(data.mlist[i] ==null){
-								if(k< l+3){
-								output+="<div class='recentlyView'>";
-								output+="<img src='resources/img/no-video.png'>";
-								output+="<span class='slide-item-title'>삭제된 게시물 입니다.</span>";				
-								output+="</div>";
-									k++;
+							output+="<div class='recentlyList'>";
+							for(j ; j <length;j++){
+								
+								if(data.mlist[j] ==null){
+									if(k< l+3){
+										output +="<div class='favList-item col-4'>"
+										output +="<img src='resources/img/no-video.png'>"
+										output +="<span class='favList-name'>삭제된 게시물 입니다.</span>";
+										output +="</div>"
+										k++;
+									}else{
+									
+										l+=3;
+										break;
+									}
 								}else{
 								
+								
+								var vurl = data.mlist[j].vurl;
+								var vtitle =data.mlist[j].vtitle;
+								var videoIdArray=vurl.split("/");
+								var videoId = videoIdArray[3];
+								
+								if(k < l+3){
+									output +="<div class='recentlyList-item col-4'>"
+									output +="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>"
+									output +="<span class='recentlyList-name'>"+vtitle+"</span>";
+									output +="</div>"
+									k++;
+								}else{
+									
 									l+=3;
 									break;
 								}
-							}else{
-							var vurl = data.mlist[i].vurl;
-							var vtitle =data.mlist[i].vtitle;
-							var videoIdArray=vurl.split("/");
-							var videoId = videoIdArray[3];
-							
-							
-							if(k < l+3){
-									
-								output+="<div class='recentlyView recentlyBoard' id='recently-"+i+"'>";
-								output+="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>";
-								output+="<span class='slide-item-title'>"+vtitle+"</span>";				
-								output+="</div>";
-						
-								k++;
-							}else{
-								
-								l+=3;
-								break;
+								}
 							}
-							}
-						}
-						
-						output +="</div>";
-						output +="</div>";
+							output+="</div>";
+						output+="</div>";
 					}
 					
-					$(".slide-body").html(output);
-					$(".slide-body").children().first().addClass("active");
+					output +="</div>";
+					
+					output += "<ol class='carousel-indicators'>"
+					for(h ; h <Math.ceil(length/3); h++){
+							output+= "<li data-target='#recently-sm-slide' data-slide-to='"+h+"' class='active'>";
+							
+						} 
+					output +="</ol>";
+					
+					output+="<a class='carousel-control-prev' href='#recently-sm-slide' role='button' data-slide='prev'>"
+					output+="<span class='carousel-control-prev-icon' aria-hidden='true'></span>";
+					output+="<span class='sr-only'>Previous</span>";
+					output+="</a>";
+					
+					output+="<a class='carousel-control-next' href='#recently-sm-slide' role='button' data-slide='next'>"
+					output+="<span class='carousel-control-next-icon' aria-hidden='true'></span>";
+					output+="<span class='sr-only'>Next</span>";
+					output+="</a>";
+					
+					output +="</div>";
+					
+					
+					
+					
+					$(".recently-sm").html(output);
+					$(".recently-inner").children().first().addClass("active");
 					
 					
 					//alert($(".carousel-item").length);
@@ -423,11 +425,45 @@ function recentlyRefresh(){
 					alert("error");
 				}
 			})
+			
+			
 		}
-
 	}
-
 }
+
+
+/* 쿠키 생성  */
+function add_cookie(vnum){
+	
+	//alert("add_cookie : " +vnum);
+	var userid ="${gui.userid}";
+	if (userid==""){
+		
+		userid= "none"; 
+	}
+	var width = document.body.clientWidth;
+	
+	$.ajax({
+		
+		url : "setCookie.do",
+		data : {
+			
+			"vnum" : vnum
+		
+		},
+		success:function(){
+			
+			recentlyRefresh(userid,width);
+		
+		},error:function(){
+			
+			
+		}
+		
+		
+	})
+}
+
 
 
 
@@ -594,15 +630,15 @@ function replyList(data){
 				
 				if(result[i].rnum == 0){
 					output +=" <div class='replyOneLine-row'>"
-					output += "<div class='reply-box border rounded-lg' id='reply-"+result[i].rpnum+"' >";
+					output += "<div class='reply-box' id='reply-"+result[i].rpnum+"' >";
 					output += "<div class='reply-replyer-box'>"+result[i].replyer;
 					
 					if(result[i].replyer == userid){
-						output += "<button class='btn badge'>삭제</button>";
-						output += "<button class='btn badge'>수정</button>";
+						output += "<button class='btn badge myReply-Update-Btn'>삭제</button>";
+						output += "<button class='btn badge myReply-Update-Btn'>수정</button>";
 					}
 					output +="</div>";
-					output += "<div class='reply-text-box'>"+result[i].replyText+"<button class='btn badge btn-outline-dark reReply-Btn' onclick='reCommentBox("+result[i].rpnum+","+result[i].rnum+","+result[i].bnum+",0)'>답글</button></div>";  
+					output += "<div class='reply-text-box'>"+result[i].replyText+"<button class='btn badge reReply-badge-btn' onclick='reCommentBox("+result[i].rpnum+","+result[i].rnum+","+result[i].bnum+",0)'>답글</button></div>";  
 					output +="</div>";																																			
 					output += "</div>";
 					output +="<div id='reReply-"+result[i].bnum+"-"+result[i].rpnum+"'></div>";
@@ -611,12 +647,12 @@ function replyList(data){
 				if(result[i].rnum != 0){
 					output +="<div class='reReplyOneLine-row'>";
 					output += "<i class='col-lg-1 col-1 reply-icon'> &#10551;</i>";
-					output += "<div class='border rounded-lg col-lg-11 col-11 reReply-box-child'>";
+					output += "<div class='col-lg-11 col-11 reReply-box-child'>";
 					output += "<div class='reply-replyer-box'>"+result[i].replyer;
 					
 					if(result[i].replyer == userid){
-						output += "<button class='btn badge'>삭제</button>";
-						output += "<button class='btn badge'>수정</button>";
+						output += "<button class='btn badge myReply-Update-Btn'>삭제</button>";
+						output += "<button class='btn badge myReply-Update-Btn'>수정</button>";
 					}
 					output += "</div>";
 					output += "<div class='reply-text-box'>"+result[i].replyText+"</div>"; 
@@ -666,8 +702,8 @@ function reCommentBox(rpnum ,rnum,bnum ,rnum){
 			output+="<textarea  style='resize: none;' id='replyText-"+bnum+"-"+rpnum+"' class='form-control'  rows='1' placeholder='답글을 입력해주세요.'></textarea>"
 		output+="</div>"
 		output+="<div class='col-lg-3 col-4 reReply-input-btn'>"
-			output+="<button type='button' name='boardNum-"+bnum+"' class='btn btn-outline-secondary reReply-btn col-7' onclick='insertReReply("+bnum+","+rpnum+")'>답글 입력</button>"
-			output+="<button type='button' class='btn btn-outline-secondary col-5' onclick ='cancel("+rpnum+","+bnum+")'>취소</button>"
+			output+="<button type='button' name='boardNum-"+bnum+"' class='btn reReply-btn col-lg-7 col-7' onclick='insertReReply("+bnum+","+rpnum+")'>답글 입력</button>"
+			output+="<button type='button' class='btn reReply-cancle-btn col-lg-5 col-5' onclick ='cancel("+rpnum+","+bnum+")'>취소</button>"
 		output+="</div></div>"
 	  
 		if(rnum == 0){
