@@ -49,10 +49,10 @@
 	<div class="sort-box">
 		<div class="sort">
 			<select class="sort-select">
-				<option class="conBtn-sm" value="">전체보기</option>
-				<option class="conBtn-sm" value="latestCon">최신순</option>
-				<option class="conBtn-sm" value="viewcnt">조회순</option>
-				<option class="conBtn-sm" value="upcnt">좋아요순</option>
+				<option class="conBtn-sm" id="allCon-sm" value="allCon">전체보기</option>
+				<option class="conBtn-sm" id="latestCon-sm" value="latestCon">최신순</option>
+				<option class="conBtn-sm" id="viewcnt-sm" value="viewcnt">조회순</option>
+				<option class="conBtn-sm" id="upcnt-sm" value="upcnt">좋아요순</option>
 			</select>
 		</div>
 	</div>
@@ -70,12 +70,25 @@
 </div>
 
 <div class="main-content" id="main-content">
+
+ 
 	<div class="accordion" id="accordion">
 
+	<c:if test="${fn:length(vlist) ==0}">
+		<div class="boardNone">
+			<i class="far fa-frown"></i>
+			<span class="boardNone-text">
+			게시물이 없습니다.
+			</span>
+		</div>
+	</c:if>
 		<c:forEach items="${vlist}" var="vlist">
 			<div class="card body-card">
 				<div class="card-header main-card-header mt-1" id="heading-${vlist.RN }">
 					<div class="row">
+					
+							
+						
 						<div class="col-lg-4 align-self-center video-img-box"
 							data-toggle="collapse" data-target="#collapse-${vlist.RN}"
 							aria-expanded="false" aria-controls="collapse-${vlist.RN}">
@@ -83,7 +96,7 @@
 							<c:set var="strArray" value="${fn:split(vlist.vurl,'/')}" />
 							<c:forEach items="${strArray }" var="videoId" varStatus="g">
 								<c:if test="${g.count == 3}">
-									<img src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg"
+									<img class="videoImg" id="img-${vlist.vnum}" src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg"
 										onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','imgClick')">
 								</c:if>
 							</c:forEach>
@@ -220,7 +233,7 @@
 				<!-- /card-header -->
 
 				<div id="collapse-${vlist.RN}"
-					class="collapse colllapse-${vlist.vnum} video-collapse-body"
+					class="collapse collapse-${vlist.vnum} video-collapse-body"
 					aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">
 					<div class="card-body">
 

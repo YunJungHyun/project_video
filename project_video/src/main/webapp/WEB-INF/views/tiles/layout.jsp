@@ -455,7 +455,12 @@ $(document).on("click", ".recentlyList-item", function() {
 function myRecentlyList(reNum) {
 	var cookie = $("#cookie").val();
 	//alert(reNum+","+cookie);
-	window.location.href = "myRecentlyVideo.do?reNum=" + reNum + "&cookie="+ cookie;
+	if(reNum !=""){
+		window.location.href = "myRecentlyVideo.do?reNum=" + reNum + "&cookie="+ cookie;
+	}else{
+		
+		window.location.href = "myRecentlyVideo.do?cookie="+ cookie;
+	}
 }
 /* 오늘 본게시물 슬라이드 아이템 클릭  끝 */
 
@@ -518,18 +523,18 @@ function myFavList(favNum) {
 		return false;
 	}
 	//alert(favNum);
-	window.location.href = "myFavVideo.do?favNum=" + favNum;
+	if(favNum != ""){
+		window.location.href = "myFavVideo.do?favNum=" + favNum;
+	}else{
+		
+		window.location.href = "myFavVideo.do";
+		
+	}
 }
 
 /* 즐겨찾기 슬라이드 아이템 클릭  끝*/
 
-$(".sort-select").on("change",function(){
-	
-	sessionStorage.setItem("con", this.value);
-	
-	//alert(sessionStorage.getItem("con"));
-	condition();
-})
+
 
 /* 쿠키 생성  */
 function add_cookie(vnum){
@@ -610,7 +615,9 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 			//alert("열려있는 아코디언있음");
 			var rePlayer = $(".open").children().attr("id");
 			var str =$(".open").attr("id");
-			//alert(rePlayer);
+			var array= rePlayer.split("-");//vnum
+			
+			$("#img-"+array[1]).css("filter","unset");
 			$("#"+str).removeClass("open");
 			$("#"+str).children().replaceWith("<div id="+rePlayer+"></div>");
 			$(".comment-"+vnum).removeClass("show"); 
@@ -660,6 +667,7 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 
 		})
 		
+		$("#img-"+vnum).css("filter","brightness(50%)");
 		viewCntUp(bnum);
 		/* 쿠키적용 함수  */
 		add_cookie(vnum);
@@ -668,7 +676,23 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 
 /* 게시물 클릭 끝  */
 
- 
+/* 보는 순서 정렬 */
+$(".sort-select").on("change",function(){
+	var con =this.value;
+	//alert(con);
+	$(".conBtn-sm").each(function(){
+		
+		var btnClick = $(this).hasClass("conClick");
+		if(btnClick==true){
+			$(this).removeClass("conClick");
+		}
+	})
+	
+	$("#"+con+"-sm").addClass("conClick");
+	
+	condition();
+})
+/* 보는 순서 정렬 끝 */
 
 /* 장르 클릭 */
 function genreClick(gnum){
@@ -687,9 +711,9 @@ function genreClick(gnum){
 	condition();
 }
 /* 장르 클릭 끝  */
-
+ 
 /* 리스트 기준 클릭  */
-/* $(".conBtn").on("click",function(){
+ $(".conBtn").on("click",function(){
 		
 	$(".conBtn").each(function(){
 		
@@ -705,46 +729,56 @@ function genreClick(gnum){
 	$(this).addClass("conClick");
 	
 	condition();
-}) */
+}) 
 /* 리스트 기준 클릭  끝*/
 
 /* 보는 기준에 따라 리스트 출력  */
 function condition(){
-	
+
 	var clickCon = false;
 	var clickGenre = false;
 	var con = "";
 	var gnum = "";
+	var width = document.body.clientWidth;
 	
-	if(sessionStorage.getItem("con") !=""){
-		
-		clickCon = true;
-		con = sessionStorage.getItem("con");
-		
+	if(width > 991){
+		$(".conBtn").each(function(){
+			
+			var btnClick = 	$(this).hasClass("conClick");	
+		 	
+			if(btnClick==true){
+		 		
+		 		//alert("컨디션클릭된것있음");
+		 		clickCon= true;
+		 		
+		 		con = $(this).attr("id");
+		 		
+		 		if(con=="allCon"){
+		 			
+		 			location.href="mainView.do";
+		 			
+		 		}
+		 	}
+		})
 	}else{
-		clickCon =false;
-		con = sessionStorage.getItem("con");
 		
+		$(".conBtn-sm").each(function(){
+			var btnClick = 	$(this).hasClass("conClick");
+			
+			if(btnClick==true){
+		 		
+		 		//alert("컨디션클릭된것있음");
+		 		clickCon= true;
+		 		
+		 		con = $(this).val();
+		 		
+		 		if(con=="allCon"){
+		 			location.href="mainView.do";
+		 		}
+		 	}
+		})
 	}
-	
-	/* 	$(".conBtn").each(function(){
-		
-		var btnClick = 	$(this).hasClass("conClick");	
-	 	
-		if(btnClick==true){
-	 		
-	 		//alert("컨디션클릭된것있음");
-	 		clickCon= true;
-	 		
-	 		con = $(this).attr("id");
-	 		
-	 		if(con=="allCon"){
-	 			
-	 			location.href="mainView.do";
-	 			
-	 		}
-	 	}
-	}) */
+ 	
 	
 	$(".genreBtn").each(function(){
 		
@@ -760,19 +794,19 @@ function condition(){
 	})
 	
 	if(clickCon ==true && clickGenre == true){
-		alert("컨디션 o ,장르 o");
-		alert(con+","+gnum);
+		//alert("컨디션 o ,장르 o");
+		//alert(con+","+gnum);
 		$(".paging-btn").load("mainView.do?con="+con+"&gnum="+gnum+" #paging-btn-group");
 		$("#main-content").load("mainView.do?con="+con+"&gnum="+gnum+" #accordion");
 	}else if(clickCon == true && clickGenre == false){
 		
-		alert("컨디션 o ,장르 x");
-		alert(con+","+gnum);
+		//alert("컨디션 o ,장르 x");
+		//alert(con+","+gnum);
 		$(".paging-btn").load("mainView.do?con="+con+" #paging-btn-group");
 		$("#main-content").load("mainView.do?con="+con+" #accordion");
 	}else if(clickCon == false && clickGenre == true ){
-		alert("컨디션 x ,장르 o");
-		alert(con+","+gnum);
+		//alert("컨디션 x ,장르 o");
+		//alert(con+","+gnum);
 		$(".paging-btn").load("mainView.do?gnum="+gnum+" #paging-btn-group");
 		$("#main-content").load("mainView.do?gnum="+gnum+" #accordion");
 		

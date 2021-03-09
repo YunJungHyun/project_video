@@ -100,6 +100,35 @@ ul {
 	display : none;
 }
 /* 브라우저 크기 작을때 페이지 타이틀 처리 끝*/
+/* boardNone 처리  */
+.boardNone{
+	
+	display: flex;
+    flex-direction: column;
+    color: white;
+    background-color: #6c757d;
+    text-align: center;
+    min-height: 30vw;
+    border-radius: .25rem;
+    justify-content: center;
+}
+.boardNone > i{
+	font-size: 15vw;
+}
+
+.boardNone-text{
+	font-size: 5vw;
+    padding-top: 2vw;
+}
+/* boardNone 처리  끝*/
+
+/* videoImg Click  */
+
+.videoImg:hover, .videoImg:focus, .videoImg:focus{
+	filter: brightness(50%); 
+}
+
+/* videoImg Click  */
 .modal-header {
 	padding-bottom: 0.5rem;
 }

@@ -29,8 +29,8 @@
 						class="dropdown-item" href="#" onclick="myBoard()">내가 작성한 게시글</a>
 					<hr>
 					<a class="dropdown-item" href="#" data-toggle="modal" data-target="#videoRegFormModal">게시물 등록</a> <a
-						class="dropdown-item" href="#">오늘 본 동영상</a> <a
-						class="dropdown-item" href="#">즐겨 찾기한 동영상</a>
+						class="dropdown-item" href="#" onclick="myRecentlyList()">오늘 본 동영상</a> <a
+						class="dropdown-item" href="#"onclick="myFavList()">즐겨 찾기한 동영상</a>
 					<hr>
 					<a class="dropdown-item logoutBtn" href="#">로그아웃</a>
 				</div>
