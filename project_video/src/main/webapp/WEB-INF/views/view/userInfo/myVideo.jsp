@@ -4,6 +4,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="paging-box">
+
+
 	<div class="col-lg-4 con-btn-group">
 		<h4>내가 작성한 게시물</h4>
 	</div>
@@ -24,7 +26,8 @@
 		</div>
 	</div>
 </div>
- 
+
+<!-- sm-title  -->
 <div class="page-sm-title my-2">
 	<span>내가 쓴 게시물</span>
 	<span class="badge page-sm-badge">(${fn:length(vlist)}) </span>
@@ -35,8 +38,9 @@
 
 		<c:forEach items="${vlist}" var="vlist">
 			<div class="card body-card">
-				<div class="card-header body-card-header" id="heading-${vlist.RN }">
+				<div class="card-header main-card-header" id="heading-${vlist.RN }">
 					<div class="row">
+
 						<div class="col-lg-4  align-self-center video-img-box"
 							data-toggle="collapse" data-target="#collapse-${vlist.RN}"
 							aria-expanded="false" aria-controls="collapse-${vlist.RN}">
@@ -49,10 +53,10 @@
 								</c:if>
 							</c:forEach>
 						</div>
-
+						
 						<!--video-info-box  -->
-						<div class="col-lg-8 video-info-box">
-
+						<div class="col-lg-8  video-info-box">
+							
 							<div class="row">
 								<div class="video-info-row">
 									<div class="video-title" data-toggle="collapse"
@@ -61,8 +65,8 @@
 										onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','titleClick')">
 										<span class="v-title">${vlist.vtitle}</span>
 									</div>
+									
 									<div class="video-info badge">
-
 										<div class="view-cnt">
 											<i class="far fa-eye"></i> ${vlist.viewcnt}
 										</div>
@@ -118,10 +122,13 @@
 															<img class="star" src="resources/css/icon/star-empty.png"></span>
 														</button>
 													</c:if>
+													<button class="btn" data-toggle="modal" data-target="#myVideoUpdateModal" onclick="myVideoEdit('${vlist.vnum }','${vlist.vurl}','${vlist.vtitle}','${vlist.gnum}','${vlist.vpw }')">
+														<img class="edit" src="resources/css/icon/edit.png"/>
+													</button>
 												</div>
 											</div>
 										</div>
-									</div>
+									</div> 
 								</div>
 
 								<div class="btn-box-row">
@@ -142,11 +149,11 @@
 									</div>
 
 									<div class="btn-like-box">
-										<button class="btn btn-outline-success info-inner-btn"
+										<button class="btn info-inner-btn"
 											onclick="judgment('up','${vlist.bnum}')">
 											좋아요 <i class="fas fa-thumbs-up"></i> ${vlist.upcnt }
 										</button>
-										<button class="btn btn-outline-danger info-inner-btn"
+										<button class="btn info-inner-btn"
 											onclick="judgment('down','${vlist.bnum}')">
 											싫어요 <i class="fas fa-thumbs-down"></i> ${vlist.downcnt }
 										</button>
@@ -167,22 +174,24 @@
 												<i class="far fa-star"></i>
 											</button>
 										</c:if>
+										
+										
 									</div>
 
 								</div>
 							</div>
-							
 						</div>
+						
 						<!--/video-info-box  -->
 					</div>
-
+					
 				</div>
-				<!-- /card-header -->
-				
-				<!-- card-body  -->
+				<!-- card-header -->
+					
+				<!--  card-body -->
 				<div id="collapse-${vlist.RN}"
 					class="collapse colllapse-${vlist.vnum} video-collapse-body"
-					aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">
+					aria-labelledby="heading-${vlist.RN }" data-parent="#my-accordion">
 					<div class="card-body">
 
 						<div id="videoBox-${vlist.vnum}"
@@ -191,9 +200,10 @@
 						</div>
 					</div>
 				</div>
+				
 				<!-- reply  -->
 				<div class="collapse comment-${vlist.vnum} reply-collapse-body"
-					aria-labelledby="heading-${vlist.RN }" data-parent="#accordion">
+					aria-labelledby="heading-${vlist.RN }" data-parent="#my-accordion">
 					<div class="card-body">
 						<div class="container">
 							<div class="row reply-input-group">
@@ -215,9 +225,10 @@
 						</div>
 					</div>
 				</div>
+				
+		
 
 			</div>
-			<!-- /card-body  -->
 		</c:forEach>
 	</div>
 </div>
@@ -237,8 +248,9 @@
 			<div class="modal-body">
 				<form id="videoUpdateForm" name="videoUpdateForm">
 					<div class="form-group">
-						<label>LINK</label> <input type="text" class="form-control"
-							name="vurl"> <input type="hidden" name="vnum">
+						<label>LINK</label> 
+						<input type="text" class="form-control" name="vurl">
+						<input type="hidden" name="vnum">
 					</div>
 					<div class="row">
 						<div class="form-group col-md-6">
@@ -333,7 +345,7 @@
 		})
 	})
 	
-	function myVideoUpdate(vnum,vurl,vtitle,gnum,vpw){
+	function myVideoEdit(vnum,vurl,vtitle,gnum,vpw){
 		//alert(vnum);
 		$("input[name=vnum]").val(vnum);
 		$("input[name=vurl]").val(vurl);
@@ -345,4 +357,3 @@
 	}
 	
 </script>
-

@@ -28,6 +28,10 @@
 	</div>
 </div>
 
+<div class="page-sm-title my-2">
+	<span>즐겨찾기</span>
+	<span class="badge page-sm-badge">(${fn:length(vlist)}) </span>
+</div>
 
 
 <div class="main-content" id="myFav-content">
@@ -35,43 +39,99 @@
 
 		<c:forEach items="${vlist}" var="vlist">
 			<div class="card body-card">
-				<div class="card-header body-card-header" id="heading-${vlist.RN}">
+				<div class="card-header main-card-header" id="heading-${vlist.RN}">
 					<div class="row">
-						<div class="col-lg-4  col-md-6 align-self-center video-img-box"
+						<div class="col-lg-4 align-self-center video-img-box"
 							data-toggle="collapse" data-target="#collapse-${vlist.RN}"
 							aria-expanded="false" aria-controls="collapse-${vlist.RN}">
 
 							<c:set var="strArray" value="${fn:split(vlist.vurl,'/')}" />
 							<c:forEach items="${strArray }" var="videoId" varStatus="g">
 								<c:if test="${g.count == 3}">
-									<img src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg" id="thum-${vlist.RN}"
+									<img src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg"
 										onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','imgClick')">
 								</c:if>
 							</c:forEach>
 						</div>
 
-						<div class="col-lg-8 col-md-6 video-info-box">
-							<div class="row video-info-row">
-								<h1 class="video-title" data-toggle="collapse"
-									data-target="#collapse-${vlist.RN}" aria-expanded="false"
-									aria-controls="collapse-${vlist.RN }"
-									onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','titleClick')">
+						<!--video-info-box  -->
+						<div class="col-lg-8 video-info-box">
 
-									${vlist.vtitle} <span class="badge">조회수 :
-										${vlist.viewcnt} &nbsp;</span>
-								</h1>
-								<h1 class="video-info">
-									작성자 : ${vlist.userid } <span class="badge badge-info"> <a
-										href="#">LINK</a>
-									</span>
+							<div class="row">
+								<div class="video-info-row">
+									<div class="video-title" data-toggle="collapse"
+										data-target="#collapse-${vlist.RN}" aria-expanded="false"
+										aria-controls="collapse-${vlist.RN }"
+										onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','titleClick')">
+										<span class="v-title">${vlist.vtitle}</span>
+									</div>
+									<div class="video-info badge">
 
-								</h1>
+										<div class="view-cnt">
+											<i class="far fa-eye"></i> ${vlist.viewcnt}
+										</div>
 
+										<div class="reply-cnt"
+											id="reply-cnt-${vlist.bnum}-${vlist.vnum}">
 
-								<div class="row btn-box-row">
+											<i class="far fa-comment-dots"></i>
+											<c:set var="i" value="0" />
+											<c:set var="sz" value="${fn:length(rlist) }" />
+
+											<c:forEach items="${rlist}" var="rlist">
+												<c:if test="${vlist.bnum == rlist.bnum }">
+													${rlist.bnumCnt}
+												</c:if>
+												<c:if test="${vlist.bnum != rlist.bnum }">
+													<c:set var="i" value="${i+1 }" />
+													<c:if test="${sz == i }">
+														0
+													</c:if>
+												</c:if>
+											</c:forEach>
+										</div>
+
+										<div class="tool-box dropup">
+											<i class="fas fa-ellipsis-v" data-toggle="dropdown"
+												aria-haspopup="true" aria-expanded="false"
+												data-display="static"></i>
+
+											<div class="dropdown-menu dropdown-menu-right">
+												<div class="v-dropup">
+														
+													<button class="btn"
+														onclick="judgment('up','${vlist.bnum}')">
+														 <i class="far fa-thumbs-up"></i> ${vlist.upcnt}
+													</button>
+													
+													<button class="btn"
+														onclick="judgment('down','${vlist.bnum}')">
+														 <i class="far fa-thumbs-down"></i> ${vlist.downcnt }
+													</button>
+													
+													<c:set value="/${vlist.bnum }/" var="fbnum" />
+													<c:if test="${ fn:contains(gui.favorites,fbnum)}">
+														<button class="btn"
+															onclick="favorites('${gui.unum}','${vlist.bnum }','true')">
+															 	 <img class="star" src="resources/css/icon/star.png"></span>
+														</button>
+													</c:if>
+													<c:if test="${not fn:contains(gui.favorites,fbnum)}">
+														<button class="btn"
+															onclick="favorites('${gui.unum}','${vlist.bnum }','false')">
+															 <img class="star" src="resources/css/icon/star-empty.png"></span>
+														</button>
+													</c:if>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="btn-box-row">
 
 									<div class="btn-comment-box">
-										<button class="btn btn-outline-dark info-inner-btn"
+										<button class="btn  info-inner-btn"
 											id="replyBtn-${vlist.bnum }"
 											onclick="commentBox('${vlist.vnum}','${vlist.bnum }')">
 											댓글 (0)
@@ -86,14 +146,16 @@
 									</div>
 
 									<div class="btn-like-box">
-										<button class="btn btn-outline-success info-inner-btn"
+										<button class="btn info-inner-btn"
 											onclick="judgment('up','${vlist.bnum}')">
 											좋아요 <i class="fas fa-thumbs-up"></i> ${vlist.upcnt }
 										</button>
-										<button class="btn btn-outline-danger info-inner-btn"
+										<button class="btn info-inner-btn"
 											onclick="judgment('down','${vlist.bnum}')">
 											싫어요 <i class="fas fa-thumbs-down"></i> ${vlist.downcnt }
 										</button>
+
+										<c:set value="/${vlist.bnum }/" var="fbnum" />
 
 										<c:if test="${fn:contains(gui.favorites,fbnum)}">
 											<button
@@ -113,15 +175,16 @@
 
 								</div>
 							</div>
-
+							
 						</div>
+						<!--/video-info-box  -->
 					</div>
 					<!-- /.row -->
 				</div>
 				<!-- card-header -->
 
 				<div id="collapse-${vlist.RN}"
-					class="collapse colllapse-${vlist.vnum}"
+					class="collapse colllapse-${vlist.vnum} video-collapse-body"
 					aria-labelledby="heading-${vlist.RN }" data-parent="#myFav-accordion">
 					<div class="card-body">
 
@@ -132,31 +195,29 @@
 					</div>
 				</div>
 				<!-- reply  -->
-				<div class="collapse comment-${vlist.vnum}"
+				<div class="collapse comment-${vlist.vnum} reply-collapse-body"
 					aria-labelledby="heading-${vlist.RN }" data-parent="#myFav-accordion">
 					<div class="card-body">
 						<div class="container">
 							<div class="row reply-input-group">
-								<div class="reply-input col-lg-10">
+								<div class="reply-input col-lg-10 col-10">
 									<textarea style="resize: none;" id="replyText-${vlist.bnum}"
 										class="form-control" rows="1" placeholder="댓글을 입력해주세요."></textarea>
 								</div>
-								<div class="reply-input-btn parentBtn col-lg-2">
+								<div class="reply-input-btn parentBtn col-lg-2 col-2">
 
 									<button type="button" name="boardNum-${vlist.bnum }"
-										class="btn btn-dark" onclick="insertReply('${vlist.bnum}')">댓글
-										등록</button>
+										class="btn reply-btn" onclick="insertReply('${vlist.bnum}')">댓글
+										입력</button>
 								</div>
 							</div>
 						</div>
-						<hr>
+						<hr class="reply-hr">
 						<div class="reply-list-group container">
-							<div id="replyList-${vlist.bnum }" class="row replyList-row"></div>
+							<div id="replyList-${vlist.bnum }" class="replyList-row"></div>
 						</div>
 					</div>
 				</div>
-
-
 
 			</div>
 		</c:forEach>
@@ -167,19 +228,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		var favNum=	$("#favNum").val();
-		
-		$(".card-header").each(function(){
-			
-			var headerId = $(this).attr("id");
-			var hArray =headerId.split("-");
-			var hid =hArray[1]-1;
-			
-			if(hid == favNum){
-				
-				$("#thum-"+hArray[1]).trigger("click");
-			}
-		})
+	
 		
 	})
 	

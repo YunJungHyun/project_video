@@ -209,7 +209,7 @@ function favRefresh(userid, width){
 								
 								if(data[j] ==null){
 									if(k< l+3){
-										output +="<div class='favList-item col-4'>"
+										output +="<div class='item-emptyBoard col-4' id='favEmpty-"+j+"'>"
 										output +="<img src='resources/img/no-video.png'>"
 										output +="<span class='favList-name'>삭제된 게시물 입니다.</span>";
 										output +="</div>"
@@ -227,7 +227,7 @@ function favRefresh(userid, width){
 									var videoId = videoIdArray[3];
 								
 									if(k < l+3){
-										output +="<div class='favList-item col-4'>"
+										output +="<div class='favList-item col-4' id='fav-"+j+"'>"
 										output +="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>"
 										output +="<span class='favList-name'>"+vtitle+"</span>";
 										output +="</div>"
@@ -368,9 +368,9 @@ function recentlyRefresh(userid, width){
 								
 								if(data.mlist[j] ==null){
 									if(k< l+3){
-										output +="<div class='favList-item col-4'>"
+										output +="<div class='item-emptyBoard col-4' id='recentlyEmpty-"+j+"'>"
 										output +="<img src='resources/img/no-video.png'>"
-										output +="<span class='favList-name'>삭제된 게시물 입니다.</span>";
+										output +="<span class='recentlyList-item-name'>삭제된 게시물 입니다.</span>";
 										output +="</div>"
 										k++;
 									}else{
@@ -387,7 +387,7 @@ function recentlyRefresh(userid, width){
 								var videoId = videoIdArray[3];
 								
 								if(k < l+3){
-									output +="<div class='recentlyList-item col-4'>"
+									output +="<div class='recentlyList-item col-4' id='recently-"+j+"'>"
 									output +="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>"
 									output +="<span class='recentlyList-name'>"+vtitle+"</span>";
 									output +="</div>"
@@ -442,6 +442,94 @@ function recentlyRefresh(userid, width){
 	}
 }
 
+/* 오늘 본게시물 슬라이드 아이템 클릭  */
+$(document).on("click", ".recentlyList-item", function() {
+	var recentlyId = $(this).attr("id");
+	var rArray = recentlyId.split("-");
+	var reNum = rArray[1];
+
+	//alert("renum :" + reNum);
+	myRecentlyList(reNum);
+})
+
+function myRecentlyList(reNum) {
+	var cookie = $("#cookie").val();
+	//alert(reNum+","+cookie);
+	window.location.href = "myRecentlyVideo.do?reNum=" + reNum + "&cookie="+ cookie;
+}
+/* 오늘 본게시물 슬라이드 아이템 클릭  끝 */
+
+/* 즐겨찾기, 최근본 게시물 삭제된 게시물 처리  */
+$(document).on("click", ".item-emptyBoard", function() {
+
+		var emptyId = $(this).attr("id");
+		var eArray = emptyId.split("-");
+		var listName = eArray[0];
+		var favNum=eArray[1];
+		//alert(listName);
+		if(listName=="recentlyEmpty"){
+			alert("이미 삭제된 게시물 입니다.");
+			return false;
+		}
+		if(listName=="favEmpty"){
+			
+			var con = confirm("즐겨찾기 목록에서 삭제하시겠습니까?");
+			
+			if (con == true) {
+				$.ajax({
+
+					url : "emptyDelete.do",
+					type : "post",
+					data : {
+						"favNum" : favNum
+					},
+					success : function() {
+						alert("해당 게시물이 즐겨찾기 목록에서 삭제되었습니다.");
+						window.location.href = "mainView.do";
+					},
+					error : function() {
+						alert("error");
+					}
+				})
+			}else{
+				
+				return false;
+			}
+		}
+		
+
+		
+	})
+/* 즐겨찾기, 최근본 게시물 삭제된 게시물 처리  */
+/* 즐겨찾기 슬라이드 아이템 클릭  */
+$(document).on("click", ".favList-item", function() {
+	var favId = $(this).attr("id");
+	var fArray = favId.split("-");
+	var favNum = fArray[1];
+
+	myFavList(favNum);
+})
+
+function myFavList(favNum) {
+	var gui = "${gui}";
+	if (gui == "") {
+
+		alert("로그인 후 이용해주세요.");
+		return false;
+	}
+	//alert(favNum);
+	window.location.href = "myFavVideo.do?favNum=" + favNum;
+}
+
+/* 즐겨찾기 슬라이드 아이템 클릭  끝*/
+
+$(".sort-select").on("change",function(){
+	
+	sessionStorage.setItem("con", this.value);
+	
+	//alert(sessionStorage.getItem("con"));
+	condition();
+})
 
 /* 쿠키 생성  */
 function add_cookie(vnum){
@@ -580,223 +668,6 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 
 /* 게시물 클릭 끝  */
 
-/* 댓글 등록 */
-function insertReply(bnumData){
-	
-	
-	var gui = "${gui}";
- 	
- 	if( gui == ""){
- 		
- 		alert("로그인 후 이용해주세요.");
- 		return false;
- 	}
-	
-	var bnum =bnumData;
-	var replyText = $("#replyText-"+bnum).val();
-
-	//alert(bnum);
-
-	$.ajax({
-
-		url : "insertReply.do",
-		type : "post",
-		dataType : "text",
-		data : {
-			"replyText" : replyText,
-			"bnum" : bnum
-		},
-		success : function(data) {
-
-			//alert(data);
-			replyList(bnum);
-		},
-		error : function() {
-			alert("error");
-		}
-
-	})
- 	
-}
-
-/* 댓글 등록 끝  */
-
-
-/* 댓글 리스트 보기 */
-function replyList(data){
-	//alert(data);
-	var bnum = data;
-	var userid = "${gui.userid}";
-	//alert(userid);
-	$.ajax({
-		type:"get",
-		url : "replyList.do?bnum="+bnum,
-		type : "json",
-		success : function(result){
-			
-			//alert(JSON.stringify(result));
-			var output ="";
-			
-			for (var i in result){
-				
-				if(result[i].rnum == 0){
-					output +=" <div class='replyOneLine-row'>"
-					output += "<div class='reply-box' id='reply-"+result[i].rpnum+"' >";
-					output += "<div class='reply-replyer-box'>"+result[i].replyer;
-					
-					if(result[i].replyer == userid){
-						output += "<button class='btn badge myReply-Update-Btn'>삭제</button>";
-						output += "<button class='btn badge myReply-Update-Btn'>수정</button>";
-					}
-					output +="</div>";
-					output += "<div class='reply-text-box'>"+result[i].replyText+"<button class='btn badge reReply-badge-btn' onclick='reCommentBox("+result[i].rpnum+","+result[i].rnum+","+result[i].bnum+",0)'>답글</button></div>";  
-					output +="</div>";																																			
-					output += "</div>";
-					output +="<div id='reReply-"+result[i].bnum+"-"+result[i].rpnum+"'></div>";
-				}
-				
-				if(result[i].rnum != 0){
-					output +="<div class='reReplyOneLine-row'>";
-					output += "<i class='col-lg-1 col-1 reply-icon'> &#10551;</i>";
-					output += "<div class='col-lg-11 col-11 reReply-box-child'>";
-					output += "<div class='reply-replyer-box'>"+result[i].replyer;
-					
-					if(result[i].replyer == userid){
-						output += "<button class='btn badge myReply-Update-Btn'>삭제</button>";
-						output += "<button class='btn badge myReply-Update-Btn'>수정</button>";
-					}
-					output += "</div>";
-					output += "<div class='reply-text-box'>"+result[i].replyText+"</div>"; 
-					output += "</div>";
-					output += "</div>";
-					output +="<div id='reReply-"+result[i].bnum+"-"+result[i].rpnum+"-"+result[i].rnum+"'></div>"
-				}; 
-			}
-			
-			$("#replyList-"+bnum).html(output);
-		},error :function(){
-			
-			alert("error");
-			
-		}
-		 
-		
-	})
-}
-
-
- 
-function commentBox(vnum,bnum){
-	
-	var cmShowChk =$(".comment-"+vnum).hasClass("show");
-	if(cmShowChk==false){
-		$(".comment-"+vnum).addClass("show");
-		
-		replyList(bnum);
-		
-	}else{
-		
-		$(".comment-"+vnum).removeClass("show");
-	}
-	
-}
-
-/* 댓글 리스트 보기 끝  */
-
-/* 대댓글 입력 창*/ 
-function reCommentBox(rpnum ,rnum,bnum ,rnum){
-	
-	//alert(rnum);
-		var output ="";
-		output="<div class='row reReply-input-group'>";	
-		output+="<div class='col-lg-9 col-8 reReply-input'>" 
-			output+="<textarea  style='resize: none;' id='replyText-"+bnum+"-"+rpnum+"' class='form-control'  rows='1' placeholder='답글을 입력해주세요.'></textarea>"
-		output+="</div>"
-		output+="<div class='col-lg-3 col-4 reReply-input-btn'>"
-			output+="<button type='button' name='boardNum-"+bnum+"' class='btn reReply-btn col-lg-7 col-7' onclick='insertReReply("+bnum+","+rpnum+")'>답글 입력</button>"
-			output+="<button type='button' class='btn reReply-cancle-btn col-lg-5 col-5' onclick ='cancel("+rpnum+","+bnum+")'>취소</button>"
-		output+="</div></div>"
-	  
-		if(rnum == 0){
-			
-			$("#reReply-"+bnum+"-"+rpnum).html(output); 
-		} 
-		else{
-			$("#reReply-"+bnum+"-"+rpnum+"-"+rnum).html(output); 
-			
-		}
-}
-/* 대댓글 입력 창 끝*/ 
-
-
-/* 대댓글 입력 취소  */
-function cancel(rpnum, bnum){
-	
-	$("#reReply-"+bnum+"-"+rpnum).children().replaceWith("");
-}
-/* 대댓글 입력 취소 끝 */
-
-/* 대댓글 입력  */
-function insertReReply(bnumData, rpnumData){
-	
-	var gui = "${gui}";
- 	
- 	if( gui == ""){
- 		
- 		alert("로그인 후 이용해주세요.");
- 		return false;
- 	}
- 	
-	var bnum = bnumData;
-	var rpnum = rpnumData;
-	var replyText =$("#replyText-"+bnum+"-"+rpnum).val();
-	
-	//alert(bnum +','+rpnum+','+replyText);
-	$.ajax({
-		
-		url : "insertReReply.do",
-		type : "post",
-		data : {
-			"bnum" : bnum,
-			"rpnum" : rpnum,
-			"replyText" : replyText
-			
-		},
-		dataType : "text",
-		success : function(result){
-			
-			//alert("대댓글 :" +result);
-			replyList(bnum);
-			
-		},error : function(){
-			alert("error");
-		}
-	})
-}
-/* 대댓글 입력 끝 */
-
-
-
-/* 조회수 카운트 */
-function viewCntUp(bnum){
-	
-	$.ajax({
-		
-		url : "viewCntUp.do",
-		data : {
-				"bnum" : bnum
-			},
-		dataType:"text",
-		success : function(data){
-			
-			
-			
-		},error :function(){
-			alert("error");
-		}
-	})
-}
-/* 조회수 카운트 끝*/
  
 
 /* 장르 클릭 */
@@ -818,7 +689,7 @@ function genreClick(gnum){
 /* 장르 클릭 끝  */
 
 /* 리스트 기준 클릭  */
-$(".conBtn").on("click",function(){
+/* $(".conBtn").on("click",function(){
 		
 	$(".conBtn").each(function(){
 		
@@ -834,7 +705,7 @@ $(".conBtn").on("click",function(){
 	$(this).addClass("conClick");
 	
 	condition();
-})
+}) */
 /* 리스트 기준 클릭  끝*/
 
 /* 보는 기준에 따라 리스트 출력  */
@@ -845,7 +716,18 @@ function condition(){
 	var con = "";
 	var gnum = "";
 	
-	$(".conBtn").each(function(){
+	if(sessionStorage.getItem("con") !=""){
+		
+		clickCon = true;
+		con = sessionStorage.getItem("con");
+		
+	}else{
+		clickCon =false;
+		con = sessionStorage.getItem("con");
+		
+	}
+	
+	/* 	$(".conBtn").each(function(){
 		
 		var btnClick = 	$(this).hasClass("conClick");	
 	 	
@@ -862,7 +744,7 @@ function condition(){
 	 			
 	 		}
 	 	}
-	})
+	}) */
 	
 	$(".genreBtn").each(function(){
 		
@@ -878,20 +760,19 @@ function condition(){
 	})
 	
 	if(clickCon ==true && clickGenre == true){
-		//alert("컨디션 o ,장르 o");
-		//alert(con+","+gnum);
+		alert("컨디션 o ,장르 o");
+		alert(con+","+gnum);
 		$(".paging-btn").load("mainView.do?con="+con+"&gnum="+gnum+" #paging-btn-group");
 		$("#main-content").load("mainView.do?con="+con+"&gnum="+gnum+" #accordion");
 	}else if(clickCon == true && clickGenre == false){
 		
-		//alert("컨디션 o ,장르 x");
-		//alert(con+","+gnum);
-		
+		alert("컨디션 o ,장르 x");
+		alert(con+","+gnum);
 		$(".paging-btn").load("mainView.do?con="+con+" #paging-btn-group");
 		$("#main-content").load("mainView.do?con="+con+" #accordion");
 	}else if(clickCon == false && clickGenre == true ){
-		//alert("컨디션 x ,장르 o");
-		//alert(con+","+gnum);
+		alert("컨디션 x ,장르 o");
+		alert(con+","+gnum);
 		$(".paging-btn").load("mainView.do?gnum="+gnum+" #paging-btn-group");
 		$("#main-content").load("mainView.do?gnum="+gnum+" #accordion");
 		
@@ -1165,7 +1046,224 @@ function favorites(unum, bnum ,chk){
 		commentBox(vnum, bnum);
 	})
 /* 화면 작을때 댓글 클릭 끝  */ 
+
+/* 댓글 등록 */
+function insertReply(bnumData){
 	
+	
+	var gui = "${gui}";
+ 	
+ 	if( gui == ""){
+ 		
+ 		alert("로그인 후 이용해주세요.");
+ 		return false;
+ 	}
+	
+	var bnum =bnumData;
+	var replyText = $("#replyText-"+bnum).val();
+
+	//alert(bnum);
+
+	$.ajax({
+
+		url : "insertReply.do",
+		type : "post",
+		dataType : "text",
+		data : {
+			"replyText" : replyText,
+			"bnum" : bnum
+		},
+		success : function(data) {
+
+			//alert(data);
+			replyList(bnum);
+		},
+		error : function() {
+			alert("error");
+		}
+
+	})
+ 	
+}
+
+/* 댓글 등록 끝  */
+
+
+/* 댓글 리스트 보기 */
+function replyList(data){
+	//alert(data);
+	var bnum = data;
+	var userid = "${gui.userid}";
+	//alert(userid);
+	$.ajax({
+		type:"get",
+		url : "replyList.do?bnum="+bnum,
+		type : "json",
+		success : function(result){
+			
+			//alert(JSON.stringify(result));
+			var output ="";
+			
+			for (var i in result){
+				
+				if(result[i].rnum == 0){
+					output +=" <div class='replyOneLine-row'>"
+					output += "<div class='reply-box' id='reply-"+result[i].rpnum+"' >";
+					output += "<div class='reply-replyer-box'>"+result[i].replyer;
+					
+					if(result[i].replyer == userid){
+						output += "<button class='btn badge myReply-Update-Btn'>삭제</button>";
+						output += "<button class='btn badge myReply-Update-Btn'>수정</button>";
+					}
+					output +="</div>";
+					output += "<div class='reply-text-box'>"+result[i].replyText+"<button class='btn badge reReply-badge-btn' onclick='reCommentBox("+result[i].rpnum+","+result[i].rnum+","+result[i].bnum+",0)'>답글</button></div>";  
+					output +="</div>";																																			
+					output += "</div>";
+					output +="<div id='reReply-"+result[i].bnum+"-"+result[i].rpnum+"'></div>";
+				}
+				
+				if(result[i].rnum != 0){
+					output +="<div class='reReplyOneLine-row'>";
+					output += "<i class='col-lg-1 col-1 reply-icon'> &#10551;</i>";
+					output += "<div class='col-lg-11 col-11 reReply-box-child'>";
+					output += "<div class='reply-replyer-box'>"+result[i].replyer;
+					
+					if(result[i].replyer == userid){
+						output += "<button class='btn badge myReply-Update-Btn'>삭제</button>";
+						output += "<button class='btn badge myReply-Update-Btn'>수정</button>";
+					}
+					output += "</div>";
+					output += "<div class='reply-text-box'>"+result[i].replyText+"</div>"; 
+					output += "</div>";
+					output += "</div>";
+					output +="<div id='reReply-"+result[i].bnum+"-"+result[i].rpnum+"-"+result[i].rnum+"'></div>"
+				}; 
+			}
+			
+			$("#replyList-"+bnum).html(output);
+		},error :function(){
+			
+			alert("error");
+			
+		}
+		 
+		
+	})
+}
+
+
+ 
+function commentBox(vnum,bnum){
+	
+	var cmShowChk =$(".comment-"+vnum).hasClass("show");
+	if(cmShowChk==false){
+		$(".comment-"+vnum).addClass("show");
+		
+		replyList(bnum);
+		
+	}else{
+		
+		$(".comment-"+vnum).removeClass("show");
+	}
+	
+}
+
+/* 댓글 리스트 보기 끝  */
+
+/* 대댓글 입력 창*/ 
+function reCommentBox(rpnum ,rnum,bnum ,rnum){
+	
+	//alert(rnum);
+		var output ="";
+		output="<div class='row reReply-input-group'>";	
+		output+="<div class='col-lg-9 col-8 reReply-input'>" 
+			output+="<textarea  style='resize: none;' id='replyText-"+bnum+"-"+rpnum+"' class='form-control'  rows='1' placeholder='답글을 입력해주세요.'></textarea>"
+		output+="</div>"
+		output+="<div class='col-lg-3 col-4 reReply-input-btn'>"
+			output+="<button type='button' name='boardNum-"+bnum+"' class='btn reReply-btn col-lg-7 col-7' onclick='insertReReply("+bnum+","+rpnum+")'>답글 입력</button>"
+			output+="<button type='button' class='btn reReply-cancle-btn col-lg-5 col-5' onclick ='cancel("+rpnum+","+bnum+")'>취소</button>"
+		output+="</div></div>"
+	  
+		if(rnum == 0){
+			
+			$("#reReply-"+bnum+"-"+rpnum).html(output); 
+		} 
+		else{
+			$("#reReply-"+bnum+"-"+rpnum+"-"+rnum).html(output); 
+			
+		}
+}
+/* 대댓글 입력 창 끝*/ 
+
+
+/* 대댓글 입력 취소  */
+function cancel(rpnum, bnum){
+	
+	$("#reReply-"+bnum+"-"+rpnum).children().replaceWith("");
+}
+/* 대댓글 입력 취소 끝 */
+
+/* 대댓글 입력  */
+function insertReReply(bnumData, rpnumData){
+	
+	var gui = "${gui}";
+ 	
+ 	if( gui == ""){
+ 		
+ 		alert("로그인 후 이용해주세요.");
+ 		return false;
+ 	}
+ 	
+	var bnum = bnumData;
+	var rpnum = rpnumData;
+	var replyText =$("#replyText-"+bnum+"-"+rpnum).val();
+	
+	//alert(bnum +','+rpnum+','+replyText);
+	$.ajax({
+		
+		url : "insertReReply.do",
+		type : "post",
+		data : {
+			"bnum" : bnum,
+			"rpnum" : rpnum,
+			"replyText" : replyText
+			
+		},
+		dataType : "text",
+		success : function(result){
+			
+			//alert("대댓글 :" +result);
+			replyList(bnum);
+			
+		},error : function(){
+			alert("error");
+		}
+	})
+}
+/* 대댓글 입력 끝 */
+
+
+
+/* 조회수 카운트 */
+function viewCntUp(bnum){
+	
+	$.ajax({
+		
+		url : "viewCntUp.do",
+		data : {
+				"bnum" : bnum
+			},
+		dataType:"text",
+		success : function(data){
+			
+			
+			
+		},error :function(){
+			alert("error");
+		}
+	})
+}
+/* 조회수 카운트 끝*/
 /* scroll paging */
 
 

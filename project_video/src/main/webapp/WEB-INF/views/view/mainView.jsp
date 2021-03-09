@@ -6,9 +6,10 @@
 
 <div class="paging-box">
 	<div class="col-lg-4 con-btn-group">
-		<a href="#" class="conBtn" id="allCon">전체보기</a> <a href="#"
-			class="conBtn" id="latestCon">최신</a> <a href="#" class="conBtn"
-			id="viewcnt">조회수</a> <a href="#" class="conBtn" id="upcnt">좋아요</a>
+		<a href="#" class="conBtn" id="allCon">전체보기</a> 
+		<a href="#" class="conBtn" id="latestCon">최신</a> 
+		<a href="#" class="conBtn" id="viewcnt">조회수</a> 
+		<a href="#" class="conBtn" id="upcnt">좋아요</a>
 	</div>
 
 	<div class="paging-btn col-6 col-lg-auto ml-auto">
@@ -40,7 +41,7 @@
 	<div class="content-view-box">
 		<a class="recently" data-toggle="collapse" href="#recentlyCollapse"
 			role="button" aria-expanded="false" aria-controls="recentlyCollapse">
-			최근 본 게시물 </a> <a class="favorites" data-toggle="collapse"
+			오늘 본 게시물 </a> <a class="favorites" data-toggle="collapse"
 			href="#favoritesCollapse" role="button" aria-expanded="false"
 			aria-controls="favoritesCollapse"> 즐겨찾기 </a>
 
@@ -48,10 +49,10 @@
 	<div class="sort-box">
 		<div class="sort">
 			<select class="sort-select">
-				<option value="">선택</option>
-				<option>최신순</option>
-				<option>조회순</option>
-				<option>좋아요순</option>
+				<option class="conBtn-sm" value="">전체보기</option>
+				<option class="conBtn-sm" value="latestCon">최신순</option>
+				<option class="conBtn-sm" value="viewcnt">조회순</option>
+				<option class="conBtn-sm" value="upcnt">좋아요순</option>
 			</select>
 		</div>
 	</div>
@@ -73,7 +74,7 @@
 
 		<c:forEach items="${vlist}" var="vlist">
 			<div class="card body-card">
-				<div class="card-header body-card-header mt-1" id="heading-${vlist.RN }">
+				<div class="card-header main-card-header mt-1" id="heading-${vlist.RN }">
 					<div class="row">
 						<div class="col-lg-4 align-self-center video-img-box"
 							data-toggle="collapse" data-target="#collapse-${vlist.RN}"
@@ -166,7 +167,7 @@
 								<div class="btn-box-row">
 
 									<div class="btn-comment-box">
-										<button class="btn btn-outline-dark info-inner-btn"
+										<button class="btn  info-inner-btn"
 											id="replyBtn-${vlist.bnum }"
 											onclick="commentBox('${vlist.vnum}','${vlist.bnum }')">
 											댓글 (0)
@@ -181,11 +182,11 @@
 									</div>
 
 									<div class="btn-like-box">
-										<button class="btn btn-outline-success info-inner-btn"
+										<button class="btn info-inner-btn"
 											onclick="judgment('up','${vlist.bnum}')">
 											좋아요 <i class="fas fa-thumbs-up"></i> ${vlist.upcnt }
 										</button>
-										<button class="btn btn-outline-danger info-inner-btn"
+										<button class="btn info-inner-btn"
 											onclick="judgment('down','${vlist.bnum}')">
 											싫어요 <i class="fas fa-thumbs-down"></i> ${vlist.downcnt }
 										</button>

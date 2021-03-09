@@ -126,7 +126,7 @@ a, a:hover, a:focus {
 	flex-direction: row;
 }
 
-.recentlyList-item:hover, .favList-item:hover{
+.recentlyList-item:hover, .favList-item:hover, .item-emptyBoard:hover{
 	
 	transition: transform 1s;
     filter: brightness(50%);
@@ -134,7 +134,7 @@ a, a:hover, a:focus {
     
 }
 
-.favList-item>img ,.recentlyList-item>img {
+.favList-item>img ,.recentlyList-item>img, .item-emptyBoard >img  {
 	max-width: 100%;
 	height: auto;
 	padding: 0.1rem;
@@ -215,11 +215,11 @@ a, a:hover, a:focus {
 	flex-direction: row;
 }
 
-.body-card-header {
+.main-card-header {
 	padding: 0px;
 }
 
-.body-card-header>.row {
+.main-card-header>.row {
 	diplay: flex;
 	flex-direction: column;
 }
@@ -300,9 +300,9 @@ a, a:hover, a:focus {
 	
 	background-color:#dee2e6;
 }
-.star{
+.star, .edit{
 	
-	width: 3.5vw;
+	width: 4vw;
 }
 
 .fa-thumbs-up{
