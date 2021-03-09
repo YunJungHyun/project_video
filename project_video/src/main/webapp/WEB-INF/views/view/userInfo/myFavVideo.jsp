@@ -4,8 +4,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <div class="paging-box">
-	
-	<input type="hidden" id="favNum"  value="${favNum }"/>
+
+	<input type="hidden" id="favNum" value="${favNum }" />
 
 	<div class="col-lg-4 con-btn-group">
 		<h4>즐겨찾기한 게시물</h4>
@@ -29,8 +29,8 @@
 </div>
 
 <div class="page-sm-title my-2">
-	<span>즐겨찾기</span>
-	<span class="badge page-sm-badge">(${fn:length(vlist)}) </span>
+	<span>즐겨찾기</span> <span class="badge page-sm-badge">(${fn:length(vlist)})
+	</span>
 </div>
 
 
@@ -98,28 +98,28 @@
 
 											<div class="dropdown-menu dropdown-menu-right">
 												<div class="v-dropup">
-														
+
 													<button class="btn"
 														onclick="judgment('up','${vlist.bnum}')">
-														 <i class="far fa-thumbs-up"></i> ${vlist.upcnt}
+														<i class="far fa-thumbs-up"></i> ${vlist.upcnt}
 													</button>
-													
+
 													<button class="btn"
 														onclick="judgment('down','${vlist.bnum}')">
-														 <i class="far fa-thumbs-down"></i> ${vlist.downcnt }
+														<i class="far fa-thumbs-down"></i> ${vlist.downcnt }
 													</button>
-													
+
 													<c:set value="/${vlist.bnum }/" var="fbnum" />
 													<c:if test="${ fn:contains(gui.favorites,fbnum)}">
 														<button class="btn"
 															onclick="favorites('${gui.unum}','${vlist.bnum }','true')">
-															 	 <img class="star" src="resources/css/icon/star.png"></span>
+															<img class="star" src="resources/css/icon/star.png"></span>
 														</button>
 													</c:if>
 													<c:if test="${not fn:contains(gui.favorites,fbnum)}">
 														<button class="btn"
 															onclick="favorites('${gui.unum}','${vlist.bnum }','false')">
-															 <img class="star" src="resources/css/icon/star-empty.png"></span>
+															<img class="star" src="resources/css/icon/star-empty.png"></span>
 														</button>
 													</c:if>
 												</div>
@@ -175,7 +175,7 @@
 
 								</div>
 							</div>
-							
+
 						</div>
 						<!--/video-info-box  -->
 					</div>
@@ -185,7 +185,8 @@
 
 				<div id="collapse-${vlist.RN}"
 					class="collapse colllapse-${vlist.vnum} video-collapse-body"
-					aria-labelledby="heading-${vlist.RN }" data-parent="#myFav-accordion">
+					aria-labelledby="heading-${vlist.RN }"
+					data-parent="#myFav-accordion">
 					<div class="card-body">
 
 						<div id="videoBox-${vlist.vnum}"
@@ -196,7 +197,8 @@
 				</div>
 				<!-- reply  -->
 				<div class="collapse comment-${vlist.vnum} reply-collapse-body"
-					aria-labelledby="heading-${vlist.RN }" data-parent="#myFav-accordion">
+					aria-labelledby="heading-${vlist.RN }"
+					data-parent="#myFav-accordion">
 					<div class="card-body">
 						<div class="container">
 							<div class="row reply-input-group">
@@ -228,7 +230,19 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-	
+	/* var favNum=	$("#favNum").val();
+		
+		$(".main-card-header").each(function(){
+			
+			var headerId = $(this).attr("id");
+			var hArray =headerId.split("-");
+			var hid =hArray[1]-1;
+			
+			if(hid == favNum){
+				
+				$("#fav-"+hArray[1]).trigger("click");
+			}
+		}) */
 		
 	})
 	
