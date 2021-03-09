@@ -127,7 +127,18 @@ $(document).ready(function(){
 		//alert(userid);
 	}
 	
-	
+	$(window).scroll(function(){
+		
+		var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
+		var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
+		var mainContainerHeight = $('.mainContainer').height(); //문서 전체 내용을 갖는 div의 높이
+		if(scrollT + scrollH +1 >= mainContainerHeight) { // 스크롤바가 아래 쪽에 위치할 때
+	 
+			alert("다음페이지");
+			//pageAnchor('next','','${pagingMap.searchTxt }','${pagingMap.gnum}','${pagingMap.con }','${pagingMap.nowPage}','${pagingVO.startPage}','${pagingVO.lastPage }')"
+		
+		}	
+	})
 	favRefresh(userid,width);
 	recentlyRefresh(userid,width);
 
@@ -896,7 +907,7 @@ function condition(){
 function pageAnchor(data ,view ,searchTxt ,gnum , con ,nowPage, startPage, lastPage){
 					//next , 0 , bnum ,  1 , 10
 
-	 
+	
 	var cntPerPage = 10;
 	var startPrev = Number(startPage)-1;
 	var startNext = Number(startPage)+1;
@@ -1138,9 +1149,6 @@ function favorites(unum, bnum ,chk){
 	}
 	
 }
-
-
-
 /* 즐겨 찾기 끝  */
 
 /* 화면 작을때 댓글 클릭  */
@@ -1156,5 +1164,9 @@ function favorites(unum, bnum ,chk){
 		
 		commentBox(vnum, bnum);
 	})
- 
+/* 화면 작을때 댓글 클릭 끝  */ 
+	
+/* scroll paging */
+
+
 </script>

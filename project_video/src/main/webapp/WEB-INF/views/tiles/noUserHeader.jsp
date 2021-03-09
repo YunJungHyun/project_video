@@ -5,19 +5,31 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
 	<div class="container">
 		<a class="navbar-brand" href="mainView.do">YOON PLAYER</a>
+		<div class="nav-sm">
+			<div class="navbar-toggler">
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#searchTool" aria-controls="searchTool"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<i class="fas fa-search search-icon-sm"></i>
+				</button>
+			</div>
 
-		<div class="dropdown">
-			<button class="navbar-toggler" type="button" id="dropdownMenuButton"
-				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="dropdown-menu dropdown-menu-right right-hamburger" aria-labelledby="dropdownMenuButton">
-				<a class="dropdown-item" href="#">게시물 등록</a>
-				
-				<hr>
-				<a class="dropdown-item" href="#" data-toggle="modal" data-target="#loginFormModal">로그인</a>
-			</div> 
-		</div> 
+			<div class="dropdown">
+				<button class="navbar-toggler" type="button" id="dropdownMenuButton"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="dropdown-menu dropdown-menu-right right-hamburger"
+					aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" id="videoInsertBtn" href="#">게시물 등록</a>
+
+					<hr>
+					<a class="dropdown-item" href="#" data-toggle="modal"
+						data-target="#loginFormModal">로그인</a>
+				</div>
+			</div>
+
+		</div>
 		<div class="collapse navbar-collapse">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item active"><a
@@ -27,6 +39,14 @@
 		</div>
 
 
+	</div>
+
+	<div class="collapse navbar-collapse" id="searchTool">
+		<form class="form-inline my-3">
+			<input name="search" class="form-control" type="search"
+				placeholder="게시글 제목을 입력해주세요." aria-label="Search">
+			<button class="btn " type="submit">검색</button>
+		</form>
 	</div>
 </nav>
 
@@ -123,6 +143,18 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		var idCheckValue = false;
+		var userid = "${gui.userid}";
+		/* 비로그인시 게시물등록 클릭 */
+		$("#videoInsertBtn").on("click", function() {
+
+			if (userid == "") {
+
+				alert("로그인 후 이용가능합니다.");
+
+			}
+
+		})
+		/* 비로그인시 게시물등록 클릭 끝*/
 
 		$("#signUp").on("click", function() {
 

@@ -89,7 +89,7 @@
 						</div>
 
 
-						<!--header info box  -->
+						<!--video-info-box  -->
 						<div class="col-lg-8 video-info-box">
 
 							<div class="row">
@@ -210,12 +210,13 @@
 
 								</div>
 							</div>
-							<!-- / header info box  -->
+							
 						</div>
+						<!--/video-info-box  -->
 					</div>
-					<!-- /.row -->
+					
 				</div>
-				<!-- card-header -->
+				<!-- /card-header -->
 
 				<div id="collapse-${vlist.RN}"
 					class="collapse colllapse-${vlist.vnum} video-collapse-body"

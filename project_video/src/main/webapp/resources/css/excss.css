@@ -18,6 +18,21 @@ a, a:hover, a:focus {
 	padding: 0px;
 }
 
+
+/* 검색 폼 */
+.form-inline{
+	
+	flex-flow: unset;
+}
+
+.form-inline > button{
+	
+	margin : 0px 1vw;
+	color : white;
+	width : 20%;
+	background-color: #6c757d;
+}
+
 /* 장르 메뉴들  */
 .genreBtn {
 	margin: 0px 0.1rem;
@@ -441,6 +456,28 @@ a, a:hover, a:focus {
 
 /* 대댓글 끝  */
 
+/* 브라우저 크기 작을때 페이지 타이틀 처리 */
+.page-sm-title{
+	
+	display : block;
+	color : white;
+	font-size: 4vw;
+    font-weight: bold;
+    padding: 0px 2vw;
+    background-color: #495057;
+    border-radius: .25rem;
+    height: 9vw;
+    display: flex;
+    align-items: center;
+   
+}
+
+.page-sm-badge{
+	
+	padding-bottom: 0px;
+}
+
+/* 브라우저 크기 작을때 페이지 타이틀 처리 끝*/
 /* 
 .video-info-row > * {
 	

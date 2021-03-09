@@ -7,26 +7,36 @@
 	<div class="container">
 		<a class="navbar-brand" href="mainView.do">YOONPLAYER</a>
 
-
-		<div class="dropdown">
-			<button class="navbar-toggler" type="button" id="dropdownMenuButton"
-				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-				<span class="navbar-toggler-icon"></span>
-
-			</button>
-			<div class="dropdown-menu dropdown-menu-right right-hamburger"
-				aria-labelledby="dropdownMenuButton">
-				<a class="dropdown-item" href="#">나의 회원 정보</a> 
-				<a class="dropdown-item" href="#">내가 작성한 게시글</a>
-				<hr>
-				<a class="dropdown-item" href="#">게시물 등록</a>
-				<a class="dropdown-item" href="#">오늘 본 동영상</a>
-				<a class="dropdown-item" href="#">즐겨 찾기한 동영상</a>
-				<hr>
-				<a class="dropdown-item logoutBtn" href="#">로그아웃</a>
+		<div class="nav-sm">
+		
+			<div class="navbar-toggler">
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#searchTool" aria-controls="searchTool"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<i class="fas fa-search search-icon-sm"></i>
+				</button>
 			</div>
- 
+			<div class="dropdown">
+				<button class="navbar-toggler" type="button" id="dropdownMenuButton"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+					<span class="navbar-toggler-icon"></span>
+
+				</button>
+				<div class="dropdown-menu dropdown-menu-right right-hamburger"
+					aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" href="#" data-toggle="modal" data-target="#myUserInfoModal">나의 회원 정보</a> <a
+						class="dropdown-item" href="#" onclick="myBoard()">내가 작성한 게시글</a>
+					<hr>
+					<a class="dropdown-item" href="#" data-toggle="modal" data-target="#videoRegFormModal">게시물 등록</a> <a
+						class="dropdown-item" href="#">오늘 본 동영상</a> <a
+						class="dropdown-item" href="#">즐겨 찾기한 동영상</a>
+					<hr>
+					<a class="dropdown-item logoutBtn" href="#">로그아웃</a>
+				</div>
+
+			</div>
+
 		</div>
 		<div class="collapse navbar-collapse" id="navbar-menu">
 			<ul class="navbar-nav ml-auto">
@@ -48,14 +58,40 @@
 					data-target="#videoRegFormModal" href="#">게시물 등록</a></li>
 			</ul>
 		</div>
+	</div>
 
-
-
-
-
+	<div class="collapse navbar-collapse" id="searchTool">
+		<form class="form-inline my-3">
+			<input class="form-control" type="search"
+				placeholder="게시글 제목을 입력해주세요." aria-label="Search">
+			<button class="btn" type="submit">검색</button>
+		</form>
 	</div>
 </nav>
 <!-- 나의 회원 정보 modal  -->
+<div class="modal fade" id="myUserInfoModal" tabindex="-1"
+	role="dialog" aria-labelledby="myUserInfoModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myUserInfoModalLabel">내 정보</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+			
+			</div>
+			<div class="modal-footer">
+				
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 나의 회원 정보 modal 끝-->
+
 
 <!-- Modal -->
 <div class="modal fade" id="videoRegFormModal" tabindex="-1"
@@ -153,10 +189,12 @@
 		})
 	})
 	
-	function myBoard(unum){
-		var gui = "${gui}";
+	function myBoard(){
+	
+		var unum = "${gui.unum}";
 		
-		if( gui == ""){
+		//alert(unum);
+		if( unum == ""){
 	 		
 	 		alert("로그인 후 이용해주세요.");
 	 		return false;

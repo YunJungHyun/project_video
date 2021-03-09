@@ -37,6 +37,19 @@ ul {
 	
 	display : none;
 } */
+/* navbar sm group */
+.nav-sm{
+	
+	display : flex;
+}
+
+/* 검색아이콘  */
+.search-icon-sm{
+	
+	vertical-align: -webkit-baseline-middle;
+}
+
+
 
 /* 브랜드 이름  */
 .navbar-brand {
@@ -79,7 +92,14 @@ ul {
 .navbar-toggler:focus {
 	outline: unset;
 }
+/* 네비게이션바 오른쪽 드롭다운 메뉴 끝  */
 
+/* 브라우저 크기 작을때 페이지 타이틀 처리 */
+.page-sm-title{
+	
+	display : none;
+}
+/* 브라우저 크기 작을때 페이지 타이틀 처리 끝*/
 .modal-header {
 	padding-bottom: 0.5rem;
 }
