@@ -158,7 +158,6 @@ $(document).ready(function(){
 /* 화면 크기 조절  */
 $(window).resize(function(){
 	
-	
 	var userid = "${gui.userid}";
 	var width =document.body.clientWidth;
 	if(userid == ""){
@@ -683,10 +682,23 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 		viewCntUp(bnum);
 		/* 쿠키적용 함수  */
 		add_cookie(vnum);
+		
+		fnMove(vnum);
+		
 	}
 }
 
 /* 게시물 클릭 끝  */
+
+/* 원하는 위치에 스크롤  */
+function fnMove(vnum){
+	
+	var offset = $("#img-" + vnum).offset();
+	//alert(offset.top);
+    $('html, body').animate({scrollTop : offset.top+200}, 400);
+
+}
+/* 원하는 위치에 스크롤  */
 
 /* 보는 순서 정렬 */
 $(".sort-select").on("change",function(){
