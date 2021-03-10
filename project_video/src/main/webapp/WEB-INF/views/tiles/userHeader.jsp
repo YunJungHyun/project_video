@@ -144,6 +144,10 @@
 	</div>
 </div>
 
+<div class="page-top-btn" onclick="window.scrollTo(0,0)">
+	<img src="resources/img/upwards-arrow.png"/>
+</div>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		

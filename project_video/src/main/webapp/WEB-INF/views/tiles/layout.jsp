@@ -119,6 +119,8 @@
 <script type="text/javascript">	
 $(document).ready(function(){
 	
+	
+	
 	var userid = "${gui.userid}";
 	var width =document.body.clientWidth;
 	
@@ -126,19 +128,29 @@ $(document).ready(function(){
 		userid="none";
 		//alert(userid);
 	}
-	
-	$(window).scroll(function(){
+	if(width <= 991){
+		$(window).scroll(function(){
 		
-		var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
-		var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
-		var mainContainerHeight = $('.mainContainer').height(); //문서 전체 내용을 갖는 div의 높이
-		if(scrollT + scrollH +1 >= mainContainerHeight) { // 스크롤바가 아래 쪽에 위치할 때
-	 
-			alert("다음페이지");
-			//pageAnchor('next','','${pagingMap.searchTxt }','${pagingMap.gnum}','${pagingMap.con }','${pagingMap.nowPage}','${pagingVO.startPage}','${pagingVO.lastPage }')"
+			var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
+			var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
+			var mainContainerHeight = $('.mainContainer').height(); //문서 전체 내용을 갖는 div의 높이
+			
+			if(scrollT >= 10){
+				
+				$(".page-top-btn").css("display","block");
+			}else{
+				
+				$(".page-top-btn").css("display","none");
+			}
+			
+			if(scrollT + scrollH +1 >= mainContainerHeight) { // 스크롤바가 아래 쪽에 위치할 때
+		 
+				alert("다음페이지");
+				//pageAnchor('next','','${pagingMap.searchTxt }','${pagingMap.gnum}','${pagingMap.con }','${pagingMap.nowPage}','${pagingVO.startPage}','${pagingVO.lastPage }')"
 		
-		}	
-	})
+			}	
+		})
+	}
 	favRefresh(userid,width);
 	recentlyRefresh(userid,width);
 

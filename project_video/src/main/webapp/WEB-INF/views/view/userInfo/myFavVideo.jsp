@@ -230,20 +230,20 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-	/* var favNum=	$("#favNum").val();
+		/* vnum으로 처리할것   */
+		 var favNum=$("#favNum").val();
 		
-		$(".main-card-header").each(function(){
+	 	$(".main-card-header").each(function(){
 			
 			var headerId = $(this).attr("id");
-			var hArray =headerId.split("-");
+			var hArray =headerId.split("-");	
 			var hid =hArray[1]-1;
-			
+		
 			if(hid == favNum){
 				
 				$("#fav-"+hArray[1]).trigger("click");
 			}
-		}) */
-		
+		})
 	})
 	
 </script>

@@ -29,13 +29,18 @@
 
 <!-- sm-title  -->
 <div class="page-sm-title my-2">
-	<span>내가 쓴 게시물</span>
-	<span class="badge page-sm-badge">(${fn:length(vlist)}) </span>
+	<span>내가 쓴 게시물</span> <span class="badge page-sm-badge">(${fn:length(vlist)})
+	</span>
 </div>
 
 <div class="main-content" id="my-content">
 	<div class="accordion" id="my-accordion">
-
+		<c:if test="${fn:length(vlist) ==0}">
+			<div class="boardNone">
+				<i class="far fa-frown"></i> <span class="boardNone-text">
+					게시물이 없습니다. </span>
+			</div>
+		</c:if>
 		<c:forEach items="${vlist}" var="vlist">
 			<div class="card body-card">
 				<div class="card-header main-card-header" id="heading-${vlist.RN }">
@@ -53,10 +58,10 @@
 								</c:if>
 							</c:forEach>
 						</div>
-						
+
 						<!--video-info-box  -->
 						<div class="col-lg-8  video-info-box">
-							
+
 							<div class="row">
 								<div class="video-info-row">
 									<div class="video-title" data-toggle="collapse"
@@ -65,7 +70,7 @@
 										onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','titleClick')">
 										<span class="v-title">${vlist.vtitle}</span>
 									</div>
-									
+
 									<div class="video-info badge">
 										<div class="view-cnt">
 											<i class="far fa-eye"></i> ${vlist.viewcnt}
@@ -122,13 +127,15 @@
 															<img class="star" src="resources/css/icon/star-empty.png"></span>
 														</button>
 													</c:if>
-													<button class="btn" data-toggle="modal" data-target="#myVideoUpdateModal" onclick="myVideoEdit('${vlist.vnum }','${vlist.vurl}','${vlist.vtitle}','${vlist.gnum}','${vlist.vpw }')">
-														<img class="edit" src="resources/css/icon/edit.png"/>
+													<button class="btn" data-toggle="modal"
+														data-target="#myVideoUpdateModal"
+														onclick="myVideoEdit('${vlist.vnum }','${vlist.vurl}','${vlist.vtitle}','${vlist.gnum}','${vlist.vpw }')">
+														<img class="edit" src="resources/css/icon/edit.png" />
 													</button>
 												</div>
 											</div>
 										</div>
-									</div> 
+									</div>
 								</div>
 
 								<div class="btn-box-row">
@@ -174,20 +181,20 @@
 												<i class="far fa-star"></i>
 											</button>
 										</c:if>
-										
-										
+
+
 									</div>
 
 								</div>
 							</div>
 						</div>
-						
+
 						<!--/video-info-box  -->
 					</div>
-					
+
 				</div>
 				<!-- card-header -->
-					
+
 				<!--  card-body -->
 				<div id="collapse-${vlist.RN}"
 					class="collapse colllapse-${vlist.vnum} video-collapse-body"
@@ -200,7 +207,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<!-- reply  -->
 				<div class="collapse comment-${vlist.vnum} reply-collapse-body"
 					aria-labelledby="heading-${vlist.RN }" data-parent="#my-accordion">
@@ -225,8 +232,8 @@
 						</div>
 					</div>
 				</div>
-				
-		
+
+
 
 			</div>
 		</c:forEach>
@@ -248,9 +255,8 @@
 			<div class="modal-body">
 				<form id="videoUpdateForm" name="videoUpdateForm">
 					<div class="form-group">
-						<label>LINK</label> 
-						<input type="text" class="form-control" name="vurl">
-						<input type="hidden" name="vnum">
+						<label>LINK</label> <input type="text" class="form-control"
+							name="vurl"> <input type="hidden" name="vnum">
 					</div>
 					<div class="row">
 						<div class="form-group col-md-6">

@@ -140,10 +140,16 @@
 	</div>
 </div>
 
+<div class="page-top-btn" onclick="window.scrollTo(0,0)">
+	<img src="resources/img/upwards-arrow.png"/>
+</div>
+
 
 <!-- js -->
 <script type="text/javascript">
 	$(document).ready(function() {
+		
+		
 		var idCheckValue = false;
 		var userid = "${gui.userid}";
 		/* 비로그인시 게시물등록 클릭 */
