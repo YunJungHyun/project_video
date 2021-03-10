@@ -6,10 +6,9 @@
 
 <div class="paging-box">
 	<div class="col-lg-4 con-btn-group">
-		<a href="#" class="conBtn" id="allCon">전체보기</a> 
-		<a href="#" class="conBtn" id="latestCon">최신</a> 
-		<a href="#" class="conBtn" id="viewcnt">조회수</a> 
-		<a href="#" class="conBtn" id="upcnt">좋아요</a>
+		<a href="#" class="conBtn" id="allCon">전체보기</a> <a href="#"
+			class="conBtn" id="latestCon">최신</a> <a href="#" class="conBtn"
+			id="viewcnt">조회수</a> <a href="#" class="conBtn" id="upcnt">좋아요</a>
 	</div>
 
 	<div class="paging-btn col-6 col-lg-auto ml-auto">
@@ -41,22 +40,27 @@
 	<div class="content-view-box">
 		<a class="recently" data-toggle="collapse" href="#recentlyCollapse"
 			role="button" aria-expanded="false" aria-controls="recentlyCollapse">
-			오늘 본 게시물 </a> <a class="favorites" data-toggle="collapse"
+			오늘 본 게시물 </a> 
+		<a class="favorites" data-toggle="collapse"
 			href="#favoritesCollapse" role="button" aria-expanded="false"
 			aria-controls="favoritesCollapse"> 즐겨찾기 </a>
+		<a class="all" href="mainView.do">
+			전체보기
+		</a>
 
 	</div>
 	<div class="sort-box">
 		<div class="sort">
 			<select class="sort-select">
-				<option class="conBtn-sm" id="allCon-sm" value="allCon">전체보기</option>
-				<option class="conBtn-sm" id="latestCon-sm" value="latestCon">최신순</option>
-				<option class="conBtn-sm" id="viewcnt-sm" value="viewcnt">조회순</option>
-				<option class="conBtn-sm" id="upcnt-sm" value="upcnt">좋아요순</option>
+				
+				<option class="sortBtn-sm" id="viewcnt-sm" value="viewcnt">조회순</option>
+				<option class="sortBtn-sm" id="latestCon-sm" value="latestCon">최신순</option>
+				<option class="sortBtn-sm" id="upcnt-sm" value="upcnt">좋아요순</option>
 			</select>
 		</div>
 	</div>
-</div> 
+</div>
+
 
 <div class="collapse my-1" id="recentlyCollapse">
 	<div id="recentlyNone-sm">최근 본 게시물이 없습니다.</div>
@@ -71,24 +75,31 @@
 
 <div class="main-content" id="main-content">
 
- 
-	<div class="accordion" id="accordion">
 
-	<c:if test="${fn:length(vlist) ==0}">
-		<div class="boardNone">
-			<i class="far fa-frown"></i>
-			<span class="boardNone-text">
-			게시물이 없습니다.
-			</span>
+	<div class="accordion" id="accordion">
+		<!-- 삭제할 것  -->
+		<div class="admin-txt">
+			<span class="info-txt">nowPage : ${pagingMap.nowPage }</span> <span
+				class="info-txt">cntPerPage : ${pagingMap.cntPerPage }</span> <span
+				class="info-txt">sort : ${pagingMap.sort}</span> <span
+				class="info-txt">gnum : ${pagingMap.gnum }</span> <span
+				class="info-txt">searchTxt : ${pagingMap.searchTxt }</span>
 		</div>
-	</c:if>
+		<!-- 삭제할 것 끝 -->
+		<c:if test="${fn:length(vlist) ==0}">
+			<div class="boardNone">
+				<i class="far fa-frown"></i> <span class="boardNone-text">
+					게시물이 없습니다. </span>
+			</div>
+		</c:if>
 		<c:forEach items="${vlist}" var="vlist">
 			<div class="card body-card">
-				<div class="card-header main-card-header mt-1" id="heading-${vlist.RN }">
+				<div class="card-header main-card-header mt-1"
+					id="heading-${vlist.RN }">
 					<div class="row">
-					
-							
-						
+
+
+
 						<div class="col-lg-4 align-self-center video-img-box"
 							data-toggle="collapse" data-target="#collapse-${vlist.RN}"
 							aria-expanded="false" aria-controls="collapse-${vlist.RN}">
@@ -96,7 +107,8 @@
 							<c:set var="strArray" value="${fn:split(vlist.vurl,'/')}" />
 							<c:forEach items="${strArray }" var="videoId" varStatus="g">
 								<c:if test="${g.count == 3}">
-									<img class="videoImg" id="img-${vlist.vnum}" src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg"
+									<img class="videoImg" id="img-${vlist.vnum}"
+										src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg"
 										onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','imgClick')">
 								</c:if>
 							</c:forEach>
@@ -147,28 +159,28 @@
 
 											<div class="dropdown-menu dropdown-menu-right">
 												<div class="v-dropup">
-														
+
 													<button class="btn"
 														onclick="judgment('up','${vlist.bnum}')">
-														 <i class="far fa-thumbs-up"></i> ${vlist.upcnt}
+														<i class="far fa-thumbs-up"></i> ${vlist.upcnt}
 													</button>
-													
+
 													<button class="btn"
 														onclick="judgment('down','${vlist.bnum}')">
-														 <i class="far fa-thumbs-down"></i> ${vlist.downcnt }
+														<i class="far fa-thumbs-down"></i> ${vlist.downcnt }
 													</button>
-													
+
 													<c:set value="/${vlist.bnum }/" var="fbnum" />
 													<c:if test="${ fn:contains(gui.favorites,fbnum)}">
 														<button class="btn"
 															onclick="favorites('${gui.unum}','${vlist.bnum }','true')">
-															 	 <img class="star" src="resources/css/icon/star.png"></span>
+															<img class="star" src="resources/css/icon/star.png"></span>
 														</button>
 													</c:if>
 													<c:if test="${not fn:contains(gui.favorites,fbnum)}">
 														<button class="btn"
 															onclick="favorites('${gui.unum}','${vlist.bnum }','false')">
-															 <img class="star" src="resources/css/icon/star-empty.png"></span>
+															<img class="star" src="resources/css/icon/star-empty.png"></span>
 														</button>
 													</c:if>
 												</div>
@@ -224,11 +236,11 @@
 
 								</div>
 							</div>
-							
+
 						</div>
 						<!--/video-info-box  -->
 					</div>
-					
+
 				</div>
 				<!-- /card-header -->
 

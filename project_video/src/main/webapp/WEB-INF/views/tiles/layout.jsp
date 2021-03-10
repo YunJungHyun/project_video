@@ -144,9 +144,9 @@ $(document).ready(function(){
 			}
 			
 			if(scrollT + scrollH +1 >= mainContainerHeight) { // 스크롤바가 아래 쪽에 위치할 때
-		 
-				alert("다음페이지");
-				//pageAnchor('next','','${pagingMap.searchTxt }','${pagingMap.gnum}','${pagingMap.con }','${pagingMap.nowPage}','${pagingVO.startPage}','${pagingVO.lastPage }')"
+		 		var vlistSize ="${pagingMap.vlistSize}";	
+				var searchTxt ="${pagingMap.searchTxt}";
+		 		pageAnchorSmall(vlistSize ,searchTxt);
 		
 			}	
 		})
@@ -218,7 +218,6 @@ function favRefresh(userid, width){
 							output+="<div class='favList'>";
 							for(j ; j <length;j++){
 								
-								
 								if(data[j] ==null){
 									if(k< l+3){
 										output +="<div class='item-emptyBoard col-4' id='favEmpty-"+j+"'>"
@@ -232,14 +231,14 @@ function favRefresh(userid, width){
 										break;
 									}
 								}else{
-								
+									
 									var vurl = data[j].vurl;
 									var vtitle =data[j].vtitle;
 									var videoIdArray=vurl.split("/");
 									var videoId = videoIdArray[3];
-								
+									var vnum = data[j].vnum;
 									if(k < l+3){
-										output +="<div class='favList-item col-4' id='fav-"+j+"'>"
+										output +="<div class='favList-item col-4' id='fav-"+j+"-"+vnum+"'>"
 										output +="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>"
 										output +="<span class='favList-name'>"+vtitle+"</span>";
 										output +="</div>"
@@ -523,11 +522,12 @@ $(document).on("click", ".favList-item", function() {
 	var favId = $(this).attr("id");
 	var fArray = favId.split("-");
 	var favNum = fArray[1];
+	var favVnum = fArray[2];
 
-	myFavList(favNum);
+	myFavList(favNum,favVnum);
 })
 
-function myFavList(favNum) {
+function myFavList(favNum, favVnum) {
 	var gui = "${gui}";
 	if (gui == "") {
 
@@ -536,7 +536,7 @@ function myFavList(favNum) {
 	}
 	//alert(favNum);
 	if(favNum != ""){
-		window.location.href = "myFavVideo.do?favNum=" + favNum;
+		window.location.href = "myFavVideo.do?favNum="+favNum+"&favVnum="+favVnum;
 	}else{
 		
 		window.location.href = "myFavVideo.do";
@@ -690,26 +690,30 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 
 /* 보는 순서 정렬 */
 $(".sort-select").on("change",function(){
-	var con =this.value;
+	var sort =this.value;
 	//alert(con);
-	$(".conBtn-sm").each(function(){
+	$(".sortBtn-sm").each(function(){
 		
-		var btnClick = $(this).hasClass("conClick");
+		var btnClick = $(this).hasClass("sortClick");
 		if(btnClick==true){
-			$(this).removeClass("conClick");
+			$(this).removeClass("sortClick");
 		}
 	})
 	
-	$("#"+con+"-sm").addClass("conClick");
+	$("#"+sort+"-sm").addClass("sortClick");
+	
+	
+	sessionStorage.setItem("sort", sort);
 	
 	condition();
+	
 })
 /* 보는 순서 정렬 끝 */
 
 /* 장르 클릭 */
 function genreClick(gnum){
 	
-	
+	//alert(gnum);
 	$(".genreBtn").each(function(){	
 	 	var btnClick = 	$(this).hasClass("genreClick");	
 	 	if(btnClick==true){	
@@ -718,6 +722,8 @@ function genreClick(gnum){
 	})	
 	
 	$("#genre-"+gnum).addClass("genreClick");
+	
+	sessionStorage.setItem("gnum", gnum);
 	
 	//alert(con);
 	condition();
@@ -746,89 +752,68 @@ function genreClick(gnum){
 
 /* 보는 기준에 따라 리스트 출력  */
 function condition(){
-
-	var clickCon = false;
-	var clickGenre = false;
-	var con = "";
-	var gnum = "";
-	var width = document.body.clientWidth;
 	
-	if(width > 991){
-		$(".conBtn").each(function(){
-			
-			var btnClick = 	$(this).hasClass("conClick");	
-		 	
-			if(btnClick==true){
-		 		
-		 		//alert("컨디션클릭된것있음");
-		 		clickCon= true;
-		 		
-		 		con = $(this).attr("id");
-		 		
-		 		if(con=="allCon"){
-		 			
-		 			location.href="mainView.do";
-		 			
-		 		}
-		 	}
-		})
-	}else{
-		
-		$(".conBtn-sm").each(function(){
-			var btnClick = 	$(this).hasClass("conClick");
-			
-			if(btnClick==true){
-		 		
-		 		//alert("컨디션클릭된것있음");
-		 		clickCon= true;
-		 		
-		 		con = $(this).val();
-		 		
-		 		if(con=="allCon"){
-		 			location.href="mainView.do";
-		 		}
-		 	}
-		})
-	}
- 	
+	var searchTxt = "${pagingMap.searchTxt}";
+	var gnumCheck = sessionStorage.getItem("gnum");
+	var sortCheck = sessionStorage.getItem("sort");
 	
+	var hasGCnt= 0;
+	var hasSCnt= 0;
+	
+	/* session 중복 처리  */
 	$(".genreBtn").each(function(){
 		
-		var btnClick = 	$(this).hasClass("genreClick");	
-	 	if(btnClick==true){
-	 		
-	 		//alert("장르클릭된것있음");
-	 		clickGenre= true
-	 		var gstr = $(this).attr("id");
-	 		var gArray = gstr.split("-");
-	 		gnum = gArray[1];
-	 	}
+		var has =$(this).hasClass("genreClick");
+		
+		if(has == true){
+			hasGCnt += 1;
+		}
+	})
+	if(hasGCnt== 0 ){
+		
+		sessionStorage.removeItem("gnum");
+		gnumCheck =null;
+	}
+	
+	$(".sortBtn-sm").each(function(){
+		
+	var has =$(this).hasClass("sortClick");
+		
+		if(has ==true){
+			hasSCnt += 1;
+		}
 	})
 	
-	if(clickCon ==true && clickGenre == true){
-		//alert("컨디션 o ,장르 o");
-		//alert(con+","+gnum);
-		$(".paging-btn").load("mainView.do?con="+con+"&gnum="+gnum+" #paging-btn-group");
-		$("#main-content").load("mainView.do?con="+con+"&gnum="+gnum+" #accordion");
-	}else if(clickCon == true && clickGenre == false){
+	if(hasSCnt==0){
 		
-		//alert("컨디션 o ,장르 x");
-		//alert(con+","+gnum);
-		$(".paging-btn").load("mainView.do?con="+con+" #paging-btn-group");
-		$("#main-content").load("mainView.do?con="+con+" #accordion");
-	}else if(clickCon == false && clickGenre == true ){
-		//alert("컨디션 x ,장르 o");
-		//alert(con+","+gnum);
-		$(".paging-btn").load("mainView.do?gnum="+gnum+" #paging-btn-group");
-		$("#main-content").load("mainView.do?gnum="+gnum+" #accordion");
-		
-	}else{
-		//alert("X");
+		sessionStorage.removeItem("sort");
+		sortCheck =null;
 	}
+	/* session 중복 처리  */
+
+	
+	$(".paging-btn").load("mainView.do?search="+searchTxt+"&sort="+sortCheck+"&gnum="+gnumCheck+" #paging-btn-group");
+	$("#main-content").load("mainView.do?search="+searchTxt+"&sort="+sortCheck+"&gnum="+gnumCheck+" #accordion");
+	
+   
 };
 
 
 /* 보는 기준에따라 리스트 출력 끝 */
+
+/* small size 페이징  */
+function pageAnchorSmall(vlistSize , searchTxt){
+	var addSize = Number(vlistSize)+10;
+	var sort = sessionStorage.getItem("sort");
+	var gnum = sessionStorage.getItem("gnum");
+	//alert(addSize);
+	
+	$("#main-content").load("mainView.do?search="+searchTxt+"&sort="+sort+"&gnum="+gnum+"&end="+addSize+" #accordion");
+	
+	
+}
+/* small size 페이징  */
+ 
 
 /* 페이징 */
 function pageAnchor(data ,view ,searchTxt ,gnum , con ,nowPage, startPage, lastPage){

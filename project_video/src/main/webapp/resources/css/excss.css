@@ -63,7 +63,7 @@ a, a:hover, a:focus {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	padding: 0px 0.3rem;
+	
 	align-items: flex-end;
 }
 
@@ -73,7 +73,7 @@ a, a:hover, a:focus {
 	align-items: flex-end;
 }
 
-.favorites, .recently {
+.favorites, .recently, .all {
 	height: fit-content;
 	font-size: 3vw;
 	padding: 0.1rem 0.4rem;

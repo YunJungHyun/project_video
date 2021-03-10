@@ -59,12 +59,11 @@
 			</ul>
 		</div>
 	</div>
-
 	<div class="collapse navbar-collapse" id="searchTool">
 		<form class="form-inline my-3">
-			<input class="form-control" type="search"
+			<input name="search" class="form-control" type="search"
 				placeholder="게시글 제목을 입력해주세요." aria-label="Search">
-			<button class="btn" type="submit">검색</button>
+			<button class="btn " type="submit">검색</button>
 		</form>
 	</div>
 </nav>

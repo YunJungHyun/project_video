@@ -14,7 +14,12 @@ body {
 	font-family: 'Gothic A1', sans-serif;
 	letter-spacing: 0.05rem;
 }
-
+/* 관리자  */
+.admin-txt{
+	 display :none;
+	background-color: white;
+}
+/* 관리자  */
 .navbar {
 	background-color: #000000;
 }

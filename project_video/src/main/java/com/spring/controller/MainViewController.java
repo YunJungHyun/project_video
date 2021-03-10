@@ -1,7 +1,6 @@
 package com.spring.controller;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,24 +53,37 @@ public class MainViewController {
 			@RequestParam(value="nowPage", required= false) String nowPage,
 			@RequestParam(value="cntPerPage", required= false) String cntPerPage,
 			@RequestParam(value="gnum", required= false) String gnum,
-			@RequestParam(value="con", required= false) String con,
+			@RequestParam(value="sort", required= false) String sort,
 			@RequestParam(value="search",required=false) String searchTxt,
+			@RequestParam(value="end",required=false) String end,
 			HttpServletRequest request,
 			HttpSession session,
 			Model model
+			
 			) {
 		System.out.println("[mainView.do]");
 		//System.out.println("searchTxt :" +searchTxt);
-		
+		System.out.println("end :" + end);
 		/* System.out.println("nowPage : "+nowPage); */
-
-		if(gnum== null || gnum.equals("0") ) {
+		System.out.println("genre : "+gnum);
+		System.out.println("sort : "+sort);
+		System.out.println("searchTxt : "+searchTxt);	
+		
+		//장르 클릭했는지	
+		if(gnum == null || gnum.equals("null") || gnum.equals("")) {
 			gnum= "";
 		}
-		if(searchTxt == null) {
+		
+		System.out.println("before1 genre : "+gnum);
+		//검색어 있는지
+		if(searchTxt == null || searchTxt.equals("")) {
 			searchTxt ="";
 		}
-		
+		System.out.println("before1 searchTxt : "+searchTxt);
+		if(sort == null ||sort.equals("null")|| sort.equals("") || sort.equals("latestCon")) {
+			sort = "bnum";
+		}
+		System.out.println("before1 sort : "+sort);
 		
 		int total = boardService.boardTotalCnt(gnum,searchTxt);
 
@@ -84,64 +95,50 @@ public class MainViewController {
 		}else if(cntPerPage==null) {
 			cntPerPage ="10";
 		}
+		
 		pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-
+		
+		pagingVO.setSort(sort);
 		pagingVO.setGnum(gnum);
 		pagingVO.setSearchTxt(searchTxt);
-
 		
-		
-		if(con != null) {
-			switch (con) {
-
-			case "allCon" :  pagingVO.setCon("bnum");
-			break;
-			case "viewcnt" : pagingVO.setCon("viewcnt") ;	
-			break;
-			case "upcnt" : pagingVO.setCon("upcnt") ;
-			break;
-			case "latestCon" : pagingVO.setCon("bnum") ;
-			break;
-			case "bnum" : pagingVO.setCon("bnum") ;
-			break;
-			//case "latestCon" :  pagingVO.setCon("");
-
-
-			}
-		}else if(con ==null){
-
-			pagingVO.setCon("bnum");
+		//list 사이즈 수정 되는지
+		if(end != null) {
+			pagingVO.setEnd(Integer.parseInt(end));
 		}
-		//System.out.println("pagingVO :  "+pagingVO.toString());
 
+		
+		
 		//장르
 		List<GenreVO> glist= genreService.getAllGenre();
 
-
+		
 		//등록한동영상 정보
 		List<VideoVO> vlist = videoService.getAllList(pagingVO);
 
-		//System.out.println(vlist.size()); 
+		System.out.println(vlist.size()); 
 
 		Map<String, String> map = new HashMap<String,String>();
 		//페이지 세션
 		map.put("nowPage", Integer.toString(pagingVO.getNowPage()));
 		map.put("cntPerPage", Integer.toString(pagingVO.getCntPerPage()));
-		map.put("con",pagingVO.getCon());
+		map.put("sort",pagingVO.getSort());
 		map.put("searchTxt",pagingVO.getSearchTxt());
-
-
+		
+		map.put("vlistSize", Integer.toString(vlist.size()));
+		map.put("searchTxt" ,searchTxt);
 		if(pagingVO.getGnum()=="") {
 			map.put("gnum", "0");
 		}else {
 			map.put("gnum", pagingVO.getGnum());
 		}
+		
 		session =request.getSession(true); 
 		session.setAttribute("pagingMap", map);	
 
 		//댓글 갯수가져오기
 		List<ReplyVO> rlist =replyService.getReplyCnt();
-		
+
 		System.out.println("rlist.size : "+rlist.size());
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("pagingVO",pagingVO);
@@ -217,7 +214,8 @@ public class MainViewController {
 			Model model,
 			HttpServletRequest request,
 			HttpSession session,
-			@RequestParam(value="favNum" , required=false) String favNum
+			@RequestParam(value="favNum" , required=false) String favNum,
+			@RequestParam(value="favVnum" , required=false) String favVnum
 			) {
 		UserVO gui = (UserVO)session.getAttribute("gui");
 		int unum = gui.getUnum();
@@ -288,7 +286,7 @@ public class MainViewController {
 		session.setAttribute("PagingMap", map);	
 		//댓글 갯수가져오기
 		List<ReplyVO> rlist =replyService.getReplyCnt();
-
+		model.addAttribute("favVnum",favVnum);
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("favNum" ,favNum);
 		model.addAttribute("pagingVO",pagingVO);
@@ -316,7 +314,7 @@ public class MainViewController {
 
 		String[] cArray = cookie.trim().split(",");
 		String[] cookieArray = new String[cArray.length];
-		
+
 		int total = 0;
 
 		String cookieStr = "^";
@@ -325,7 +323,7 @@ public class MainViewController {
 
 			total += 1;
 			cookieArray[cArray.length-i-1] = cArray[i];
-			
+
 			if(i != cArray.length-1) {
 				cookieStr += cArray[i]+"$|^";
 

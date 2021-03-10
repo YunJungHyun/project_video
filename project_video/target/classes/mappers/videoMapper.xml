@@ -19,7 +19,7 @@
 			
 		
 	SELECT * FROM(
-		SELECT ROW_NUMBER() over (ORDER BY ${con} DESC ) AS RN ,bnum ,B.vnum ,B.unum ,B.gnum ,B.userid ,vurl , vtitle ,vpw, A.upcnt, A.downcnt, A.viewcnt 
+		SELECT ROW_NUMBER() over (ORDER BY ${sort} DESC ) AS RN ,bnum ,B.vnum ,B.unum ,B.gnum ,B.userid ,vurl , vtitle ,vpw, A.upcnt, A.downcnt, A.viewcnt 
 					FROM boards A INNER JOIN videos B 
 						ON A.vnum = B.vnum 
 						WHERE B.gnum LIKE CONCAT( #{gnum}, '%') AND B.vtitle LIKE CONCAT('%',#{searchTxt},'%')

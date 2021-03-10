@@ -11,7 +11,7 @@ public class PagingVO {
 		private String gnum;
 		
 		//리스트 보는 조건 선택
-		private String con;
+		private String sort;
 		
 		//나의 게시물 볼때
 		private int unum;
@@ -155,16 +155,16 @@ public class PagingVO {
 			this.gnum = gnum;
 		}
 		
-		public String getCon() {
-			return con;
-		}
-
-		public void setCon(String con) {
-			this.con = con;
-		}
-
 		
 		
+		public String getSort() {
+			return sort;
+		}
+
+		public void setSort(String sort) {
+			this.sort = sort;
+		}
+
 		public String getFav() {
 			return fav;
 		}
