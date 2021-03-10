@@ -151,6 +151,7 @@
 	$(document).ready(function(){
 		
 		
+		 
 		$("#videoReg").on("click" , function(){
 			
 			var queryString = $("form[name=videoRegForm]").serialize() ;

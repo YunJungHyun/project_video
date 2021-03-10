@@ -311,7 +311,7 @@ public class MainViewController {
 
 		System.out.println("reNum : "+ reNum);
 		System.out.println("cookie : "+ cookie);
-
+		
 		String[] cArray = cookie.trim().split(",");
 		String[] cookieArray = new String[cArray.length];
 

@@ -119,6 +119,16 @@
 <script type="text/javascript">	
 $(document).ready(function(){
 	
+	$(".navbar-brand").on("click", function(){
+	/* 	var gnum = sessionStorage.getItem("gnum");
+		var sort = sessionStorage.getItem("sort");
+		var searchTxt = sessionStorage.getItem("searchTxt");
+	 */
+	 
+		 sessionStorage.removeItem("gnum");
+		 sessionStorage.removeItem("sort");
+		 sessionStorage.removeItem("searchTxt");
+	})
 	
 	
 	var userid = "${gui.userid}";
@@ -465,7 +475,7 @@ $(document).on("click", ".recentlyList-item", function() {
 function myRecentlyList(reNum) {
 	var cookie = $("#cookie").val();
 	//alert(reNum+","+cookie);
-	if(reNum !=""){
+	if(reNum !="" ){
 		window.location.href = "myRecentlyVideo.do?reNum=" + reNum + "&cookie="+ cookie;
 	}else{
 		
