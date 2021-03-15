@@ -247,7 +247,7 @@ function favRefresh(userid, width){
 									var videoId = videoIdArray[3];
 									var vnum = data[j].vnum;
 									if(k < l+3){
-										output +="<div class='favList-item col-4' id='fav-"+j+"-"+vnum+"'>"
+										output +="<div class='favList-item col-4' id='fav-"+vnum+"'>"
 										output +="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>"
 										output +="<span class='favList-name'>"+vtitle+"</span>";
 										output +="</div>"
@@ -400,14 +400,14 @@ function recentlyRefresh(userid, width){
 									}
 								}else{
 								
-								
+								var vnum =data.mlist[j].vnum;
 								var vurl = data.mlist[j].vurl;
 								var vtitle =data.mlist[j].vtitle;
 								var videoIdArray=vurl.split("/");
 								var videoId = videoIdArray[3];
 								
 								if(k < l+3){
-									output +="<div class='recentlyList-item col-4' id='recently-"+j+"'>"
+									output +="<div class='recentlyList-item col-4' id='recently-"+vnum+"'>"
 									output +="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>"
 									output +="<span class='recentlyList-name'>"+vtitle+"</span>";
 									output +="</div>"
@@ -474,13 +474,9 @@ $(document).on("click", ".recentlyList-item", function() {
 
 function myRecentlyList(reNum) {
 	var cookie = $("#cookie").val();
-	//alert(reNum+","+cookie);
-	if(reNum !="" ){
-		window.location.href = "myRecentlyVideo.do?reNum=" + reNum + "&cookie="+ cookie;
-	}else{
-		
-		window.location.href = "myRecentlyVideo.do?cookie="+ cookie;
-	}
+	
+	window.location.href = "myRecentlyVideo.do?reNum=" + reNum + "&cookie="+ cookie;
+	
 }
 /* 오늘 본게시물 슬라이드 아이템 클릭  끝 */
 
@@ -531,12 +527,12 @@ $(document).on("click", ".favList-item", function() {
 	var favId = $(this).attr("id");
 	var fArray = favId.split("-");
 	var favNum = fArray[1];
-	var favVnum = fArray[2];
 
-	myFavList(favNum,favVnum);
+
+	myFavList(favNum);
 })
 
-function myFavList(favNum, favVnum) {
+function myFavList( favNum) {
 	var gui = "${gui}";
 	if (gui == "") {
 
@@ -545,7 +541,7 @@ function myFavList(favNum, favVnum) {
 	}
 	//alert(favNum);
 	if(favNum != ""){
-		window.location.href = "myFavVideo.do?favNum="+favNum+"&favVnum="+favVnum;
+		window.location.href = "myFavVideo.do?favNum="+favNum;
 	}else{
 		
 		window.location.href = "myFavVideo.do";
@@ -615,8 +611,10 @@ function getCookie(cname){
 /* 쿠키 생성  끝 */
 
 /* 게시물 클릭  */
-function videoClick(vnumData , vurlData,bnumData, clickObjeck){
+function videoClick(vnumData , vurlData,bnumData, clickObjeck, trigger){
 	
+	
+	var trigger = trigger;
 	
 	var vnum = vnumData;
 	var vurl = vurlData;
@@ -677,7 +675,7 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 					height : '350px',
 					width : '100%',
 					videoId : data.videoId
-
+ 
 				}) 
 				
 				
@@ -702,10 +700,11 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck){
 
 /* 원하는 위치에 스크롤  */
 function fnMove(vnum){
-	
+	//alert(trigger);
 	var offset = $("#img-" + vnum).offset();
 	//alert(offset.top);
-    $('html, body').animate({scrollTop : offset.top+200}, 400);
+	
+   	$('html, body').animate({scrollTop : offset.top+200}, 400);
 
 }
 /* 원하는 위치에 스크롤  */
@@ -825,6 +824,7 @@ function condition(){
 
 /* small size 페이징  */
 function pageAnchorSmall(vlistSize , searchTxt){
+	
 	var addSize = Number(vlistSize)+10;
 	var sort = sessionStorage.getItem("sort");
 	var gnum = sessionStorage.getItem("gnum");

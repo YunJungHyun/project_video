@@ -27,7 +27,8 @@ public class UserController {
 	HttpSession session;
 
 	@RequestMapping(value="login.do" , method=RequestMethod.POST)
-	public String login(UserVO userVO,
+	public String login(
+			UserVO userVO,
 			RedirectAttributes rttr,
 			HttpServletRequest request
 			,HttpServletResponse response

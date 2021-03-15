@@ -5,7 +5,6 @@
 
 <div class="paging-box">
 
-	<input type="hidden" id="favVnum" value="${favVnum }" />
 
 	<div class="col-lg-4 con-btn-group">
 		<h4>즐겨찾기한 게시물</h4>
@@ -48,7 +47,7 @@
 							<c:set var="strArray" value="${fn:split(vlist.vurl,'/')}" />
 							<c:forEach items="${strArray }" var="videoId" varStatus="g">
 								<c:if test="${g.count == 3}">
-									<img id="videoImg-${favVnum }" src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg"
+									<img id="img-${vlist.vnum}" src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg"
 										onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','imgClick')">
 								</c:if>
 							</c:forEach>
@@ -230,10 +229,13 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+			
 		/* vnum으로 처리할것   */
-		 var favVnum=$("#favVnum").val();
+		var favNum="${favNum}";
 		
-		$("#videoImg-"+favVnum).trigger("click");
+		$("#img-"+favNum).trigger("click");
+		
+		
 		
 	})
 	

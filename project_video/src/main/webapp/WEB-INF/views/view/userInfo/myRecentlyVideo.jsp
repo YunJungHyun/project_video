@@ -17,6 +17,12 @@
 
 <div class="main-content" id="myRecently-content">
 	<div class="accordion" id="myRecently-accordion">
+		<c:if test="${fn:length(vlist) ==0}">
+			<div class="boardNone">
+				<i class="far fa-frown"></i> <span class="boardNone-text">
+					게시물이 없습니다. </span>
+			</div>
+		</c:if>
 		<c:forEach items="${vlist}" var="vlist">
 			<div class="card body-card">
 				<div class="card-header main-card-header" id="heading-${vlist.RN}">
@@ -28,7 +34,7 @@
 							<c:set var="strArray" value="${fn:split(vlist.vurl,'/')}" />
 							<c:forEach items="${strArray }" var="videoId" varStatus="g">
 								<c:if test="${g.count == 3}">
-									<img id="recently-${vlist.RN }" src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg"
+									<img id="img-${vlist.vnum }" src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg"
 										onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','imgClick')">
 								</c:if>
 							</c:forEach>
@@ -208,31 +214,15 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		var userid ="${gui.userid}";
-		if(userid == ""){
+		
+		var reNum = "${reNum}";
+		//alert(reNum);
+		if(reNum != "all"){
 			
-			userid ="none";
+			
+			$("#img-"+reNum).trigger("click");
+			
 		}
-		if(document.cookie.indexOf(userid) == -1){
-			//alert("hi");
-			window.location.href="mainView.do";
-		}
-		
-		var reNum=	$("#reNum").val();
-		
-		$(".main-card-header").each(function(){
-			
-			var headerId = $(this).attr("id");
-			var hArray =headerId.split("-");
-			var hid =hArray[1]-1;
-			
-			//	alert("reNum:" + reNum +", hid = "+hid);
-			if(hid == reNum){
-				
-				$("#recently-"+hArray[1]).trigger("click");
-			}
-		})
-		
 	})
 	
 </script>

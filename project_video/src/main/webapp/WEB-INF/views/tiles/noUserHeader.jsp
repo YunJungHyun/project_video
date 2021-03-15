@@ -21,7 +21,7 @@
 				</button>
 				<div class="dropdown-menu dropdown-menu-right right-hamburger"
 					aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="#" onclick="myRecentlyList()">오늘 본 게시물</a>
+					<a class="dropdown-item" href="#" onclick="myRecentlyList('all')">오늘 본 게시물</a>
 					<a class="dropdown-item" id="videoInsertBtn" href="#">게시물 등록</a>
 
 					<hr>

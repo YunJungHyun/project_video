@@ -214,8 +214,7 @@ public class MainViewController {
 			Model model,
 			HttpServletRequest request,
 			HttpSession session,
-			@RequestParam(value="favNum" , required=false) String favNum,
-			@RequestParam(value="favVnum" , required=false) String favVnum
+			@RequestParam(value="favNum" , required=false) String favNum
 			) {
 		UserVO gui = (UserVO)session.getAttribute("gui");
 		int unum = gui.getUnum();
@@ -286,7 +285,7 @@ public class MainViewController {
 		session.setAttribute("PagingMap", map);	
 		//댓글 갯수가져오기
 		List<ReplyVO> rlist =replyService.getReplyCnt();
-		model.addAttribute("favVnum",favVnum);
+		
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("favNum" ,favNum);
 		model.addAttribute("pagingVO",pagingVO);
@@ -311,6 +310,8 @@ public class MainViewController {
 
 		System.out.println("reNum : "+ reNum);
 		System.out.println("cookie : "+ cookie);
+	
+		if(!cookie.equals("")) {
 		
 		String[] cArray = cookie.trim().split(",");
 		String[] cookieArray = new String[cArray.length];
@@ -349,8 +350,12 @@ public class MainViewController {
 		pagingVO.setRecentlyArray(cookieArray);
 
 		List<VideoVO> relist = videoService.getMyRecentlyVideo(pagingVO);
-
 		System.out.println("rlist.size()"+relist.size());
+		model.addAttribute("vlist", relist);
+		}else {
+			
+			model.addAttribute("vlist", null);
+		}
 
 		//장르
 		List<GenreVO> glist= genreService.getAllGenre();
@@ -368,9 +373,9 @@ public class MainViewController {
 		List<ReplyVO> rlist =replyService.getReplyCnt();
 
 		model.addAttribute("rlist", rlist);
-		model.addAttribute("reNum" ,reNum);
+		model.addAttribute("reNum" ,reNum);	
 		model.addAttribute("pagingVO",pagingVO);
-		model.addAttribute("vlist", relist);
+		
 		model.addAttribute("glist", glist);
 
 

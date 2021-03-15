@@ -4,6 +4,7 @@ body {
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
 	background-color: #212529;
+	
 }
 
 body::-webkit-scrollbar {
@@ -16,6 +17,14 @@ a, a:hover, a:focus {
 
 .col-12, .col-4 {
 	padding: 0px;
+}
+
+.navbar-brand {
+	margin: 0px;
+	padding: 0rem 0.25rem;
+	font-family: brandName;
+	letter-spacing: 0.1rem;
+	font-size: 3.7vw;
 }
 
 
