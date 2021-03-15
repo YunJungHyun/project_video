@@ -21,15 +21,23 @@
 <!-- 내가 설정한 css  -->
 <link type="text/css" rel="stylesheet"
 	href="<c:url value='resources/css/css.css'/>" />
+	
 <link type="text/css" rel="stylesheet"
 	media="screen and (min-width:992px)"
 	href="<c:url value='resources/css/lgcss.css'/>" />
+	
+<link type="text/css" rel="stylesheet"
+	media="screen and (max-width:991px)"
+	href="<c:url value='resources/css/resize.css'/>" />
+	
 <link type="text/css" rel="stylesheet"
 	media="screen and (min-width:768px) and (max-width:991px)"
 	href="<c:url value='resources/css/mcss.css'/>" />
+	
 <link type="text/css" rel="stylesheet"
 	media="screen and (min-width:576px) and (max-width:767px)"
 	href="<c:url value='resources/css/scss.css'/>" />
+	
 <link type="text/css" rel="stylesheet"
 	media="screen and (max-width:575px)"
 	href="<c:url value='resources/css/excss.css'/>" />

@@ -36,7 +36,7 @@
 	</div>
 </div>
 
-<div class="content-view mt-2 mb-1">
+<div class="content-view mt-3 mb-1">
 	<div class="content-view-box">
 		<a class="recently" data-toggle="collapse" href="#recentlyCollapse"
 			role="button" aria-expanded="false" aria-controls="recentlyCollapse">

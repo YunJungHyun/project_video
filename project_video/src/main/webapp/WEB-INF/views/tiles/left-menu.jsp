@@ -4,7 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="search-box">
-	<form class="my-4 search-form">
+	<form class="mt-4 mb-2 search-form">
 		<input id="search" name="search" class="col-lg-10 search-input"
 			type="search" placeholder="영상 제목을 입력해주세요.">
 		<button class="search-btn col-lg-2" type="submit">

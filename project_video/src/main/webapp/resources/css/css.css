@@ -22,6 +22,7 @@ body {
 /* 관리자  */
 .navbar {
 	background-color: #000000;
+	
 }
 
 hr {
@@ -38,11 +39,7 @@ ul {
 	padding : 0px;
 }
 
-/* .mainContainer {
-	
-	display : none;
-} */
-/* navbar sm group */
+
 .nav-sm{
 	
 	display : flex;
@@ -70,7 +67,6 @@ ul {
 /* 네비게이션바 오른쪽 드롭다운 메뉴  */
 .navbar-toggler {
 	padding: 0rem 0.25rem;
-	font-size: 4vw;
 	border: none;
 }
  

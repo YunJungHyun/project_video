@@ -60,8 +60,8 @@
 		</div>
 	</div>
 	<div class="collapse navbar-collapse" id="searchTool">
-		<form class="form-inline my-3">
-			<input name="search" class="form-control" type="search"
+		<form class="form-inline container my-3">
+			<input name="search" class="form-control col-sm-10" type="search"
 				placeholder="게시글 제목을 입력해주세요." aria-label="Search">
 			<button class="btn " type="submit">검색</button>
 		</form>
