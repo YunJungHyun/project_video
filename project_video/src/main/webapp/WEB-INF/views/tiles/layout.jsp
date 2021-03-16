@@ -21,23 +21,23 @@
 <!-- 내가 설정한 css  -->
 <link type="text/css" rel="stylesheet"
 	href="<c:url value='resources/css/css.css'/>" />
-	
+
 <link type="text/css" rel="stylesheet"
 	media="screen and (min-width:992px)"
 	href="<c:url value='resources/css/lgcss.css'/>" />
-	
+
 <link type="text/css" rel="stylesheet"
 	media="screen and (max-width:991px)"
 	href="<c:url value='resources/css/resize.css'/>" />
-	
+
 <link type="text/css" rel="stylesheet"
 	media="screen and (min-width:768px) and (max-width:991px)"
 	href="<c:url value='resources/css/mcss.css'/>" />
-	
+
 <link type="text/css" rel="stylesheet"
 	media="screen and (min-width:576px) and (max-width:767px)"
 	href="<c:url value='resources/css/scss.css'/>" />
-	
+
 <link type="text/css" rel="stylesheet"
 	media="screen and (max-width:575px)"
 	href="<c:url value='resources/css/excss.css'/>" />
@@ -308,13 +308,99 @@ function favRefresh(userid, width){
 			
 			
 		}	
+	}else{
+		
+		if(favList =="/"){
+			
+			$("#favNone").css("display" ,"block");
+			$("#fav-slide").css("display" ,"none");
+		
+		}else{
+			
+		$.ajax({
+				
+				url : "favList.do",
+				type : "get",
+				dataType :"json",
+				data:{
+					
+					"fav" : favList
+				},
+				success : function(data){
+					var length = data.length
+					
+					
+					var output ="";
+					var h = 0;
+					
+					var i = 0;
+					
+					var j =0;
+					var k =0;
+					var l =0;
+					
+					for(i ; i <Math.ceil(length/3); i++){
+						output+="<div class='carousel-item'>";
+							output+="<div class='left-favList'>";
+							for(j ; j <length;j++){
+								
+								if(data[j] ==null){
+									if(k< l+3){
+										output +="<div class='item-emptyBoard' id='favEmpty-"+j+"'>"
+										output +="<img class='left-img' src='resources/img/no-video.png'>"
+										output +="<span class='favList-name'>삭제된 게시물 입니다.</span>";
+										output +="</div>"
+										k++;
+									}else{
+									
+										l+=3;
+										break;
+									} 
+								}else{
+									
+									var vurl = data[j].vurl;
+									var vtitle =data[j].vtitle;
+									var videoIdArray=vurl.split("/");
+									var videoId = videoIdArray[3];
+									var vnum = data[j].vnum;
+									if(k < l+3){
+										output +="<div class='favList-item' id='fav-"+vnum+"'>"
+										output +="<img class='left-img' src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>"
+										output +="<span class='favList-name'>"+vtitle+"</span>";
+										output +="</div>"
+										k++;
+									}else{
+									
+										l+=3;
+										break;
+									}
+								
+								}
+								
+							}
+							output+="</div>";
+						output+="</div>";
+					}
+					
+					
+
+					
+					$(".fav-left-inner").html(output);
+					$(".fav-left-inner").children().first().addClass("active");
+					
+				},error : function(){
+					alert("error");
+				}
+				
+			})
+		}
 	}
 	
 }
 
 function recentlyRefresh(userid, width){
 	//alert(userid +" , "+ width+" , "+document.cookie);
-	var cookieList =document.cookie;
+	var cookieList = document.cookie;
 	
 	
 	if(width<=991){
@@ -396,8 +482,8 @@ function recentlyRefresh(userid, width){
 								
 								if(data.mlist[j] ==null){
 									if(k< l+3){
-										output +="<div class='item-emptyBoard col-4' id='recentlyEmpty-"+j+"'>"
-										output +="<img src='resources/img/no-video.png'>"
+										output +="<div class='item-emptyBoard  col-4' id='recentlyEmpty-"+j+"'>"
+										output +="<img  src='resources/img/no-video.png'>"
 										output +="<span class='recentlyList-item-name'>삭제된 게시물 입니다.</span>";
 										output +="</div>"
 										k++;
@@ -415,8 +501,8 @@ function recentlyRefresh(userid, width){
 								var videoId = videoIdArray[3];
 								
 								if(k < l+3){
-									output +="<div class='recentlyList-item col-4' id='recently-"+vnum+"'>"
-									output +="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>"
+									output +="<div class='recentlyList-item  col-4' id='recently-"+vnum+"'>"
+									output +="<img  src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>"
 									output +="<span class='recentlyList-name'>"+vtitle+"</span>";
 									output +="</div>"
 									k++;
@@ -466,6 +552,128 @@ function recentlyRefresh(userid, width){
 			})
 			
 			
+		}
+	}else {
+		
+		if(cookieList.indexOf(userid) == -1){
+			//alert("block");
+			$("#recentlyNone").css("display" ,"block");
+			$("#recently-slide").css("display","none");
+		
+		}else {
+			
+			$("#recentlyNone").css("display" ,"none");
+			$("#recently-slide").css("display","block");
+			
+			var cookie ="";
+			
+			if(cookieList.indexOf(";") != -1){
+				var cookieArray = cookieList.split(";");
+				
+				for( var  i = 0 ; i < cookieArray.length ;i++){ 
+					
+					var chk = cookieArray[i].includes(userid);
+					
+					
+					if(chk == true ){
+						var updateArray = cookieArray[i].replace(userid+"=","");
+						var updateArray2 = updateArray.replace(";","");
+						cookie = updateArray2.split("%2C");
+						
+			 			
+					}  
+					
+				}
+			
+			}else{
+				
+				var updateArray = document.cookie.replace(userid+"=","");
+				cookie = updateArray.split("%2C");	
+				
+			}
+			
+			
+			$("#cookie").val(cookie);
+			
+			var cookie = $("#cookie").val();
+			
+			
+			$.ajax ({
+				
+				url : "recentlyList.do",
+				type :"GET",
+				data :{
+					
+					"cookie" : cookie 
+				},
+				dataType:"json",
+				success : function(data){
+					//	var x =data;
+					var length = data.mlist.length;
+					
+
+					var output ="";
+					var h = 0;
+					var i = 0;
+					var j =0;
+					var k =0;
+					var l =0;
+					
+					for(i ; i <Math.ceil(length/3); i++){
+						
+						output +="<div class='carousel-item'>";
+						output +="<div class='left-recently-list'>";
+							
+						for(j ; j <length;j++){
+							
+							if(data.mlist[j] ==null){ 
+								if(k< l+3){
+									output +="<div class='item-emptyBoard' id='recentlyEmpty-"+j+"'>"
+									output +="<img class='left-img' src='resources/img/no-video.png'>"
+									output +="<span class='recentlyList-name'>삭제된 게시물 입니다.</span>";
+									output +="</div>"
+									k++;
+								}else{
+								
+									l+=3;
+									break;
+								}
+							}else{
+							
+							var vnum =data.mlist[j].vnum;
+							var vurl = data.mlist[j].vurl;
+							var vtitle =data.mlist[j].vtitle;
+							var videoIdArray=vurl.split("/");
+							var videoId = videoIdArray[3];
+							
+							if(k < l+3){
+								output +="<div class='recentlyList-item' id='recently-"+vnum+"'>"
+								output +="<img  class='left-img' src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>"
+								output +="<span class='recentlyList-name'>"+vtitle+"</span>";
+								output +="</div>"
+								k++;
+							}else{
+								
+								l+=3;
+								break;
+							}
+							}
+						}
+						output +="</div>";
+						output +="</div>";
+					}
+					
+					
+					$(".recently-left-inner").html(output);
+					$(".recently-left-inner").children().first().addClass("active");
+					
+					
+					//alert($(".carousel-item").length);
+				},error : function(){
+					alert("error");
+				}
+			})
+
 		}
 	}
 }
