@@ -120,10 +120,12 @@ public class MainViewController {
 
 		Map<String, String> map = new HashMap<String,String>();
 		//페이지 세션
+		
 		map.put("nowPage", Integer.toString(pagingVO.getNowPage()));
 		map.put("cntPerPage", Integer.toString(pagingVO.getCntPerPage()));
 		map.put("sort",pagingVO.getSort());
 		map.put("searchTxt",pagingVO.getSearchTxt());
+		
 		
 		map.put("vlistSize", Integer.toString(vlist.size()));
 		map.put("searchTxt" ,searchTxt);
@@ -191,7 +193,7 @@ public class MainViewController {
 		map.put("cntPerPage", Integer.toString(pagingVO.getCntPerPage()));
 
 		session =request.getSession(true); 
-		session.setAttribute("PagingMap", map);	
+		session.setAttribute("pagingMap", map);	
 		//댓글 갯수가져오기
 		List<ReplyVO> rlist =replyService.getReplyCnt();
 
@@ -280,7 +282,7 @@ public class MainViewController {
 		//페이지 세션
 		map.put("nowPage", Integer.toString(pagingVO.getNowPage()));
 		map.put("cntPerPage", Integer.toString(pagingVO.getCntPerPage()));
-
+		
 		session =request.getSession(true); 
 		session.setAttribute("PagingMap", map);	
 		//댓글 갯수가져오기

@@ -3,7 +3,7 @@
 body {
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
-	background-color: #212529;
+	background-color: #383d41;
 }
 
 body::-webkit-scrollbar {
@@ -33,8 +33,9 @@ a, a:hover, a:focus {
 
 }
 
+
 /* 검색 폼 */
-.form-inline {
+.form-inline { 
 	flex-flow: unset;
 }
 
@@ -47,6 +48,10 @@ a, a:hover, a:focus {
 /* 검색 폼 끝 */
 
 /* 장르 메뉴들  */
+
+.genre-container {
+    margin-top: 1rem;
+}
 .genre-box {
 	display: flex;
 	flex-direction: row;
@@ -185,6 +190,22 @@ a, a:hover, a:focus {
 /* 슬라이드 끝 */
 
 /* accordion  */
+
+.video-info-row.lg {
+	
+	display : none;
+}
+
+.btn-box-row.lg {
+	
+	display : none;
+}
+
+.writer-info-row.lg{
+	
+	display :none;
+}
+
 .body-card {
 	border: unset;
 	background-color: #212529;
@@ -416,7 +437,7 @@ a, a:hover, a:focus {
 }
 
 .star, .edit {
-	width: 4vw;
+	width: 1.5rem;
 }
 
 .fa-thumbs-up {

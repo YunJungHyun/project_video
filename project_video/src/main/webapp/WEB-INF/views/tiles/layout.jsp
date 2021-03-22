@@ -132,7 +132,6 @@ $(document).ready(function(){
 		var sort = sessionStorage.getItem("sort");
 		var searchTxt = sessionStorage.getItem("searchTxt");
 	 */
-	 
 		 sessionStorage.removeItem("gnum");
 		 sessionStorage.removeItem("sort");
 		 sessionStorage.removeItem("searchTxt");
@@ -168,7 +167,11 @@ $(document).ready(function(){
 		
 			}	
 		})
+		
+		
 	}
+	
+	
 	favRefresh(userid,width);
 	recentlyRefresh(userid,width);
 
@@ -181,6 +184,16 @@ $(window).resize(function(){
 	if(userid == ""){
 		userid="none";
 		//alert(userid);
+	} 
+	
+	if(width <= 991){
+		
+		$(".sm").css("display","flex");
+		$(".lg").css("display","none");
+	}else{
+		
+		$(".lg").css("display","flex");
+		$(".sm").css("display", "none");	
 	}
 	
 	favRefresh(userid,width);
@@ -968,21 +981,23 @@ function genreClick(gnum){
 /* 장르 클릭 끝  */
  
 /* 리스트 기준 클릭  */
- $(".conBtn").on("click",function(){
+ $(".sortBtn-lg").on("click",function(){
+	 var sort =$(this).attr("id");
+	
+	$(".sortBtn-lg").each(function(){
 		
-	$(".conBtn").each(function(){
-		
-	 	var btnClick = 	$(this).hasClass("conClick");
+	 	var btnClick = 	$(this).hasClass("sortClick");
 	 	if(btnClick==true){
 	 		
-	 		$(this).removeClass("conClick");
+	 		$(this).removeClass("sortClick");
 	 		$(this).css("background-color","#fff");
 	 	}
 	})	
+	$("#"+sort).css("background-color","#ffc107");
+	$("#"+sort).addClass("sortClick");
+	sessionStorage.setItem("sortLg", sort);
 	
-	$(this).css("background-color", "#ffc107");
-	$(this).addClass("conClick");
-	
+	//alert(sessionStorage.getItem("sortLg"));
 	condition();
 }) 
 /* 리스트 기준 클릭  끝*/
@@ -993,9 +1008,13 @@ function condition(){
 	var searchTxt = "${pagingMap.searchTxt}";
 	var gnumCheck = sessionStorage.getItem("gnum");
 	var sortCheck = sessionStorage.getItem("sort");
+	var sortCheckLg = sessionStorage.getItem("sortLg");
+	
+	var width = document.body.clientWidth;
 	
 	var hasGCnt= 0;
 	var hasSCnt= 0;
+	var hasSLCnt= 0;
 	
 	/* session 중복 처리  */
 	$(".genreBtn").each(function(){
@@ -1026,12 +1045,32 @@ function condition(){
 		sessionStorage.removeItem("sort");
 		sortCheck =null;
 	}
+	
+	$(".sortBtn-lg").each(function(){
+		
+	var has =$(this).hasClass("sortClick");
+		
+		if(has ==true){
+			hasSLCnt += 1;
+		}
+	})
+	
+	if(hasSLCnt==0){
+		
+		sessionStorage.removeItem("sortLg");
+		sortCheckLg =null;
+	}
 	/* session 중복 처리  */
+	
 
-	
-	$(".paging-btn").load("mainView.do?search="+searchTxt+"&sort="+sortCheck+"&gnum="+gnumCheck+" #paging-btn-group");
-	$("#main-content").load("mainView.do?search="+searchTxt+"&sort="+sortCheck+"&gnum="+gnumCheck+" #accordion");
-	
+	if(width <= 991){	
+		$(".paging-btn").load("mainView.do?search="+searchTxt+"&sort="+sortCheck+"&gnum="+gnumCheck+" #paging-btn-group");
+		$("#main-content").load("mainView.do?search="+searchTxt+"&sort="+sortCheck+"&gnum="+gnumCheck+" #accordion");
+	}else{
+		$(".paging-btn").load("mainView.do?search="+searchTxt+"&sort="+sortCheckLg+"&gnum="+gnumCheck+" #paging-btn-group");
+		$("#main-content").load("mainView.do?search="+searchTxt+"&sort="+sortCheckLg+"&gnum="+gnumCheck+" #accordion");
+		
+	}
    
 };
 
@@ -1054,160 +1093,91 @@ function pageAnchorSmall(vlistSize , searchTxt){
  
 
 /* 페이징 */
-function pageAnchor(data ,view ,searchTxt ,gnum , con ,nowPage, startPage, lastPage){
+function pageAnchor(data ,view ,nowPage, startPage, lastPage ){
 					//next , 0 , bnum ,  1 , 10
-
 	
+	var gnum = sessionStorage.getItem("gnum");
+	var sortSm = sessionStorage.getItem("sort");
+	var sortLg = sessionStorage.getItem("sortLg");
+	var sort = "";
+
 	var cntPerPage = 10;
 	var startPrev = Number(startPage)-1;
 	var startNext = Number(startPage)+1;
-	var unum = "${gui.unum}";
+	
+	var unum ="${gui.unum}";
 	
 	
-	
-	//alert(data+","+gnum+","+ con+","+nowPage+","+startPage+","+lastPage ); 
-	if(view==""){
+	if(sortSm != null ){
+		
+		sort = sortSm;
+	}
+	if(sortLg != null){
+		
+		sort = sortLg;
+	}
+		
+	//alert(data+","+view+","+nowPage+","+startPage+","+lastPage);
+
+	if(view == "mainView.do"){
 		switch(data){
 			case "prev" :
 				//alert("prev"); 
 				if(nowPage != 1){ 
 				//alert("1페이지 아님");
-				 
-				$(".paging-btn").load("mainView.do?search="+searchTxt+"&nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+"  #paging-btn-group");							
-				$("#main-content").load("mainView.do?search="+searchTxt+"&nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #accordion");
+			 
+				$(".paging-btn").load(view+"?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&sort="+sort+"&gnum="+gnum+"  #paging-btn-group");							
+				$("#main-content").load(view+"?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&sort="+sort+"&gnum="+gnum+" #accordion");
 			}
 			break;
-	
-		case "next" :
+
+			case "next" :
+				if(nowPage != lastPage){
+				//alert("다름");
+				$(".paging-btn").load(view+"?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&sort="+sort+"&gnum="+gnum+"  #paging-btn-group");
+				$("#main-content").load(view+"?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&sort="+sort+"&gnum="+gnum+" #accordion");
+			
+			}
+				if(nowPage == lastPage){
+				//alert("같음");
+			}
+			break;
+
+		}
+	}else if(view == "myVideo.do"){
+		
+		 sessionStorage.removeItem("gnum");
+		 sessionStorage.removeItem("sort");
+		 sessionStorage.removeItem("sortLg");
+		 
+		 switch(data){
+			case "prev" :
+				//alert("prev"); 
+				if(nowPage != 1){
+				//alert("1페이지 아님");
+				
+				$(".my-paging-btn").load(view+"?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&unum="+unum +"  #my-paging-btn-group");							
+				$("#my-content").load(view+"?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&unum="+unum +" #my-accordion");
+			}else{
+				alert(nowPage);
+			}
+			break;
+	 
+			case "next" :
 			if(nowPage != lastPage){
 				//alert("다름");
-				$(".paging-btn").load("mainView.do?search="+searchTxt+"&nowPage="+startNext+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+"  #paging-btn-group");
-				$("#main-content").load("mainView.do?search="+searchTxt+"&nowPage="+startNext+"&cntPerPage="+cntPerPage+"&con="+con+"&gnum="+gnum+" #accordion");
+				$(".my-paging-btn").load(view+"?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&unum="+unum +"  #my-paging-btn-group");
+				$("#my-content").load(view+"?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&unum="+unum +" #my-accordion");
 				
 			}
 			if(nowPage == lastPage){
 				//alert("같음");
 			}
-			break;
+			break; 
+
+		}
+	}
 	
-		}
-	}else if (view =="myVideo"){
-		
-		switch(data){
-		case "prev" :
-			//alert("prev"); 
-			if(nowPage != 1){
-			//alert("1페이지 아님");
-			
-			$(".my-paging-btn").load("myVideo.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&unum="+unum +"  #my-paging-btn-group");							
-			$("#my-content").load("myVideo.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&unum="+unum +" #my-accordion");
-		}else{
-			alert(nowPage);
-		}
-		break;
- 
-		case "next" :
-		if(nowPage != lastPage){
-			//alert("다름");
-			$(".my-paging-btn").load("myVideo.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&unum="+unum +"  #my-paging-btn-group");
-			$("#my-content").load("myVideo.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&unum="+unum +" #my-accordion");
-			
-		}
-		if(nowPage == lastPage){
-			//alert("같음");
-		}
-		break;
-
-	}
-		
-	}else if (view =="favVideo"){
-		
-		switch(data){
-		case "prev" :
-			//alert("prev"); 
-			if(nowPage != 1){
-			//alert("1페이지 아님");
-			
-			$(".myFav-paging-btn").load("myFavVideo.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&unum="+unum +"  #myFav-paging-btn-group");							
-			$("#myFav-content").load("myFavVideo.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&unum="+unum +" #myFav-accordion");
-		}else{
-			alert(nowPage);
-		}
-		break;
- 
-		case "next" :
-		if(nowPage != lastPage){
-			//alert("다름");
-			$(".myFav-paging-btn").load("myFavVideo.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&unum="+unum +"  #myFav-paging-btn-group");
-			$("#myFav-content").load("myFavVideo.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&unum="+unum +" #myFav-accordion");
-			
-		}
-		if(nowPage == lastPage){
-			//alert("같음");
-		}
-		break;
-
-	}
-		
-	}else if (view =="myVideo"){
-		
-		switch(data){
-		case "prev" :
-			//alert("prev"); 
-			if(nowPage != 1){
-			//alert("1페이지 아님");
-			
-			$(".my-paging-btn").load("myVideo.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&unum="+unum +"  #my-paging-btn-group");							
-			$("#my-content").load("myVideo.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&unum="+unum +" #my-accordion");
-		}else{
-			alert(nowPage);
-		}
-		break;
- 
-		case "next" :
-		if(nowPage != lastPage){
-			//alert("다름");
-			$(".my-paging-btn").load("myVideo.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&unum="+unum +"  #my-paging-btn-group");
-			$("#my-content").load("myVideo.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&unum="+unum +" #my-accordion");
-			
-		}
-		if(nowPage == lastPage){
-			//alert("같음");
-		}
-		break;
-
-	}
-		
-	}else if (view =="recentlyVideo"){
-		
-		switch(data){
-		case "prev" :
-			//alert("prev"); 
-			if(nowPage != 1){
-			//alert("1페이지 아님");
-			
-			$(".myRecently-paging-btn").load("myRecentlyVideo.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&unum="+unum +"  #myRecently-paging-btn-group");							
-			$("#myRecently-content").load("myRecentlyVideo.do?nowPage="+startPrev+"&cntPerPage="+cntPerPage+"&unum="+unum +" #myRecently-accordion");
-		}else{
-			alert(nowPage);
-		}
-		break;
- 
-		case "next" :
-		if(nowPage != lastPage){
-			//alert("다름");
-			$(".myRecently-paging-btn").load("myRecentlyVideo.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&unum="+unum +"  #myRecently-paging-btn-group");
-			$("#myRecently-content").load("myRecentlyVideo.do?nowPage="+startNext+"&cntPerPage="+cntPerPage+"&unum="+unum +" #myRecently-accordion");
-			
-		}
-		if(nowPage == lastPage){
-			//alert("같음");
-		}
-		break;
-
-	}
-		
-	}
 }
 
 /* 페이징 끝  */
@@ -1241,12 +1211,12 @@ function judgment(judg ,bnum){
 				
 				alert("해당 게시물을 싫어합니다.");
 			}  
-			if(${pagingMap.gnum}==0){
+		/* 	if(${pagingMap.gnum}==0){
 				window.location.href="mainView.do?nowPage="+${pagingMap.nowPage}+"&cntPerPage="+${pagingMap.cntPerPage};
 			}else{
 				
 				window.location.href="mainView.do?nowPage="+${pagingMap.nowPage}+"&cntPerPage="+${pagingMap.cntPerPage}+"&gnum="+${pagingMap.gnum};
-			}
+			} */
 				
 		},error : function(error){
 			

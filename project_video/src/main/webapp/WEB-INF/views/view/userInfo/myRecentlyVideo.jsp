@@ -5,8 +5,8 @@
 
 <div class="paging-box">
 	<input type="hidden" id="reNum" value="${reNum }"/>
-	<div class="col-lg-4 con-btn-group">
-		<h4>최근 본 게시물</h4>
+	<div class="con-btn-group">
+		<span class="page-title">오늘 본 게시물 ( ${fn:length(vlist)} )</span>
 	</div>
 </div>
 
@@ -27,14 +27,14 @@
 			<div class="card body-card">
 				<div class="card-header main-card-header" id="heading-${vlist.RN}">
 					<div class="row">
-						<div class="col-lg-4 align-self-center video-img-box"
+						<div class="col-lg-5 align-self-center video-img-box"
 							data-toggle="collapse" data-target="#collapse-${vlist.RN}"
 							aria-expanded="false" aria-controls="collapse-${vlist.RN}">
 
 							<c:set var="strArray" value="${fn:split(vlist.vurl,'/')}" />
 							<c:forEach items="${strArray }" var="videoId" varStatus="g">
 								<c:if test="${g.count == 3}">
-									<img id="img-${vlist.vnum }" src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg"
+									<img class="videoImg" id="img-${vlist.vnum }" src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg"
 										onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','imgClick')">
 								</c:if>
 							</c:forEach>
@@ -42,10 +42,68 @@
 
 						
 						<!--video-info-box  -->
-						<div class="col-lg-8 video-info-box">
+						<div class="col-lg-7 video-info-box">
 
-							<div class="row">
-								<div class="video-info-row">
+									<div class="video-info-row lg">
+								<div class="video-title" data-toggle="collapse"
+									data-target="#collapse-${vlist.RN}" aria-expanded="false"
+									aria-controls="collapse-${vlist.RN }"
+									onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','titleClick')">
+									<span class="v-title">${vlist.vtitle}</span>
+								</div>
+
+								<div class="viewCnt badge">
+									<i class="far fa-eye"></i> ${vlist.viewcnt }
+								</div>
+							</div>
+							<div class="writer-info-row lg">
+								<span class="u-title">작성자 : ${vlist.userid }</span>
+								<div class="link badge">LINK</div>
+							</div>
+							<div class="btn-box-row lg">
+
+								<div class="btn-comment-box">
+									<button class="btn info-btn" id="replyBtn-${vlist.bnum }"
+										onclick="commentBox('${vlist.vnum}','${vlist.bnum }')">
+										댓글 (0)
+										<c:forEach items="${rlist }" var="rlist">
+											<c:if test="${vlist.bnum == rlist.bnum }">
+												<script>
+											$("#replyBtn-"+${vlist.bnum}).html("댓글 ("+${rlist.bnumCnt}+")");
+										</script>
+											</c:if>
+										</c:forEach>
+									</button>
+								</div>
+
+								<div class="btn-like-box">
+									<button class="btn info-btn"
+										onclick="judgment('up','${vlist.bnum}')">
+										좋아요 <i class="far fa-thumbs-up"></i> ${vlist.upcnt }
+									</button>
+									<button class="btn info-btn"
+										onclick="judgment('down','${vlist.bnum}')">
+										싫어요 <i class="far fa-thumbs-down"></i> ${vlist.downcnt }
+									</button>
+
+									<c:set value="/${vlist.bnum }/" var="fbnum" />
+
+									<c:if test="${fn:contains(gui.favorites,fbnum)}">
+										<button class="btn info-btn fbtn-${vlist.bnum }"
+											onclick="favorites('${gui.unum}','${vlist.bnum }','true')">
+											<i class="fas fa-star"></i>
+										</button>
+									</c:if>
+									<c:if test="${not fn:contains(gui.favorites,fbnum)}">
+										<button class="btn info-btn fbtn-${vlist.bnum }"
+											onclick="favorites('${gui.unum}','${vlist.bnum }','false')">
+											<i class="far fa-star"></i>
+										</button>
+									</c:if>
+								</div>
+
+							</div>
+								<div class="video-info-row sm">
 									<div class="video-title" data-toggle="collapse"
 										data-target="#collapse-${vlist.RN}" aria-expanded="false"
 										aria-controls="collapse-${vlist.RN }"
@@ -115,53 +173,8 @@
 									</div>
 								</div>
 
-								<div class="btn-box-row">
-
-									<div class="btn-comment-box">
-										<button class="btn  info-inner-btn"
-											id="replyBtn-${vlist.bnum }"
-											onclick="commentBox('${vlist.vnum}','${vlist.bnum }')">
-											댓글 (0)
-											<c:forEach items="${rlist }" var="rlist">
-												<c:if test="${vlist.bnum == rlist.bnum }">
-													<script>
-											$("#replyBtn-"+${vlist.bnum}).html("댓글 ("+${rlist.bnumCnt}+")");
-										</script>
-												</c:if>
-											</c:forEach>
-										</button>
-									</div>
-
-									<div class="btn-like-box">
-										<button class="btn info-inner-btn"
-											onclick="judgment('up','${vlist.bnum}')">
-											좋아요 <i class="fas fa-thumbs-up"></i> ${vlist.upcnt }
-										</button>
-										<button class="btn info-inner-btn"
-											onclick="judgment('down','${vlist.bnum}')">
-											싫어요 <i class="fas fa-thumbs-down"></i> ${vlist.downcnt }
-										</button>
-
-										<c:set value="/${vlist.bnum }/" var="fbnum" />
-
-										<c:if test="${fn:contains(gui.favorites,fbnum)}">
-											<button
-												class="btn btn-outline-warning info-inner-btn fbtn-${vlist.bnum }"
-												onclick="favorites('${gui.unum}','${vlist.bnum }','true')">
-												<i class="fas fa-star"></i>
-											</button>
-										</c:if>
-										<c:if test="${not fn:contains(gui.favorites,fbnum)}">
-											<button
-												class="btn btn-outline-warning info-inner-btn fbtn-${vlist.bnum }"
-												onclick="favorites('${gui.unum}','${vlist.bnum }','false')">
-												<i class="far fa-star"></i>
-											</button>
-										</c:if>
-									</div>
-
-								</div>
-							</div>
+								
+						
 							
 						</div>
 						<!--/video-info-box  -->
