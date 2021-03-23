@@ -6,10 +6,10 @@
 
 <div class="paging-box">
 	<div class="con-btn-group">
-		<a href="mainView.do" class="all">전체보기</a> 
-		<a href="#" class="sortBtn-lg" id="latestCon">최신</a> 
-		<a href="#" class="sortBtn-lg" id="viewcnt">조회수</a> 
-		<a href="#" class="sortBtn-lg" id="upcnt">좋아요</a>
+		<a href="mainView.do" class="all">전체보기</a> <a href="#"
+			class="sortBtn-lg" id="latestCon">최신</a> <a href="#"
+			class="sortBtn-lg" id="viewcnt">조회수</a> <a href="#"
+			class="sortBtn-lg" id="upcnt">좋아요</a>
 	</div>
 
 	<div class="paging-btn">
@@ -39,12 +39,10 @@
 
 <div class="content-view mt-3 mb-1">
 	<div class="content-view-box">
-		<a class="recently" data-toggle="collapse" href="#recentlyCollapse"
-			role="button" aria-expanded="false" aria-controls="recentlyCollapse">
-			오늘 본 게시물 </a> <a class="favorites" data-toggle="collapse"
-			href="#favoritesCollapse" role="button" aria-expanded="false"
-			aria-controls="favoritesCollapse"> 즐겨찾기 </a> <a class="all"
-			href="mainView.do"> 전체보기 </a>
+		<a class="all" href="mainView.do"> 전체보기 </a> 
+		<a class="recently" data-toggle="collapse" href="#recentlyCollapse" role="button" aria-expanded="false" aria-controls="recentlyCollapse"> 오늘 본 게시물
+		</a> 
+		<a class="favorites" data-toggle="collapse" href="#favoritesCollapse" role="button" aria-expanded="false" aria-controls="favoritesCollapse"> 즐겨찾기 </a>
 
 	</div>
 	<div class="sort-box">
@@ -89,15 +87,10 @@
 						<div class="col-lg-5 align-self-center video-img-box"
 							data-toggle="collapse" data-target="#collapse-${vlist.RN}"
 							aria-expanded="false" aria-controls="collapse-${vlist.RN}">
-
-							<c:set var="strArray" value="${fn:split(vlist.vurl,'/')}" />
-							<c:forEach items="${strArray }" var="videoId" varStatus="g">
-								<c:if test="${g.count == 3}">
-									<img class="videoImg" id="img-${vlist.vnum}"
-										src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg"
-										onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','imgClick')">
-								</c:if>
-							</c:forEach>
+							<img class="videoImg" id="img-${vlist.vnum}"
+										src="${vlist.vthumimg }"
+										onclick="videoClick('${vlist.videoid }','${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','imgClick')">
+						
 						</div>
 
 
@@ -109,7 +102,7 @@
 								<div class="video-title" data-toggle="collapse"
 									data-target="#collapse-${vlist.RN}" aria-expanded="false"
 									aria-controls="collapse-${vlist.RN }"
-									onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','titleClick')">
+									onclick="videoClick('${vlist.videoid }','${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','titleClick')">
 									<span class="v-title">${vlist.vtitle}</span>
 								</div>
 
@@ -261,7 +254,7 @@
 							<div class="row reply-input-group">
 								<div class="reply-input col-lg-10 col-10">
 									<textarea style="resize: none;" id="replyText-${vlist.bnum}"
-										class="form-control" rows="1" placeholder="댓글을 입력해주세요."></textarea>
+										class="form-control reply-area" rows="1" placeholder="댓글을 입력해주세요."></textarea>
 								</div>
 								<div class="reply-input-btn parentBtn col-lg-2 col-2">
 

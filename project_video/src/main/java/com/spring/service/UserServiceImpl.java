@@ -10,39 +10,51 @@ import com.spring.vo.UserVO;
 @Service
 public class UserServiceImpl implements UserService {
 
-		
-		@Inject
-		UserDAO userDAO;
-	
-		@Override
-		public int idCheck(String userid) {
-			// TODO Auto-generated method stub
-			return userDAO.idCheck(userid);
-		}
-		 
-		@Override
-		public UserVO getUserInfo(UserVO userVO) {
-			// TODO Auto-generated method stub
-			return userDAO.getUserInfo(userVO);
-		}
-		
-		
-		@Override
-		public int updateFav(UserVO userVO) {
+
+	@Inject
+	UserDAO userDAO;
+
+	@Override
+	public int idCheck(String userid) {
 		// TODO Auto-generated method stub
-			return userDAO.updateFav(userVO);
-		}
-		
-		@Override
-		public int updateFavRelease(UserVO userVO) {
+		return userDAO.idCheck(userid);
+	}
+
+	@Override
+	public UserVO getUserInfo(UserVO userVO) {
+		// TODO Auto-generated method stub
+		return userDAO.getUserInfo(userVO);
+	}
+
+
+	@Override
+	public int updateFav(UserVO userVO) {
+		// TODO Auto-generated method stub
+		return userDAO.updateFav(userVO);
+	}
+
+	@Override
+	public int updateFavRelease(UserVO userVO) {
 		// TODO Auto-generated method stub
 		return userDAO.updateFavRelease(userVO);
-		}
-		
-		@Override
-		public int emtyDelete(UserVO gui) {
+	}
+
+	@Override
+	public int emtyDelete(UserVO gui) {
 		// TODO Auto-generated method stub
 		return userDAO.emtyDelete(gui);
-		}
-		
+	}
+
+	@Override
+	public int userInsert(UserVO userVO) {
+
+		return userDAO.userInsert(userVO);
+	}
+
+	@Override
+	public int userUpdate(UserVO userVO) {
+		// TODO Auto-generated method stub
+		return userDAO.userUpdate(userVO);
+	}
+
 }

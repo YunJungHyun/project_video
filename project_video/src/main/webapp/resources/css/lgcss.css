@@ -326,9 +326,12 @@ span.u-title {
 /* accordion body -reply */
 .form-control {
 	border: 1px solid;
-	box-shadow: 0 0 0 0.05rem #6c757d;
 }
 
+.reply-area,.reReply-area{
+		box-shadow: 0 0 0 0.05rem #6c757d;
+	
+}
 .reply-btn, .reReply-badge-btn, .reReply-btn, .reReply-cancle-btn {
 	border: 1px solid;
 	box-shadow: 0 0 0 0.05rem #6c757d;
@@ -464,3 +467,4 @@ span.u-title {
 }
 
 /* accordion body -reReply 끝*/
+

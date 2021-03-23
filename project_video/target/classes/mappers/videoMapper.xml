@@ -11,7 +11,7 @@
 
 		
 	<insert id="insertVideo" parameterType="videoVO" keyProperty="vnum" keyColumn="vnum" useGeneratedKeys="true"  >
-		INSERT INTO videos(vurl ,unum ,userid ,vpw, vtitle, gnum) VALUES(#{vurl},  #{unum},#{userid} , #{vpw}, #{vtitle} ,#{gnum})
+		INSERT INTO videos(vurl,videoid ,unum ,userid ,vpw,vthumimg, vtitle, gnum) VALUES(#{vurl}, #{videoid},  #{unum},#{userid} , #{vpw},#{vthumimg}, #{vtitle} ,#{gnum})
 	
 	</insert>
 
@@ -19,7 +19,7 @@
 			
 		
 	SELECT * FROM(
-		SELECT ROW_NUMBER() over (ORDER BY ${sort} DESC ) AS RN ,bnum ,B.vnum ,B.unum ,B.gnum ,B.userid ,vurl , vtitle ,vpw, A.upcnt, A.downcnt, A.viewcnt 
+		SELECT ROW_NUMBER() over (ORDER BY ${sort} DESC ) AS RN ,bnum ,B.vnum ,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid ,vurl , vtitle ,vpw, A.upcnt, A.downcnt, A.viewcnt 
 					FROM boards A INNER JOIN videos B 
 						ON A.vnum = B.vnum 
 						WHERE B.gnum LIKE CONCAT( #{gnum}, '%') AND B.vtitle LIKE CONCAT('%',#{searchTxt},'%')
@@ -33,7 +33,7 @@
 	<select id="getMyVideo" resultType="videoVO">
 	
 	SELECT * FROM(
-		SELECT ROW_NUMBER() over (ORDER BY bnum DESC ) AS RN ,bnum ,B.vnum ,B.unum ,B.gnum ,B.userid ,vurl , vtitle, vpw,  A.upcnt, A.downcnt, A.viewcnt 
+		SELECT ROW_NUMBER() over (ORDER BY bnum DESC ) AS RN ,bnum ,B.vnum ,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid ,vurl , vtitle, vpw,  A.upcnt, A.downcnt, A.viewcnt 
 					FROM boards A INNER JOIN videos B 
 						ON A.vnum = B.vnum 
 						 
@@ -60,7 +60,7 @@
 		
 		<![CDATA[
 		 SELECT * FROM(
-		SELECT ROW_NUMBER() over (ORDER BY FIELD(bnum, ]]><foreach collection="favArray" item="favNum" separator=",">${favNum}</foreach><![CDATA[) ) AS RN ,bnum ,B.vnum ,B.unum ,B.gnum ,B.userid ,vurl , vtitle, vpw,  A.upcnt, A.downcnt, A.viewcnt 
+		SELECT ROW_NUMBER() over (ORDER BY FIELD(bnum, ]]><foreach collection="favArray" item="favNum" separator=",">${favNum}</foreach><![CDATA[) ) AS RN ,bnum ,B.vnum,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid ,vurl , vtitle, vpw,  A.upcnt, A.downcnt, A.viewcnt 
 					FROM boards A INNER JOIN videos B 
 						ON A.vnum = B.vnum 
 						AND A.bnum REGEXP (#{fav})		 
@@ -75,7 +75,7 @@
 		
 		<![CDATA[
 		 SELECT * FROM(
-		SELECT ROW_NUMBER() over (ORDER BY FIELD(A.vnum, ]]><foreach collection="recentlyArray" item="reNum" separator=",">${reNum}</foreach><![CDATA[) ) AS RN ,bnum ,B.vnum ,B.unum ,B.gnum ,B.userid ,vurl , vtitle, vpw,  A.upcnt, A.downcnt, A.viewcnt 
+		SELECT ROW_NUMBER() over (ORDER BY FIELD(A.vnum, ]]><foreach collection="recentlyArray" item="reNum" separator=",">${reNum}</foreach><![CDATA[) ) AS RN ,bnum ,B.vnum,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid ,vurl , vtitle, vpw,  A.upcnt, A.downcnt, A.viewcnt 
 					FROM boards A INNER JOIN videos B 
 						ON A.vnum = B.vnum 
 						AND A.vnum REGEXP (#{recently})		 

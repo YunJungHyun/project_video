@@ -191,4 +191,31 @@ public class UserController {
 	
 		System.out.println("result : " + result);
 	}
+	
+	@RequestMapping(value="signUp.do" ,  method=RequestMethod.POST)
+	@ResponseBody
+	public String signUp(UserVO userVO) {
+		
+		System.out.println("[signUp.do]");
+		System.out.println(userVO.toString());
+		
+		int result =userService.userInsert(userVO); 
+		//System.out.println(result);
+		
+		String str = Integer.toString(result);
+		return str;
+	}
+	
+	@RequestMapping(value="userUpdate.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String userUpdate(UserVO userVO) {
+		System.out.println("[userUpdate.do]");
+		System.out.println(userVO.toString());
+	
+		int result = userService.userUpdate(userVO);
+		//System.out.println(result);
+		
+		String str = Integer.toString(result);
+		return str;
+	}
 }

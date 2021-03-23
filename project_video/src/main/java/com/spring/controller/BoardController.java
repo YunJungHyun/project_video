@@ -34,18 +34,15 @@ public class BoardController {
 	
 	@RequestMapping(value="getOneBoard.do", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> getOneBoard(String vnum,String vurl,HttpServletRequest request) {
+	public Map<String, Object> getOneBoard(String vnum,HttpServletRequest request) {
 		//System.out.println("vnum : "+ vnum);
 		Map<String, Object> map = new HashMap<String,Object>();
 		String videoId = null;
 		BoardVO boardVO = boardService.getOneBoard(vnum);
 		
-		String[] strArray =vurl.split("/");
-		videoId = strArray[3];
-		
+	
 		//System.out.println("videoId :"+ videoId);
 		map.put("map", boardVO);
-		map.put("videoId", videoId);
 		
 		//Map<String, String> rMap = new HashMap<String,String>();
 		

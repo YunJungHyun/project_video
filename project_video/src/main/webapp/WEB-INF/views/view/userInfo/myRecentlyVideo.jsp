@@ -31,13 +31,9 @@
 							data-toggle="collapse" data-target="#collapse-${vlist.RN}"
 							aria-expanded="false" aria-controls="collapse-${vlist.RN}">
 
-							<c:set var="strArray" value="${fn:split(vlist.vurl,'/')}" />
-							<c:forEach items="${strArray }" var="videoId" varStatus="g">
-								<c:if test="${g.count == 3}">
-									<img class="videoImg" id="img-${vlist.vnum }" src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg"
-										onclick="videoClick('${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','imgClick')">
-								</c:if>
-							</c:forEach>
+									<img class="videoImg" id="img-${vlist.vnum }" src="${vlist.vthumimg}"
+										onclick="videoClick('${vlist.videoid }','${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','imgClick')">
+								
 						</div>
 
 						
@@ -202,7 +198,7 @@
 							<div class="row reply-input-group">
 								<div class="reply-input col-lg-10 col-10">
 									<textarea style="resize: none;" id="replyText-${vlist.bnum}"
-										class="form-control" rows="1" placeholder="댓글을 입력해주세요."></textarea>
+										class="form-control reply-area" rows="1" placeholder="댓글을 입력해주세요."></textarea>
 								</div>
 								<div class="reply-input-btn parentBtn col-lg-2 col-2">
 

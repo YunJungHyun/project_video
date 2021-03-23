@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
@@ -52,18 +53,11 @@ public class VideoController {
 
 
 			) {
-
-		//System.out.println("videoVO.getGnum :" +videoVO.getGnum());
-		//		System.out.println("videoVO.getVurl() :" + videoVO.getVurl());
-		//		System.out.println("videoVO.getVtitle() :" + videoVO.getVtitle());
-		//		System.out.println("videoVO.getVpw() :" + videoVO.getVpw());
-		//		System.out.println("videoVO.getUnum() :" + videoVO.getUnum());
-
+		System.out.println("[videoReg.do]");
+		
+		System.out.println("videoID : " + videoVO.getVideoid());
+		videoVO.setVthumimg("https://img.youtube.com/vi/"+videoVO.getVideoid()+"/mqdefault.jpg");
 		videoService.insertVideo(videoVO);
-
-
-		System.out.println("videoVO.getVnum():"+videoVO.getVnum());
-		System.out.println("videoVO.getUnum():"+videoVO.getUnum());
 
 		int result = boardService.insertBoard(videoVO); 
 

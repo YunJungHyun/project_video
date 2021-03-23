@@ -3,14 +3,13 @@
 .navbar-brand {
 	margin: 0px;
 	padding: 0rem 0.25rem;
-	font-family: brandName;
 	letter-spacing: 0.1rem;
 	font-size: 3.7vw;
 }
 
 /* 슬라이드 이너 */
 .carousel-inner {
-	width: 29rem;
+	width: 80vw;
 }
 /* 슬라이드 이너 끝  */
 
@@ -21,3 +20,9 @@
 	top: 5%;
 }
 /* modal 끝  */
+
+.right-hamburger>.dropdown-item {
+	
+	font-size: 3vw;
+	padding: .25rem 0.75rem;
+}

@@ -12,6 +12,8 @@ public class VideoVO {
 	private String vthumimg;
 	private String vpw;
 	private String vtitle;
+	private String  videoid;
+	
 	
 	private int upcnt;
 	private int downcnt;
@@ -19,6 +21,12 @@ public class VideoVO {
 	
 	
 
+	public String getVideoid() {
+		return videoid;
+	}
+	public void setVideoid(String videoid) {
+		this.videoid = videoid;
+	}
 	public String getGnum() {
 		return gnum;
 	}
@@ -97,11 +105,15 @@ public class VideoVO {
 	public void setVtitle(String vtitle) {
 		this.vtitle = vtitle;
 	}
+	
+	
 	@Override
 	public String toString() {
-		return "VideoVO [vnum=" + vnum + ", unum=" + unum + ", bnum=" + bnum + ", RN=" + RN + ", vurl=" + vurl
-				+ ", vthumimg=" + vthumimg + ", vpw=" + vpw + ", vtitle=" + vtitle + "]";
+		return "VideoVO [vnum=" + vnum + ", unum=" + unum + ", userid=" + userid + ", bnum=" + bnum + ", RN=" + RN
+				+ ", gnum=" + gnum + ", vurl=" + vurl + ", vthumimg=" + vthumimg + ", vpw=" + vpw + ", vtitle=" + vtitle
+				+ ", videoid=" + videoid + ", upcnt=" + upcnt + ", downcnt=" + downcnt + ", viewcnt=" + viewcnt + "]";
 	}
+	
 
 
 	

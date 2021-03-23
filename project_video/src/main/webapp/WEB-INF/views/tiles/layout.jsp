@@ -17,6 +17,8 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
+ 
+ 
 
 <!-- 내가 설정한 css  -->
 <link type="text/css" rel="stylesheet"
@@ -124,7 +126,9 @@
 
 
 
-<script type="text/javascript">	
+<script type="text/javascript">
+
+
 $(document).ready(function(){
 	
 	$(".navbar-brand").on("click", function(){
@@ -264,12 +268,12 @@ function favRefresh(userid, width){
 									
 									var vurl = data[j].vurl;
 									var vtitle =data[j].vtitle;
-									var videoIdArray=vurl.split("/");
-									var videoId = videoIdArray[3];
 									var vnum = data[j].vnum;
+									var videoId = data[j].videoId;
+									var thumimg = data[j].vthumimg;
 									if(k < l+3){
 										output +="<div class='favList-item col-4' id='fav-"+vnum+"'>"
-										output +="<img src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>"
+										output +="<img src='"+thumimg+"'>"
 										output +="<span class='favList-name'>"+vtitle+"</span>";
 										output +="</div>"
 										k++;
@@ -373,12 +377,13 @@ function favRefresh(userid, width){
 									
 									var vurl = data[j].vurl;
 									var vtitle =data[j].vtitle;
-									var videoIdArray=vurl.split("/");
-									var videoId = videoIdArray[3];
 									var vnum = data[j].vnum;
+									var videoId = data[j].videoid;
+									var thumimg = data[j].vthumimg;
+									
 									if(k < l+3){
 										output +="<div class='favList-item' id='fav-"+vnum+"'>"
-										output +="<img class='left-img' src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>"
+										output +="<img class='left-img' src='"+thumimg+"'>"
 										output +="<span class='favList-name'>"+vtitle+"</span>";
 										output +="</div>"
 										k++;
@@ -510,12 +515,11 @@ function recentlyRefresh(userid, width){
 								var vnum =data.mlist[j].vnum;
 								var vurl = data.mlist[j].vurl;
 								var vtitle =data.mlist[j].vtitle;
-								var videoIdArray=vurl.split("/");
-								var videoId = videoIdArray[3];
-								
+								var videoId = data.mlist[j].videoid;
+								var thumImg =data.mlist[j].vthumimg;
 								if(k < l+3){
 									output +="<div class='recentlyList-item  col-4' id='recently-"+vnum+"'>"
-									output +="<img  src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>"
+									output +="<img  src='"+thumImg+"'>"
 									output +="<span class='recentlyList-name'>"+vtitle+"</span>";
 									output +="</div>"
 									k++;
@@ -656,12 +660,13 @@ function recentlyRefresh(userid, width){
 							var vnum =data.mlist[j].vnum;
 							var vurl = data.mlist[j].vurl;
 							var vtitle =data.mlist[j].vtitle;
-							var videoIdArray=vurl.split("/");
-							var videoId = videoIdArray[3];
+							
+							var videoId = data.mlist[j].videoid;
+							var thumimg = data.mlist[j].vthumimg;
 							
 							if(k < l+3){
 								output +="<div class='recentlyList-item' id='recently-"+vnum+"'>"
-								output +="<img  class='left-img' src='https://img.youtube.com/vi/"+videoId+"/mqdefault.jpg'>"
+								output +="<img  class='left-img' src='"+thumimg+"'>"
 								output +="<span class='recentlyList-name'>"+vtitle+"</span>";
 								output +="</div>"
 								k++;
@@ -840,7 +845,7 @@ function getCookie(cname){
 /* 쿠키 생성  끝 */
 
 /* 게시물 클릭  */
-function videoClick(vnumData , vurlData,bnumData, clickObjeck, trigger){
+function videoClick(videoidData ,vnumData , vurlData, bnumData, clickObjeck, trigger){
 	
 	
 	var trigger = trigger;
@@ -848,6 +853,7 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck, trigger){
 	var vnum = vnumData;
 	var vurl = vurlData;
 	var bnum = bnumData;
+	var videoid = videoidData;
 	
 	var player ="player-"+vnum;
 	
@@ -881,8 +887,7 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck, trigger){
 			dataType : "json",
 			data : {
 
-				'vnum' : vnum,
-				'vurl' : vurl
+				'vnum' : vnum
 			},
 			success : function(data) {
 				//alert(data.videoId);  
@@ -901,9 +906,9 @@ function videoClick(vnumData , vurlData,bnumData, clickObjeck, trigger){
 			
 				youTube_player = new YT.Player(player, {
 
-					height : '350px',
+					height : '450px',
 					width : '100%',
-					videoId : data.videoId
+					videoId : videoid
  
 				}) 
 				
@@ -1416,7 +1421,7 @@ function reCommentBox(rpnum ,rnum,bnum ,rnum){
 		var output ="";
 		output="<div class='row reReply-input-group'>";	
 		output+="<div class='col-lg-9 col-8 reReply-input'>" 
-			output+="<textarea  style='resize: none;' id='replyText-"+bnum+"-"+rpnum+"' class='form-control'  rows='1' placeholder='답글을 입력해주세요.'></textarea>"
+			output+="<textarea  style='resize: none;' id='replyText-"+bnum+"-"+rpnum+"' class='form-control reReply-area'  rows='1' placeholder='답글을 입력해주세요.'></textarea>"
 		output+="</div>"
 		output+="<div class='col-lg-3 col-4 reReply-input-btn'>"
 			output+="<button type='button' name='boardNum-"+bnum+"' class='btn reReply-btn col-lg-7 col-7' onclick='insertReReply("+bnum+","+rpnum+")'>답글 입력</button>"

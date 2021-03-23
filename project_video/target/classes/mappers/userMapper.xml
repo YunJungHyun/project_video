@@ -20,7 +20,7 @@
 	<update id="updateFavRelease">
 		
 		
-			UPDATE users SET favorites =  REPLACE(favorites,#{fbnum} ,'') WHERE unum =#{unum};
+			UPDATE users SET favorites =  REPLACE(favorites,#{fbnum} ,'') WHERE unum =#{unum}
 	</update>
 	<update id="updateFav">
 		
@@ -29,6 +29,16 @@
 	</update>
 	<update id="emtyDelete">
 		UPDATE users SET favorites= #{favorites} where unum= #{unum}
+	</update>
+	
+	
+	<insert id="userInsert">
+	
+		INSERT INTO users(userid, uname, userpw, uemail , uphn  ) VALUES(#{userid},  #{uname},#{userpw} , #{uemail}, #{uphn})
+	</insert>
+	 
+	<update id="userUpdate">
+		UPDATE users SET userpw = #{userpw} , uemail = #{uemail} , uphn = #{uphn} WHERE userid =#{userid}
 	</update>
 </mapper>
 

@@ -51,5 +51,17 @@ public class UserDAOImpl implements UserDAO{
 		
 		return result;
 	}
+	
+	@Override
+	public int userInsert(UserVO userVO) {
+		int result = sqlSession.insert(Namespace+".userInsert", userVO);
+		return result;
+	}
+	
+	@Override
+	public int userUpdate(UserVO userVO) {
+		int result = sqlSession.update(Namespace+".userUpdate",userVO);
+		return result;
+	}
 
 }

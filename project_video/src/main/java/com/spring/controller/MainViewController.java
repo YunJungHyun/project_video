@@ -108,7 +108,6 @@ public class MainViewController {
 		}
 
 		
-		
 		//장르
 		List<GenreVO> glist= genreService.getAllGenre();
 
@@ -116,7 +115,7 @@ public class MainViewController {
 		//등록한동영상 정보
 		List<VideoVO> vlist = videoService.getAllList(pagingVO);
 
-		System.out.println(vlist.size()); 
+		System.out.println(vlist.toString()); 
 
 		Map<String, String> map = new HashMap<String,String>();
 		//페이지 세션
