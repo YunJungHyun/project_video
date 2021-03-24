@@ -1,0 +1,470 @@
+@charset "UTF-8";
+
+.navbar {
+	background-color: #000000;
+	height: 4rem;
+}
+
+#searchTool {
+	position: absolute;
+}
+
+.form-inline {
+	display: none;
+}
+
+.content-view {
+	display: none;
+}
+
+
+.mainBox {
+	margin-top: 4.5rem;
+}
+
+/* left-menuBox 전체  */
+.left-menuBox {
+	top: 4rem;
+	position: sticky;
+	height: calc(100vh - 4rem);
+	margin-top: 4rem;
+	display: flex;
+	flex-direction: column;
+	border-right: 1px solid #bbb;
+}
+/* left-menuBox 전체  끝*/
+
+/* 검색창   */
+.search-form {
+	display: flex;
+	height: 2.5rem;
+	border-radius: .25rem .25rem 0 0;
+	border: 2px solid #000;
+}
+
+.search-input {
+	border: none;
+}
+
+.search-btn {
+	border: 2px solid #000;
+	padding: 0px;
+	background-color: #000;
+	width: -webkit-fill-available;
+}
+
+.search-btn>i {
+	color: #fff;
+}
+
+/* 검색창 끝  */
+
+/*left-menu  */
+.left-card-header {
+	padding: 0px;
+}
+
+#left-menu-accordion, .left-card-header, .left-card-header>.list-group-item
+	{
+	border-radius: unset;
+	border: none;
+}
+
+#left-menu-accordion {
+	border: 2px solid #000;
+	border-top: none;
+	border-radius: 0 0 .25rem .25rem;
+}
+
+#left-menu-accordion>.card {
+	border: unset;
+}
+
+#left-menu-accordion>.card:first-child {
+	border-radius: unset;
+	border-bottom: 0.25px solid #bbb;
+}
+
+#left-menu-accordion>.card:last-child {
+	border-top: 0.25px solid #bbb;
+}
+
+.left-card-header>.list-group-item {
+	text-decoration: none;
+	color: black;
+}
+
+#recentlyNone, #guiNone, #favNone {
+	display: none;
+}
+
+.card-body {
+	padding: 0px;
+}
+
+.vert .carousel-item-next.carousel-item-left, .vert .carousel-item-prev.carousel-item-right
+	{
+	-webkit-transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+}
+
+.vert .carousel-item-next, .vert .active.carousel-item-right {
+	-webkit-transform: translate3d(0, 100%, 0);
+	transform: translate3d(0, 100% 0);
+}
+
+.vert .carousel-item-prev, .vert .active.carousel-item-left {
+	-webkit-transform: translate3d(0, -100%, 0);
+	transform: translate3d(0, -100%, 0);
+}
+
+.carousel-control-down, .carousel-control-up {
+	position: absolute;
+	z-index: 1;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	width: 100%;
+	color: #fff;
+	text-align: center;
+	transition: opacity .15s ease;
+	height: 2rem;
+}
+
+.carousel-control-down {
+	bottom: 3px;
+}
+
+.carousel-control-up {
+	top: 3px;
+}
+
+.carousel-control-down>span, .carousel-control-up>span {
+	color: #fff;
+}
+
+#recentlyNone, #favNone {
+	padding: 1rem;
+	background-color: #212529;
+	color: #fff;
+}
+
+.left-img {
+	width: 100%;
+	padding-top: 0.4rem;
+}
+
+.recently-left-inner, .fav-left-inner {
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+	border-top: 1px solid #bbb;
+}
+
+.recently-slide>.card-body, .fav-slide>.card-body {
+	background-color: #212529;
+}
+
+.recentlyList-name, .favList-name {
+	color: #fff;
+	font-size: 1.2rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	display: block;
+	padding: 0.4rem 0.5rem 0 0.5rem;
+}
+/*left-menu  끝*/
+
+/* paging-box   */
+
+.page-title {
+	font-size: 1.5rem;
+    font-weight: bold;
+	
+}
+.paging-box {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	
+}
+
+.con-btn-group > a {
+	
+	font-weight: bold;
+    background-color: #dee2e6;
+    padding: .25rem 0.5rem;
+    border-radius: .25rem;
+}
+.con-btn-group {
+	align-self: flex-end;
+}
+
+.my-paging-btn{
+	
+}
+/* paging-box  끝 */
+
+/* genre-box   */
+.genre-box {
+	display: flex;
+	padding: 0;
+}
+
+.genreBtn {
+	flex: unset;
+	margin: 0.5rem 0.1rem;
+	padding: 0.25rem 0px;
+	background-color: #6c757d;
+	color: #fff;
+	font-size: 1rem;
+	min-height: 2.5rem;
+}
+
+.genreBtn:first-child {
+	margin-left: 0px;
+}
+
+.genreBtn:last-child {
+	margin-right: 0px;
+}
+/* genre-box  끝 */
+
+/* main-card-header  */
+.video-info-row.sm {
+	display: none;
+}
+
+.main-card-header {
+	padding: 0;
+}
+
+.videoImg {
+	width: 100%;
+	height: auto;
+}
+
+.video-info-box {
+	padding-left: 0px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.video-info-row.lg {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 0.5rem;
+	border-bottom: 1px solid #bbb;
+}
+
+.viewCnt.badge {
+	align-self: flex-end;
+	border: 1px solid;
+}
+
+span.v-title {
+	font-weight: bold;
+	font-size: 1.2rem;
+	letter-spacing: 2px;
+}
+
+.writer-info-row.lg {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 0.5rem;
+}
+
+span.u-title {
+	font-weight: bold;
+	font-size: 1rem;
+}
+
+.link.badge {
+	align-self: center;
+	background-color: #6c757d;
+	color: #fff;
+}
+
+.btn-box-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 0.5rem;
+}
+
+.info-btn {
+	border-radius: 0.25rem;
+	border: 1px solid #bbb;
+}
+
+.fa-thumbs-up {
+	color: red;
+}
+
+.fa-thumbs-down {
+	color: green;
+}
+.fa-star {
+	
+	color : #ffc107;
+}
+
+.info-btn:hover, .info-btn:focus {
+	background-color: #6c757d;
+	color: white;
+	box-shadow: 0 0 0 0.1rem #adb5bd;
+}
+/* main-card-header 끝 */
+.card-body {
+	background-color: #f7f7f7;
+}
+/* accordion body -reply */
+.form-control {
+	border: 1px solid;
+}
+
+.reply-area,.reReply-area{
+		box-shadow: 0 0 0 0.05rem #6c757d;
+	
+}
+.reply-btn, .reReply-badge-btn, .reReply-btn, .reReply-cancle-btn {
+	border: 1px solid;
+	box-shadow: 0 0 0 0.05rem #6c757d;
+}
+
+.reply-btn:hover, .reReply-badge-btn:hover, .reReply-btn:hover,
+	.reReply-cancle-btn:hover {
+	background-color: #212529;
+	color: white;
+}
+
+.reply-btn:focus, .reReply-badge-btn:focus, .reReply-btn:focus,
+	.reReply-cancle-btn:focus {
+	background-color: #212529;
+	color: white;
+	box-shadow: none;
+}
+
+.reply-input-group {
+	padding: 1rem 0.5rem;
+}
+
+.reply-hr {
+	margin-top: 0px;
+	background-color: #fff;
+}
+
+.reply-input {
+	padding-left: 0px;
+	padding-right: 0.25rem;
+}
+
+.reply-input-btn {
+	padding-left: 0.25px;
+	padding-right: 0rem;
+}
+
+.reply-input-btn>button {
+	padding: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+.reply-list-group {
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	display: flex;
+	flex-direction: column;
+}
+
+.replyOneLine-row {
+	width: 100%;
+	margin: 0px;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 0.3rem;
+}
+
+.reply-box, .reReply-box-child {
+	width: 100%;
+	padding: 0.5rem;
+	border-bottom: 1px solid #fff;
+	border: 1px solid #bbb;
+	border-radius: .25rem;
+}
+
+.reply-icon {
+	padding-left: 0px;
+	padding-right: 0.5rem;
+	font-size: 2rem;
+	text-align: right;
+}
+
+.reply-replyer-box {
+	font-weight: bold;
+	font-size: 1rem;
+	padding-bottom: 0.25rem;
+	border-bottom: 1px solid #bbb;
+}
+
+.reply-text-box {
+	font-size: 1rem;
+	padding-top: 0.25rem;
+	padding-top: 0.5rem;
+	text-indent: 0.3rem;
+}
+
+.myReply-Update-Btn {
+	float: right;
+	background-color: white;
+	border: 1px solid;
+}
+/* accordion body -reply 끝*/
+
+/* accordion body -reReply*/
+.reReplyOneLine-row {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 0.3rem;
+}
+
+.reReply-badge-btn {
+	float: right;
+	padding: 0.25rem;
+	font-weight: unset;
+	width: 2.5rem;
+	height: 1.5rem;
+}
+
+.reReply-input-group {
+	width: 100%;
+	margin: 0px;
+	margin-bottom: 0.25rem;
+	padding: 1rem 0.5rem;
+}
+
+.reReply-input {
+	padding-left: 0px;
+	padding-right: 0.25rem;
+}
+
+.reReply-input-btn {
+	padding: 0px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.reReply-input-btn>button {
+	padding: 0px;
+	height: 100%;
+	margin: 0px 0.2vw;
+}
+
+/* accordion body -reReply 끝*/
+

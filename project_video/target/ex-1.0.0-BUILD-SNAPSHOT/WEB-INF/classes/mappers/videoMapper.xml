@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 실질적인 쿼리문을 작성하는 곳 -->
+<mapper namespace="com.spring.mapper.videoMapper">
+	<!-- mybatis-config.xml의 typeAlias에 등록해두지 않았다면 <select id="selectMember" 
+		resultType="com.example.dto.MemberVO" > SELECT ID, PW ,NAME FROM TEST </select> 
+		이렇게 해야 한다. -->
+	
+
+		
+	<insert id="insertVideo" parameterType="videoVO" keyProperty="vnum" keyColumn="vnum" useGeneratedKeys="true"  >
+		INSERT INTO videos(vurl,videoid ,unum ,userid ,vpw,vthumimg, vtitle, gnum) VALUES(#{vurl}, #{videoid},  #{unum},#{userid} , #{vpw},#{vthumimg}, #{vtitle} ,#{gnum})
+	
+	</insert>
+
+	<select id="getAllList" resultType="videoVO">
+			
+		
+	SELECT * FROM(
+		SELECT ROW_NUMBER() over (ORDER BY ${sort} DESC ) AS RN ,bnum ,B.vnum ,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid ,vurl , vtitle ,vpw, A.upcnt, A.downcnt, A.viewcnt 
+					FROM boards A INNER JOIN videos B 
+						ON A.vnum = B.vnum 
+						WHERE B.gnum LIKE CONCAT( #{gnum}, '%') AND B.vtitle LIKE CONCAT('%',#{searchTxt},'%')
+					) C
+					WHERE RN BETWEEN #{start} AND #{end} 
+					
+ 
+			
+	</select>
+	 
+	<select id="getMyVideo" resultType="videoVO">
+	
+	SELECT * FROM(
+		SELECT ROW_NUMBER() over (ORDER BY bnum DESC ) AS RN ,bnum ,B.vnum ,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid ,vurl , vtitle, vpw,  A.upcnt, A.downcnt, A.viewcnt 
+					FROM boards A INNER JOIN videos B 
+						ON A.vnum = B.vnum 
+						 
+						AND B.unum = #{unum}
+					) C
+					WHERE RN BETWEEN #{start} AND #{end}
+	
+	</select>
+	
+	<select id="getOneVideo" resultType="videoVO">
+		SELECT * FROM videos WHERE vnum =#{vnum}
+	</select> 
+	
+	<update id="myVideoUpdate" >
+		UPDATE videos SET vurl=#{vurl} , vtitle=#{vtitle}, vpw =#{vpw}, gnum=#{gnum} WHERE vnum= #{vnum} AND unum =#{unum}
+	</update>
+	 
+	 <delete id="videoDelete">
+	 	DELETE FROM videos WHERE vnum = #{vnum};
+	 </delete>
+	 
+	 <select id="getMyFavVideo" parameterType="videoVO" resultType="videoVO">
+		
+		
+		<![CDATA[
+		 SELECT * FROM(
+		SELECT ROW_NUMBER() over (ORDER BY FIELD(bnum, ]]><foreach collection="favArray" item="favNum" separator=",">${favNum}</foreach><![CDATA[) ) AS RN ,bnum ,B.vnum,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid ,vurl , vtitle, vpw,  A.upcnt, A.downcnt, A.viewcnt 
+					FROM boards A INNER JOIN videos B 
+						ON A.vnum = B.vnum 
+						AND A.bnum REGEXP (#{fav})		 
+					) C
+					WHERE RN BETWEEN #{start} AND #{end}		
+			]]>
+	 </select>
+	 
+	 
+	 <select id="getMyRecentlyVideo" parameterType="videoVO" resultType="videoVO">
+		
+		
+		<![CDATA[
+		 SELECT * FROM(
+		SELECT ROW_NUMBER() over (ORDER BY FIELD(A.vnum, ]]><foreach collection="recentlyArray" item="reNum" separator=",">${reNum}</foreach><![CDATA[) ) AS RN ,bnum ,B.vnum,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid ,vurl , vtitle, vpw,  A.upcnt, A.downcnt, A.viewcnt 
+					FROM boards A INNER JOIN videos B 
+						ON A.vnum = B.vnum 
+						AND A.vnum REGEXP (#{recently})		 
+					) C
+					WHERE RN BETWEEN #{start} AND #{end}		
+			]]>
+	 </select>
+	 
+	 
+</mapper>
+
+ 

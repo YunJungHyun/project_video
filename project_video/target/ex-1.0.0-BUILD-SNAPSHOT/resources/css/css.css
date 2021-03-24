@@ -1,0 +1,187 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
+@font-face{
+	
+} 
+body { 
+	font-family: 'Nanum Gothic', sans-serif;
+	letter-spacing: 0.05rem;
+}
+/* 관리자  */
+.admin-txt{
+	 display :none;
+	background-color: white;
+}
+/* 관리자  */
+.navbar {
+	background-color: #000000;
+	
+}
+
+hr {
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+
+a, a:hover {
+	text-decoration: none;
+	color: black;
+}
+
+ul {
+	list-style: none;
+	padding : 0px;
+}
+ 
+
+.nav-sm{
+	
+	display : flex;
+	align-items: center;
+}
+
+/* 검색아이콘  */
+.search-icon-sm{
+	
+	vertical-align: middle;
+}
+
+
+
+/* 브랜드 이름  */
+.navbar-brand {
+	margin: 0px;
+	padding: 0rem 0.25rem;
+	letter-spacing: 0.1rem;
+	font-weight: bold;
+}
+/* 브랜드이름 끝  */
+
+/* 네비게이션바 오른쪽 드롭다운 메뉴  */
+.navbar-toggler {
+	padding: 0rem 0.25rem;
+	border: none;
+}
+ 
+.right-hamburger {
+	text-align: left;
+	border: 1px solid #b3b1b5;
+    border-radius: 3px;
+}
+
+.right-hamburger>.dropdown-item {
+	
+	font-size: 2vw;
+	padding: .25rem 0.75rem;
+}
+
+.right-hamburger>hr {
+	margin-top: 0.25rem;
+	margin-bottom: 0.25rem;
+}
+
+
+.navbar-toggler:hover {
+	background-color: #00000061;
+}
+
+.navbar-toggler:focus {
+	outline: unset;
+}
+/* 네비게이션바 오른쪽 드롭다운 메뉴 끝  */
+
+/* 브라우저 크기 작을때 페이지 타이틀 처리 */
+.page-sm-title{
+	
+	display : none;
+}
+/* 브라우저 크기 작을때 페이지 타이틀 처리 끝*/
+/* boardNone 처리  */
+.boardNone{
+	
+	display: flex;
+    flex-direction: column;
+    color: white;
+    background-color: #6c757d;
+    text-align: center;
+    min-height: 30vw;
+    border-radius: .25rem;
+    justify-content: center;
+}
+.boardNone > i{
+	font-size: 15vw;
+}
+
+.boardNone-text{
+	font-size: 5vw;
+    padding-top: 2vw;
+}
+/* boardNone 처리  끝*/
+
+/* page-top-btn  */
+
+.page-top-btn:hover, .page-top-btn:focus, .page-top-btn:active{
+	
+	background-color: #000;
+	cursor: pointer;
+}
+.page-top-btn{
+	display : none;
+	background-color: #343a40;
+    width: 12vw;
+    height: 12vw;
+    position: fixed;
+    z-index: 100;
+    bottom: 3vw;
+    right: 4vw;
+    border-radius: 1vw;
+    font-size: 4vw;
+    text-align: center;
+    border: 3px solid #383d41;
+}
+
+.page-top-btn > img{
+	
+	filter: invert(1);
+    padding-top: 2.5vw;
+    padding-bottom: 2.5vw;
+    width: 5vw;
+    height: auto;
+}
+
+/* page-top-btn  끝*/
+
+/* videoImg Click  */
+
+.videoImg:hover, .videoImg:focus, .videoImg:focus{
+	filter: brightness(50%); 
+}
+
+/* videoImg Click 끝  */
+.modal-header {
+	padding-bottom: 0.5rem;
+}
+
+.modal-dialog {
+	height: inherit;
+}
+
+.modal-title {
+	font-weight: bold;
+}
+
+.tool-box {
+	display: none;
+}
+
+.regThumImgBox{
+	
+	display: none;
+}
+
+#regImg{
+	
+	width : 100%;
+	height : auto;
+}

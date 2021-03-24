@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+
+
+.carousel-inner {
+	width: 40rem;
+}
+
+.mainContainer {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+
+.genreBtn {
+ 	font-size: 2vw;
+    min-height: 2.4rem; 
+}

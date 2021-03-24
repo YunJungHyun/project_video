@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 실질적인 쿼리문을 작성하는 곳 -->
+<mapper namespace="com.spring.mapper.userMapper">
+	<!-- mybatis-config.xml의 typeAlias에 등록해두지 않았다면 <select id="selectMember" 
+		resultType="com.example.dto.MemberVO" > SELECT ID, PW ,NAME FROM TEST </select> 
+		이렇게 해야 한다. -->
+
+	<select id="idCheck" resultType="int">
+		SELECT COUNT(*) FROM users WHERE userid = #{userid}
+	</select>
+	
+	<select id="getUserInfo" resultType="userVO">
+		SELECT * FROM users WHERE userid = #{userid} and userpw =#{userpw}
+	</select>
+	
+	
+	<update id="updateFavRelease">
+		
+		
+			UPDATE users SET favorites =  REPLACE(favorites,#{fbnum} ,'') WHERE unum =#{unum}
+	</update>
+	<update id="updateFav">
+		
+		
+			UPDATE users SET favorites=CONCAT(favorites , #{fbnum} ) WHERE unum =#{unum}
+	</update>
+	<update id="emtyDelete">
+		UPDATE users SET favorites= #{favorites} where unum= #{unum}
+	</update>
+	
+	
+	<insert id="userInsert">
+	
+		INSERT INTO users(userid, uname, userpw, uemail , uphn  ) VALUES(#{userid},  #{uname},#{userpw} , #{uemail}, #{uphn})
+	</insert>
+	 
+	<update id="userUpdate">
+		UPDATE users SET userpw = #{userpw} , uemail = #{uemail} , uphn = #{uphn} WHERE userid =#{userid}
+	</update>
+</mapper>
+
+ 
