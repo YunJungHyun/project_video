@@ -11,77 +11,89 @@
 
 		
 	<insert id="insertVideo" parameterType="videoVO" keyProperty="vnum" keyColumn="vnum" useGeneratedKeys="true"  >
+		 <![CDATA[
 		INSERT INTO videos(vurl,videoid ,unum ,userid ,vpw,vthumimg, vtitle, gnum) VALUES(#{vurl}, #{videoid},  #{unum},#{userid} , #{vpw},#{vthumimg}, #{vtitle} ,#{gnum})
-	
+		]]>
 	</insert>
 
 	<select id="getAllList" resultType="videoVO">
 			
-		
+		 <![CDATA[
 	SELECT * FROM(
-		SELECT ROW_NUMBER() over (ORDER BY ${sort} DESC ) AS RN ,bnum ,B.vnum ,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid ,vurl , vtitle ,vpw, A.upcnt, A.downcnt, A.viewcnt 
+		SELECT  @ROWNUM := @ROWNUM + 1  AS RN , A.bnum , A.upcnt, A.downcnt, A.viewcnt ,B.vnum ,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid , B.vurl , B.vtitle , B.vpw
 					FROM boards A INNER JOIN videos B 
-						ON A.vnum = B.vnum 
-						WHERE B.gnum LIKE CONCAT( #{gnum}, '%') AND B.vtitle LIKE CONCAT('%',#{searchTxt},'%')
+						ON A.vnum = B.vnum ,(SELECT @ROWNUM := 0) R
+						WHERE B.gnum LIKE CONCAT( #{gnum}, '%') 
+						AND B.vtitle LIKE CONCAT('%',#{searchTxt},'%')
+						ORDER BY bnum desc
 					) C
 					WHERE RN BETWEEN #{start} AND #{end} 
-					
+					]]>
  
 			
 	</select>
 	 
 	<select id="getMyVideo" resultType="videoVO">
-	
+	 <![CDATA[
 	SELECT * FROM(
-		SELECT ROW_NUMBER() over (ORDER BY bnum DESC ) AS RN ,bnum ,B.vnum ,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid ,vurl , vtitle, vpw,  A.upcnt, A.downcnt, A.viewcnt 
+		SELECT @ROWNUM := @ROWNUM + 1  AS RN  , A.bnum , A.upcnt, A.downcnt, A.viewcnt ,B.vnum ,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid , B.vurl , B.vtitle , B.vpw
 					FROM boards A INNER JOIN videos B 
-						ON A.vnum = B.vnum 
-						 
+						ON A.vnum = B.vnum ,(SELECT @ROWNUM := 0) R
 						AND B.unum = #{unum}
+						ORDER BY bnum desc
 					) C
 					WHERE RN BETWEEN #{start} AND #{end}
-	
+	]]> 
 	</select>
 	
 	<select id="getOneVideo" resultType="videoVO">
+		 <![CDATA[
 		SELECT * FROM videos WHERE vnum =#{vnum}
+		]]>
 	</select> 
 	
 	<update id="myVideoUpdate" >
+		 <![CDATA[
 		UPDATE videos SET vurl=#{vurl} , vtitle=#{vtitle}, vpw =#{vpw}, gnum=#{gnum} WHERE vnum= #{vnum} AND unum =#{unum}
+		]]>
 	</update>
 	 
 	 <delete id="videoDelete">
+	 	 <![CDATA[
 	 	DELETE FROM videos WHERE vnum = #{vnum};
+	 ]]>
 	 </delete>
 	 
 	 <select id="getMyFavVideo" parameterType="videoVO" resultType="videoVO">
 		
 		
-		<![CDATA[
+		 <![CDATA[
 		 SELECT * FROM(
-		SELECT ROW_NUMBER() over (ORDER BY FIELD(bnum, ]]><foreach collection="favArray" item="favNum" separator=",">${favNum}</foreach><![CDATA[) ) AS RN ,bnum ,B.vnum,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid ,vurl , vtitle, vpw,  A.upcnt, A.downcnt, A.viewcnt 
+		SELECT @ROWNUM := @ROWNUM + 1  AS RN , A.bnum , A.upcnt, A.downcnt, A.viewcnt ,B.vnum ,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid , B.vurl , B.vtitle , B.vpw
 					FROM boards A INNER JOIN videos B 
-						ON A.vnum = B.vnum 
-						AND A.bnum REGEXP (#{fav})		 
+						ON A.vnum = B.vnum ,(SELECT @ROWNUM := 0) R
+						WHERE A.bnum REGEXP (#{fav})
+						
+						ORDER BY FIELD(bnum, ]]><foreach collection="favArray" item="favNum" separator=",">${favNum}</foreach><![CDATA[) desc 
 					) C
 					WHERE RN BETWEEN #{start} AND #{end}		
-			]]>
+			]]> 
 	 </select>
 	 
 	 
 	 <select id="getMyRecentlyVideo" parameterType="videoVO" resultType="videoVO">
 		
 		
-		<![CDATA[
+	 <![CDATA[
 		 SELECT * FROM(
-		SELECT ROW_NUMBER() over (ORDER BY FIELD(A.vnum, ]]><foreach collection="recentlyArray" item="reNum" separator=",">${reNum}</foreach><![CDATA[) ) AS RN ,bnum ,B.vnum,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid ,vurl , vtitle, vpw,  A.upcnt, A.downcnt, A.viewcnt 
+		SELECT @ROWNUM := @ROWNUM + 1  AS RN ) AS RN , A.bnum , A.upcnt, A.downcnt, A.viewcnt ,B.vnum ,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid , B.vurl , B.vtitle , B.vpw
 					FROM boards A INNER JOIN videos B 
-						ON A.vnum = B.vnum 
-						AND A.vnum REGEXP (#{recently})		 
+						ON A.vnum = B.vnum  ,(SELECT @ROWNUM := 0) R
+						WHERE A.vnum REGEXP (#{recently})
+						ORDER BY FIELD(A.vnum, ]]><foreach collection="recentlyArray" item="reNum" separator=",">${reNum}</foreach><![CDATA[) desc
 					) C
 					WHERE RN BETWEEN #{start} AND #{end}		
-			]]>
+			]]> 
 	 </select>
 	 
 	 

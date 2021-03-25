@@ -9,49 +9,61 @@
 		이렇게 해야 한다. -->
 	
 	<insert id="insertBoard" >
+		 <![CDATA[
 		INSERT INTO boards(unum , vnum) VALUES( #{unum}, #{vnum} )
-		
+		]]>
 	</insert>
 	
 	<select id="getOneBoard" resultType="boardVO">
-	 
+	  <![CDATA[
 		SELECT * FROM boards WHERE vnum=#{vnum}
+		]]>
 	</select>
 	
 	<select id ="boardTotalCnt" resultType="int">
-		
+		 <![CDATA[
 		SELECT COUNT(*) FROM boards A inner JOIN videos B 
 			ON A.vnum =B.vnum	
 			WHERE B.gnum LIKE CONCAT( #{gnum}, '%') AND B.vtitle LIKE CONCAT('%',#{searchTxt},'%')
+		 ]]>
 	</select>
 	<select id ="myBoardTotalCnt" parameterType="String" resultType="int">
-		
+		 <![CDATA[
 		SELECT COUNT(*) FROM boards A inner JOIN videos B 
 			ON A.vnum =B.vnum	
 			WHERE B.unum =#{unum}		
+		]]>
 	</select>
 	 
 	
 	<update id="updateUpCnt">
+		 <![CDATA[
 		UPDATE boards SET upcnt = upcnt + 1 WHERE bnum = #{bnum}
+		]]>
 	</update>
 	
 	<update id="updateDownCnt">
+		 <![CDATA[
 		UPDATE boards SET downcnt = downcnt + 1 WHERE bnum = #{bnum}
+		]]>
 	</update>
 	
 	<update id="viewCntUp">
+		 <![CDATA[
 		UPDATE boards SET viewcnt = viewcnt + 1 WHERE bnum=#{bnum}
+		]]>
 	</update>
 	
 	<select id="getFavlist" resultType="VideoVO" parameterType="String">
-	
+	 <![CDATA[
 		SELECT vnum,vtitle,vurl,videoid,vthumimg FROM videos WHERE vnum = (SELECT vnum FROM boards WHERE bnum=#{favArray})
+	]]>
 	</select>
 	
 	<delete id="boardDelete">
-		
+		 <![CDATA[
 		DELETE FROM boards WHERE vnum=#{vnum}
+		]]>
 	</delete>	
 </mapper>
 

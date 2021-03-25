@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 Test set: com.spring.video.MySQLConnectionTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.024 sec <<< FAILURE! - in com.spring.video.MySQLConnectionTest
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.026 sec <<< FAILURE! - in com.spring.video.MySQLConnectionTest
 testConnection(com.spring.video.MySQLConnectionTest)  Time elapsed: 0.001 sec  <<< ERROR!
 org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'com.spring.video.MySQLConnectionTest': Unsatisfied dependency expressed through field 'ds'; nested exception is org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type [javax.sql.DataSource] is defined: expected single matching bean but found 2: dataSourceSpied,dataSource
 Caused by: org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type [javax.sql.DataSource] is defined: expected single matching bean but found 2: dataSourceSpied,dataSource

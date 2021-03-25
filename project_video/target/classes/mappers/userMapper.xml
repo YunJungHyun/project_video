@@ -9,36 +9,47 @@
 		이렇게 해야 한다. -->
 
 	<select id="idCheck" resultType="int">
+		 <![CDATA[
 		SELECT COUNT(*) FROM users WHERE userid = #{userid}
+		]]>
 	</select>
 	
 	<select id="getUserInfo" resultType="userVO">
+		 <![CDATA[
 		SELECT * FROM users WHERE userid = #{userid} and userpw =#{userpw}
+		]]>
 	</select>
 	
 	
 	<update id="updateFavRelease">
 		
-		
+		 <![CDATA[
 			UPDATE users SET favorites =  REPLACE(favorites,#{fbnum} ,'') WHERE unum =#{unum}
+		]]>
 	</update>
 	<update id="updateFav">
 		
-		
+		 <![CDATA[
 			UPDATE users SET favorites=CONCAT(favorites , #{fbnum} ) WHERE unum =#{unum}
+		]]>
 	</update>
 	<update id="emtyDelete">
+		 <![CDATA[
 		UPDATE users SET favorites= #{favorites} where unum= #{unum}
+		]]>
 	</update>
 	
 	
 	<insert id="userInsert">
-	
+	 <![CDATA[
 		INSERT INTO users(userid, uname, userpw, uemail , uphn  ) VALUES(#{userid},  #{uname},#{userpw} , #{uemail}, #{uphn})
+		]]>
 	</insert>
 	 
 	<update id="userUpdate">
+		 <![CDATA[
 		UPDATE users SET userpw = #{userpw} , uemail = #{uemail} , uphn = #{uphn} WHERE userid =#{userid}
+		]]>
 	</update>
 </mapper>
 

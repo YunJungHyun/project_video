@@ -9,7 +9,9 @@
 		이렇게 해야 한다. -->
 	
 	<select id="getAllgenre" resultType="genreVO">
-		SELECT * FROM GENRES
+		 <![CDATA[
+		SELECT * FROM genres
+		]]>
 	</select>
 	
 </mapper>
