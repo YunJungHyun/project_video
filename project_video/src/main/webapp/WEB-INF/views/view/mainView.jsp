@@ -39,10 +39,12 @@
 
 <div class="content-view mt-3 mb-1">
 	<div class="content-view-box">
-		<a class="all" href="mainView.do"> 전체보기 </a> 
-		<a class="recently" data-toggle="collapse" href="#recentlyCollapse" role="button" aria-expanded="false" aria-controls="recentlyCollapse"> 오늘 본 게시물
-		</a> 
-		<a class="favorites" data-toggle="collapse" href="#favoritesCollapse" role="button" aria-expanded="false" aria-controls="favoritesCollapse"> 즐겨찾기 </a>
+		<a class="all" href="mainView.do"> 전체보기 </a> <a class="recently"
+			data-toggle="collapse" href="#recentlyCollapse" role="button"
+			aria-expanded="false" aria-controls="recentlyCollapse"> 오늘 본 게시물
+		</a> <a class="favorites" data-toggle="collapse" href="#favoritesCollapse"
+			role="button" aria-expanded="false" aria-controls="favoritesCollapse">
+			즐겨찾기 </a>
 
 	</div>
 	<div class="sort-box">
@@ -71,8 +73,8 @@
 
 <div class="main-content" id="main-content">
 
-
 	<div class="accordion" id="accordion">
+		<input type="hidden" id="vlistSize" value="${fn:length(vlist)}">
 		<c:if test="${fn:length(vlist) ==0}">
 			<div class="boardNone">
 				<i class="far fa-frown"></i> <span class="boardNone-text">
@@ -88,9 +90,9 @@
 							data-toggle="collapse" data-target="#collapse-${vlist.RN}"
 							aria-expanded="false" aria-controls="collapse-${vlist.RN}">
 							<img class="videoImg" id="img-${vlist.vnum}"
-										src="${vlist.vthumimg }"
-										onclick="videoClick('${vlist.videoid }','${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','imgClick')">
-						
+								src="${vlist.vthumimg }"
+								onclick="videoClick('${vlist.videoid }','${vlist.vnum}','${vlist.vurl}','${vlist.bnum }','imgClick')">
+
 						</div>
 
 
@@ -254,7 +256,8 @@
 							<div class="row reply-input-group">
 								<div class="reply-input col-lg-10 col-10">
 									<textarea style="resize: none;" id="replyText-${vlist.bnum}"
-										class="form-control reply-area" rows="1" placeholder="댓글을 입력해주세요."></textarea>
+										class="form-control reply-area" rows="1"
+										placeholder="댓글을 입력해주세요."></textarea>
 								</div>
 								<div class="reply-input-btn parentBtn col-lg-2 col-2">
 
@@ -275,11 +278,17 @@
 
 			</div>
 		</c:forEach>
+
+
 	</div>
 </div>
-
+ <div class="emptyArea">
+	<h6>게시글을 더 보시려면 밑으로 내려주세요.</h6>
+</div> 
 
 <script type="text/javascript">
+
+	
 	$(".favorites").on("click" , function(){
 		
 		var gui = "${gui}";

@@ -7,7 +7,7 @@
 
 
 	<div class="con-btn-group">
-		<span class="page-title">내가 작성한 게시물 ( ${fn:length(vlist)} )</span>
+		<span class="page-title">내가 작성한 게시물 ( ${myVCnt} )</span>
 	</div>
 
 	<div class="my-paging-btn  ml-auto">
@@ -29,13 +29,14 @@
 
 <!-- sm-title  -->
 <div class="page-sm-title my-2">
-	<span>내가 쓴 게시물</span> <span class="badge page-sm-badge">(${fn:length(vlist)})
+	<span>내가 쓴 게시물</span> <span class="badge page-sm-badge">(${myVCnt})
 	</span>
 </div>
 
 <div class="main-content" id="my-content">
 	<div class="accordion" id="my-accordion">
-		<c:if test="${fn:length(vlist) ==0}">
+		<input type="hidden" id="vlistSize" value="${fn:length(vlist)}" >
+		<c:if test="${myVCnt ==0}">
 			<div class="boardNone">
 				<i class="far fa-frown"></i> <span class="boardNone-text">
 					게시물이 없습니다. </span>

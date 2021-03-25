@@ -179,6 +179,11 @@
 
 /* paging-box   */
 
+.page-top-btn{
+	
+	display : none;
+}
+
 .page-title {
 	font-size: 1.5rem;
     font-weight: bold;

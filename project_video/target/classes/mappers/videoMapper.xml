@@ -25,7 +25,7 @@
 						ON A.vnum = B.vnum ,(SELECT @ROWNUM := 0) R
 						WHERE B.gnum LIKE CONCAT( #{gnum}, '%') 
 						AND B.vtitle LIKE CONCAT('%',#{searchTxt},'%')
-						ORDER BY bnum desc
+						ORDER BY ${sort} desc
 					) C
 					WHERE RN BETWEEN #{start} AND #{end} 
 					]]>
@@ -39,12 +39,52 @@
 		SELECT @ROWNUM := @ROWNUM + 1  AS RN  , A.bnum , A.upcnt, A.downcnt, A.viewcnt ,B.vnum ,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid , B.vurl , B.vtitle , B.vpw
 					FROM boards A INNER JOIN videos B 
 						ON A.vnum = B.vnum ,(SELECT @ROWNUM := 0) R
-						AND B.unum = #{unum}
+						WHERE A.unum = #{unum}
 						ORDER BY bnum desc
-					) C
+					) C 
 					WHERE RN BETWEEN #{start} AND #{end}
 	]]> 
 	</select>
+	<select id="getMyVideoCnt" resultType="int">
+		<![CDATA[
+				SELECT COUNT(*)
+					FROM boards	WHERE unum = #{unum}
+		]]>	
+	</select>
+	
+	 <select id="getMyFavVideo" parameterType="videoVO" resultType="videoVO">
+		
+		
+		 <![CDATA[
+		 SELECT * FROM(
+		SELECT @ROWNUM := @ROWNUM + 1  AS RN , A.bnum , A.upcnt, A.downcnt, A.viewcnt ,B.vnum ,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid , B.vurl , B.vtitle , B.vpw
+					FROM boards A INNER JOIN videos B 
+						ON A.vnum = B.vnum ,(SELECT @ROWNUM := 0) R
+						WHERE A.bnum REGEXP (#{fav})
+						
+						ORDER BY FIELD(B.vnum, ]]><foreach collection="favArray" item="favNum" separator=",">${favNum}</foreach><![CDATA[) asc 
+					) C
+					WHERE RN BETWEEN #{start} AND #{end}		
+			]]> 
+	 </select>
+	 
+	 
+	 <select id="getMyRecentlyVideo" parameterType="videoVO" resultType="videoVO">
+		
+		
+	 <![CDATA[
+		 SELECT * FROM(
+		SELECT @ROWNUM := @ROWNUM + 1  AS RN  , A.bnum , A.upcnt, A.downcnt, A.viewcnt ,B.vnum ,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid , B.vurl , B.vtitle , B.vpw
+					FROM boards A INNER JOIN videos B 
+						ON A.vnum = B.vnum  ,(SELECT @ROWNUM := 0) R
+						WHERE A.vnum REGEXP (#{recently})
+						
+						ORDER BY FIELD(B.vnum, ]]><foreach collection="recentlyArray" item="reNum" separator=",">${reNum}</foreach><![CDATA[) asc
+					) C
+					WHERE RN BETWEEN #{start} AND #{end}		
+			]]> 
+	 </select>
+	 
 	
 	<select id="getOneVideo" resultType="videoVO">
 		 <![CDATA[
@@ -64,39 +104,7 @@
 	 ]]>
 	 </delete>
 	 
-	 <select id="getMyFavVideo" parameterType="videoVO" resultType="videoVO">
-		
-		
-		 <![CDATA[
-		 SELECT * FROM(
-		SELECT @ROWNUM := @ROWNUM + 1  AS RN , A.bnum , A.upcnt, A.downcnt, A.viewcnt ,B.vnum ,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid , B.vurl , B.vtitle , B.vpw
-					FROM boards A INNER JOIN videos B 
-						ON A.vnum = B.vnum ,(SELECT @ROWNUM := 0) R
-						WHERE A.bnum REGEXP (#{fav})
-						
-						ORDER BY FIELD(bnum, ]]><foreach collection="favArray" item="favNum" separator=",">${favNum}</foreach><![CDATA[) desc 
-					) C
-					WHERE RN BETWEEN #{start} AND #{end}		
-			]]> 
-	 </select>
-	 
-	 
-	 <select id="getMyRecentlyVideo" parameterType="videoVO" resultType="videoVO">
-		
-		
-	 <![CDATA[
-		 SELECT * FROM(
-		SELECT @ROWNUM := @ROWNUM + 1  AS RN ) AS RN , A.bnum , A.upcnt, A.downcnt, A.viewcnt ,B.vnum ,B.videoid,B.vthumimg ,B.unum ,B.gnum ,B.userid , B.vurl , B.vtitle , B.vpw
-					FROM boards A INNER JOIN videos B 
-						ON A.vnum = B.vnum  ,(SELECT @ROWNUM := 0) R
-						WHERE A.vnum REGEXP (#{recently})
-						ORDER BY FIELD(A.vnum, ]]><foreach collection="recentlyArray" item="reNum" separator=",">${reNum}</foreach><![CDATA[) desc
-					) C
-					WHERE RN BETWEEN #{start} AND #{end}		
-			]]> 
-	 </select>
-	 
-	 
+		 
 </mapper>
 
  

@@ -59,7 +59,7 @@ public class MainViewController {
 			HttpServletRequest request,
 			HttpSession session,
 			Model model
-			
+
 			) {
 		System.out.println("[mainView.do]");
 		//System.out.println("searchTxt :" +searchTxt);
@@ -68,12 +68,12 @@ public class MainViewController {
 		System.out.println("genre : "+gnum);
 		System.out.println("sort : "+sort);
 		System.out.println("searchTxt : "+searchTxt);	
-		
+
 		//장르 클릭했는지	
 		if(gnum == null || gnum.equals("null") || gnum.equals("")) {
 			gnum= "";
 		}
-		
+
 		System.out.println("before1 genre : "+gnum);
 		//검색어 있는지
 		if(searchTxt == null || searchTxt.equals("")) {
@@ -84,7 +84,7 @@ public class MainViewController {
 			sort = "bnum";
 		}
 		System.out.println("before1 sort : "+sort);
-		
+
 		int total = boardService.boardTotalCnt(gnum,searchTxt);
 
 		if(nowPage == null && cntPerPage == null) {
@@ -95,23 +95,23 @@ public class MainViewController {
 		}else if(cntPerPage==null) {
 			cntPerPage ="10";
 		}
-		
+
 		pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		
+
 		pagingVO.setSort(sort);
 		pagingVO.setGnum(gnum);
 		pagingVO.setSearchTxt(searchTxt);
-		
+
 		//list 사이즈 수정 되는지
 		if(end != null) {
 			pagingVO.setEnd(Integer.parseInt(end));
 		}
 
-		
+
 		//장르
 		List<GenreVO> glist= genreService.getAllGenre();
 
-		
+
 		//등록한동영상 정보
 		List<VideoVO> vlist = videoService.getAllList(pagingVO);
 
@@ -119,28 +119,33 @@ public class MainViewController {
 
 		Map<String, String> map = new HashMap<String,String>();
 		//페이지 세션
-		
+
 		map.put("nowPage", Integer.toString(pagingVO.getNowPage()));
 		map.put("cntPerPage", Integer.toString(pagingVO.getCntPerPage()));
 		map.put("sort",pagingVO.getSort());
 		map.put("searchTxt",pagingVO.getSearchTxt());
+		map.put("reqValue", "mainView.do");
 		
-		
-		map.put("vlistSize", Integer.toString(vlist.size()));
+
+
+		//map.put("vlistSize", Integer.toString(vlist.size()));
 		map.put("searchTxt" ,searchTxt);
 		if(pagingVO.getGnum()=="") {
 			map.put("gnum", "0");
 		}else {
 			map.put("gnum", pagingVO.getGnum());
 		}
-		
+
 		session =request.getSession(true); 
 		session.setAttribute("pagingMap", map);	
+
+		//System.out.println("page se : "+vlist.size());
 
 		//댓글 갯수가져오기
 		List<ReplyVO> rlist =replyService.getReplyCnt();
 
-		System.out.println("rlist.size : "+rlist.size());
+		//System.out.println("rlist.size : "+rlist.size());
+		model.addAttribute("vlistSize", vlist.size());
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("pagingVO",pagingVO);
 		model.addAttribute("glist", glist);
@@ -150,19 +155,28 @@ public class MainViewController {
 	}
 
 
-	@RequestMapping(value="myVideo.do")
+	@RequestMapping(value="myVideo.do", method =RequestMethod.GET)
 	public String myVideo(
 			PagingVO pagingVO,
 			@RequestParam(value="nowPage", required= false) String nowPage,
 			@RequestParam(value="cntPerPage", required= false) String cntPerPage,
-			@RequestParam(value="unum", required=true) String unum,
+		
+			@RequestParam(value="end",required=false) String end,
+			HttpSession session,
 			Model model,
 			HttpServletRequest request
 			) {
+		
+		System.out.println("[myVideo.do]");
+		
+		UserVO gui= (UserVO)session.getAttribute("gui");
+		
+		String unum =Integer.toString(gui.getUnum());
+		
+		System.out.println("session unum : "+unum);
 		int total = boardService.myBoardTotalCnt(unum);
 
 
-		//System.out.println("total : "+total);
 
 		if(nowPage == null && cntPerPage == null) {
 			nowPage = "1";
@@ -179,8 +193,19 @@ public class MainViewController {
 		//System.out.println("pagingVO.lastPage : "+pagingVO.getLastPage());
 
 		pagingVO.setUnum(Integer.parseInt(unum));
-		List<VideoVO> myVlist = videoService.getMyVideo(pagingVO);
 
+		//list 사이즈 수정 되는지
+		if(end != null) {
+			pagingVO.setEnd(Integer.parseInt(end));
+		}
+
+
+
+		List<VideoVO> myVlist = videoService.getMyVideo(pagingVO);
+		//내가 쓴 글 갯수
+		int myVCnt = videoService.getMyVideoCnt(unum);
+
+		System.out.println("myVCnt :" + myVCnt);
 		//장르
 		List<GenreVO> glist= genreService.getAllGenre();
 
@@ -190,14 +215,15 @@ public class MainViewController {
 		//페이지 세션
 		map.put("nowPage", Integer.toString(pagingVO.getNowPage()));
 		map.put("cntPerPage", Integer.toString(pagingVO.getCntPerPage()));
-
+		
+		map.put("reqValue", "myVideo.do");
 		session =request.getSession(true); 
 		session.setAttribute("pagingMap", map);	
 		//댓글 갯수가져오기
 		List<ReplyVO> rlist =replyService.getReplyCnt();
 
 		model.addAttribute("rlist", rlist);
-
+		model.addAttribute("myVCnt", myVCnt);
 		model.addAttribute("pagingVO",pagingVO);
 		model.addAttribute("vlist", myVlist);
 		model.addAttribute("glist", glist);
@@ -281,12 +307,12 @@ public class MainViewController {
 		//페이지 세션
 		map.put("nowPage", Integer.toString(pagingVO.getNowPage()));
 		map.put("cntPerPage", Integer.toString(pagingVO.getCntPerPage()));
-		
+
 		session =request.getSession(true); 
 		session.setAttribute("PagingMap", map);	
 		//댓글 갯수가져오기
 		List<ReplyVO> rlist =replyService.getReplyCnt();
-		
+
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("favNum" ,favNum);
 		model.addAttribute("pagingVO",pagingVO);
@@ -311,50 +337,50 @@ public class MainViewController {
 
 		System.out.println("reNum : "+ reNum);
 		System.out.println("cookie : "+ cookie);
-	
+
 		if(!cookie.equals("")) {
-		
-		String[] cArray = cookie.trim().split(",");
-		String[] cookieArray = new String[cArray.length];
 
-		int total = 0;
+			String[] cArray = cookie.trim().split(",");
+			String[] cookieArray = new String[cArray.length];
 
-		String cookieStr = "^";
+			int total = 0;
 
-		for(int i = 0 ; i < cArray.length ;i++) {
+			String cookieStr = "^";
 
-			total += 1;
-			cookieArray[cArray.length-i-1] = cArray[i];
+			for(int i = 0 ; i < cArray.length ;i++) {
 
-			if(i != cArray.length-1) {
-				cookieStr += cArray[i]+"$|^";
+				total += 1;
+				cookieArray[cArray.length-i-1] = cArray[i];
 
-			}else {
+				if(i != cArray.length-1) {
+					cookieStr += cArray[i]+"$|^";
 
-				cookieStr +=cArray[i]+"$";
+				}else {
+
+					cookieStr +=cArray[i]+"$";
+				}
 			}
-		}
 
+			System.out.println("cookieStr :" +cookieStr);
+			if(nowPage == null && cntPerPage == null) {
+				nowPage = "1";
+				cntPerPage="10"; 
+			}else if(nowPage == null) {
+				nowPage ="1";
+			}else if(cntPerPage==null) {
+				cntPerPage ="10";
+			}
 
-		if(nowPage == null && cntPerPage == null) {
-			nowPage = "1";
-			cntPerPage="10"; 
-		}else if(nowPage == null) {
-			nowPage ="1";
-		}else if(cntPerPage==null) {
-			cntPerPage ="10";
-		}
+			pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 
-		pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+			pagingVO.setRecently(cookieStr);
+			pagingVO.setRecentlyArray(cookieArray);
 
-		pagingVO.setRecently(cookieStr);
-		pagingVO.setRecentlyArray(cookieArray);
-
-		List<VideoVO> relist = videoService.getMyRecentlyVideo(pagingVO);
-		System.out.println("rlist.size()"+relist.size());
-		model.addAttribute("vlist", relist);
+			List<VideoVO> relist = videoService.getMyRecentlyVideo(pagingVO);
+			System.out.println("relist.size()"+relist.size());
+			model.addAttribute("vlist", relist);
 		}else {
-			
+
 			model.addAttribute("vlist", null);
 		}
 
@@ -376,7 +402,7 @@ public class MainViewController {
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("reNum" ,reNum);	
 		model.addAttribute("pagingVO",pagingVO);
-		
+
 		model.addAttribute("glist", glist);
 
 

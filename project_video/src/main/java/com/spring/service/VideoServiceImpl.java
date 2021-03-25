@@ -63,4 +63,10 @@ public class VideoServiceImpl implements VideoService{
 		// TODO Auto-generated method stub
 		return videoDAO.getMyRecentlyVideo(pagingVO);
 	}
+	
+	@Override
+	public int getMyVideoCnt(String unum) {
+		// TODO Auto-generated method stub
+		return videoDAO.getMyVideoCnt(unum);
+	}
 }

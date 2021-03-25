@@ -17,8 +17,8 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
- 
- 
+
+
 
 <!-- 내가 설정한 css  -->
 <link type="text/css" rel="stylesheet"
@@ -103,6 +103,7 @@
 	<div class="container mainContainer">
 		<input type="hidden" id="cookie">
 
+
 		<div class="row">
 			<div class="left-menuBox col-lg-3 ">
 				<tiles:insertAttribute name="left-menu" />
@@ -152,10 +153,13 @@ $(document).ready(function(){
 	if(width <= 991){
 		$(window).scroll(function(){
 		
+		
 			var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
 			var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
+			var mainContentHeight = $(".main-content").height();
 			var mainContainerHeight = $('.mainContainer').height(); //문서 전체 내용을 갖는 div의 높이
 			
+			//	alert(scrollH +","+ mainContainerHeight);
 			if(scrollT >= 10){
 				
 				$(".page-top-btn").css("display","block");
@@ -164,15 +168,27 @@ $(document).ready(function(){
 				$(".page-top-btn").css("display","none");
 			}
 			
-			if(scrollT + scrollH +1 >= mainContainerHeight) { // 스크롤바가 아래 쪽에 위치할 때
-		 		var vlistSize ="${pagingMap.vlistSize}";	
-				var searchTxt ="${pagingMap.searchTxt}";
-		 		pageAnchorSmall(vlistSize ,searchTxt);
-		
-			}	
+			 if (scrollT == $(document).height() - $(window).height()) {
+			     
+				
+					//alert(scrollT + scrollH +1 +","+mainContainerHeight )
+	 				var searchTxt ="${pagingMap.searchTxt}"; 
+					var pageName =$(".main-content").attr("id");
+					var pageAccordion = $("#"+pageName).children().first().attr("id");
+ 					//alert(pageAccordion);
+					pageAnchorSmall(pageName,pageAccordion ,searchTxt);
+			      
+			    } 
+				
+				
+			
+		 	
 		})
 		
 		
+	}else{
+		
+		$(".page-top-btn").css("display","none");
 	}
 	
 	
@@ -191,11 +207,12 @@ $(window).resize(function(){
 	} 
 	
 	if(width <= 991){
-		
+		$(".page-top-btn").css("display","block");
 		$(".sm").css("display","flex");
 		$(".lg").css("display","none");
+	
 	}else{
-		
+		$(".page-top-btn").css("display","none");
 		$(".lg").css("display","flex");
 		$(".sm").css("display", "none");	
 	}
@@ -921,10 +938,12 @@ function videoClick(videoidData ,vnumData , vurlData, bnumData, clickObjeck, tri
 		})
 		
 		$("#img-"+vnum).css("filter","brightness(50%)");
+		
+		
+		
 		viewCntUp(bnum);
 		/* 쿠키적용 함수  */
 		add_cookie(vnum);
-		
 		fnMove(vnum);
 		
 	}
@@ -934,15 +953,15 @@ function videoClick(videoidData ,vnumData , vurlData, bnumData, clickObjeck, tri
 
 /* 원하는 위치에 스크롤  */
 function fnMove(vnum){
-	//alert(trigger);
-	var offset = $("#img-" + vnum).offset();
+	
+	 var offset = $("#img-" + vnum).offset();
 	//alert(offset.top);
 	
-   	$('html, body').animate({scrollTop : offset.top+200}, 400);
+   	//$('html, body').animate({scrollTop : offset.top+200}, 400); 
 
 }
 /* 원하는 위치에 스크롤  */
-
+ 
 /* 보는 순서 정렬 */
 $(".sort-select").on("change",function(){
 	var sort =this.value;
@@ -1083,14 +1102,18 @@ function condition(){
 /* 보는 기준에따라 리스트 출력 끝 */
 
 /* small size 페이징  */
-function pageAnchorSmall(vlistSize , searchTxt){
+function pageAnchorSmall(pageName, pageAccordion , searchTxt){
 	
+	
+	var vlistSize = $("#vlistSize").val();
+	//var pageAccordion = $(".accordion").val();
 	var addSize = Number(vlistSize)+10;
 	var sort = sessionStorage.getItem("sort");
 	var gnum = sessionStorage.getItem("gnum");
-	//alert(addSize);
-	
-	$("#main-content").load("mainView.do?search="+searchTxt+"&sort="+sort+"&gnum="+gnum+"&end="+addSize+" #accordion");
+	var reqVal = "${pagingMap.reqValue}"; 
+	/* alert(pageName+","+reqVal+","+pageAccordion);
+	alert(reqVal+"?search="+searchTxt+"&sort="+sort+"&gnum="+gnum+"&end="+addSize); */
+	$("#"+pageName).load(reqVal+"?search="+searchTxt+"&sort="+sort+"&gnum="+gnum+"&end="+addSize+" #"+pageAccordion);
 	
 	
 }

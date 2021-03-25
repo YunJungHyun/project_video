@@ -1,7 +1,5 @@
 @charset "UTF-8";
 
-
-
 .carousel-inner {
 	width: 40rem;
 }
@@ -11,8 +9,13 @@
 	padding-right: 0px;
 }
 
-
 .genreBtn {
- 	font-size: 2vw;
-    min-height: 2.4rem; 
+	font-size: 2vw;
+	min-height: 2.4rem;
+}
+
+.page-top-btn {
+	width: 10vw;
+	height: 10vw;
+	right: 8vw;
 }

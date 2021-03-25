@@ -22,6 +22,8 @@ public interface VideoService {
 	List<VideoVO> getMyFavVideo(PagingVO pagingVO);
 
 	List<VideoVO> getMyRecentlyVideo(PagingVO pagingVO);
+
+	int getMyVideoCnt(String unum);
 	
 	
 	

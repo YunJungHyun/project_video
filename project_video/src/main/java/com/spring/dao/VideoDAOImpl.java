@@ -80,4 +80,11 @@ public class VideoDAOImpl implements VideoDAO {
 		List<VideoVO> result = sqlSession.selectList(Namespace+".getMyRecentlyVideo",pagingVO);
 		return result;
 	}
+	
+	@Override
+	public int getMyVideoCnt(String unum) {
+		
+		int result = sqlSession.selectOne(Namespace+".getMyVideoCnt", unum);
+		return result;
+	}
 }
