@@ -513,4 +513,41 @@ a, a:hover, a:focus {
 }
 
 
+.page-top-btn{
+	
+	display :block;
+}
+
+
+/* page-top-btn  */
+
+.page-top-btn:hover, .page-top-btn:focus, .page-top-btn:active{
+	
+	background-color: #000;
+	cursor: pointer;
+}
+.page-top-btn{
+	
+	background-color: #6c757d;
+  
+    position: fixed;
+    z-index: 100;
+    
+    border-radius: 1vw;
+    font-size: 4vw;
+    text-align: center;
+    border: 3px solid #383d41;
+}
+
+.page-top-btn > img{
+	
+	filter: invert(1);
+    padding-top: 2.5vw;
+    padding-bottom: 2.5vw;
+    width: 5vw;
+    height: auto;
+}
+
+/* page-top-btn  끝*/
+
 

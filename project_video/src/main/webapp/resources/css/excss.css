@@ -26,3 +26,9 @@
 	font-size: 3vw;
 	padding: .25rem 0.75rem;
 }
+
+.page-top-btn{
+	width: 12vw;
+	bottom: 4vh;
+    right: 8vw;
+}

@@ -14,8 +14,9 @@
 	min-height: 2.4rem;
 }
 
-.page-top-btn {
-	width: 10vw;
-	height: 10vw;
-	right: 8vw;
+
+.page-top-btn{
+	width: 12vw;
+	bottom: 2rem;
+    right: 7vw;
 }

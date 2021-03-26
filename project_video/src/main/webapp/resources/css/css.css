@@ -119,38 +119,7 @@ ul {
 }
 /* boardNone 처리  끝*/
 
-/* page-top-btn  */
 
-.page-top-btn:hover, .page-top-btn:focus, .page-top-btn:active{
-	
-	background-color: #000;
-	cursor: pointer;
-}
-.page-top-btn{
-	display : none;
-	background-color: #6c757d;
-    width: 12vw;
-    height: 12vw;
-    position: fixed;
-    z-index: 100;
-    bottom: 3vw;
-    right: 4vw;
-    border-radius: 1vw;
-    font-size: 4vw;
-    text-align: center;
-    border: 3px solid #383d41;
-}
-
-.page-top-btn > img{
-	
-	filter: invert(1);
-    padding-top: 2.5vw;
-    padding-bottom: 2.5vw;
-    width: 5vw;
-    height: auto;
-}
-
-/* page-top-btn  끝*/
 
 /* videoImg Click  */
 

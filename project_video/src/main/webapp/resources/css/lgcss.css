@@ -474,4 +474,7 @@ span.u-title {
 /* accordion body -reReply 끝*/
 
 
-
+.empty-box{
+	
+	display: none;
+}

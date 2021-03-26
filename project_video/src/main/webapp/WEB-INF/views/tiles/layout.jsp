@@ -116,12 +116,12 @@
 
 			<div class="empty-box">
 
-				<img class="end-line" src="resources/img/zigzagSample.png" />
+			
 				<div class="end-line-info">
 					<div class="end-text">내려서 더보기 </div>
 					<i class="fas fa-arrow-circle-down"></i>
 				</div>
-
+				<img class="end-line" src="resources/img/zigzagSample.png" />
 			</div>
 
 		</div>
@@ -160,15 +160,17 @@
 				if (width <= 991) {
 					
 					var emptyH = $(window).height()/2 + "px";
-				
+					var footerH =$(".footerBox").height()/4;
+					
 					$(".empty-box").css("height",emptyH);
 					
+					//alert(footerH);
 					$(window).scroll(function() {
 						var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
 						var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
 						
-						if (scrollT >= 10) {
-
+						if (scrollT >= 10 || $(this).clientWidth <= 991) {
+									
 									$(".page-top-btn").css("display", "block");
 								} else {
 
@@ -178,7 +180,7 @@
 						
 						/* scrollH - footerH  */
 						
-						 if (scrollT == $(document).height()- $(window).height()) {
+						 if ((window.innerHeight + window.scrollY+footerH) >= document.body.offsetHeight) {
 
 							
 							var searchTxt = "${pagingMap.searchTxt}";
@@ -192,8 +194,9 @@
 							})
 
 				} else {
-
+				
 					$(".page-top-btn").css("display", "none");
+				
 				}
 
 				favRefresh(userid, width);
@@ -212,19 +215,23 @@
 		}
 
 		if (width <= 991) {
-			$(".page-top-btn").css("display", "block");
+			
 			$(".sm").css("display", "flex");
 			$(".lg").css("display", "none");
 
 		} else {
-			$(".page-top-btn").css("display", "none");
+			//alert(width);
+			
 			$(".lg").css("display", "flex");
 			$(".sm").css("display", "none");
+		
+			
 		}
-
+		
 		favRefresh(userid, width);
 		recentlyRefresh(userid, width);
-
+		
+		
 	})
 
 	/*즐겨찾기 새로고침 */
@@ -1103,10 +1110,8 @@
 		var reqVal = "${pagingMap.reqValue}";
 		/* alert(pageName+","+reqVal+","+pageAccordion);
 		alert(reqVal+"?search="+searchTxt+"&sort="+sort+"&gnum="+gnum+"&end="+addSize); */
-		$("#" + pageName).load(
-				reqVal + "?search=" + searchTxt + "&sort=" + sort + "&gnum="
-						+ gnum + "&end=" + addSize + " #" + pageAccordion);
-
+		$("#" + pageName).load(reqVal + "?search=" + searchTxt + "&sort=" + sort + "&gnum="	+ gnum + "&end=" + addSize + " #" + pageAccordion);
+		
 	}
 	/* small size 페이징  */
 

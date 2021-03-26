@@ -14,3 +14,10 @@
  	font-size: 2vw;
     min-height: 2rem; 
 }
+
+
+.page-top-btn{
+	width: 12vw;
+	bottom: 2rem;
+    right: 7vw;
+}

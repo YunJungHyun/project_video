@@ -99,7 +99,7 @@
 								</div>
 
 							</div>
-								<div class="video-info-row sm">
+								<div class="video-info-row row-sm-${vlist.vnum} sm">
 									<div class="video-title" data-toggle="collapse"
 										data-target="#collapse-${vlist.RN}" aria-expanded="false"
 										aria-controls="collapse-${vlist.RN }"
@@ -224,15 +224,15 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		var reNum = "${reNum}";
-		//alert(reNum);
-		if(reNum != "all"){
-			
-			
-			$("#img-"+reNum).trigger("click");
-			
-		}
+		/* vnum으로 처리할것   */
+		
+		var reNum="${reNum}";
+		
+		$("#img-"+reNum).trigger("click");
+		
+		
 	})
+	
 	
 </script>
 
