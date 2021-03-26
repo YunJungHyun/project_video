@@ -10,12 +10,7 @@ body::-webkit-scrollbar {
 	display: none; /* Chrome, Safari, Opera*/
 }
 
-.emptyArea{
-	color : white;
-	background-color:black;
-	text-align: center;
-	min-height : 10rem;
-}
+
 
 a, a:hover, a:focus {
 	color: black;
@@ -481,3 +476,41 @@ a, a:hover, a:focus {
 }
 
 /* 브라우저 크기 작을때 페이지 타이틀 처리 끝*/
+
+.empty-box{
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width : 100%;
+	padding: 10vh 0;
+}
+.end-text{
+	
+	font-size: 2rem;
+    padding: 0.5rem 0;
+}
+.end-line-info {
+	
+	display: flex;
+	flex-direction: column;
+	color: white;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.end-line-info> i {
+	
+	color: white;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.end-line{
+	width: 100%;
+    filter: opacity(0.5) drop-shadow(0 0 0 #6c757d );
+	height : 2rem;
+}
+
+
+

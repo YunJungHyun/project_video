@@ -161,7 +161,7 @@
 							</div>
 
 
-							<div class="video-info-row sm">
+							<div class="video-info-row row-sm-${vlist.vnum} sm">
 								<div class="video-title" data-toggle="collapse"
 									data-target="#collapse-${vlist.RN}" aria-expanded="false"
 									aria-controls="collapse-${vlist.RN }"
@@ -282,10 +282,8 @@
 
 	</div>
 </div>
- <div class="emptyArea">
-	<h6>게시글을 더 보시려면 밑으로 내려주세요.</h6>
-</div> 
 
+ 
 <script type="text/javascript">
 
 	

@@ -185,3 +185,25 @@ ul {
 	width : 100%;
 	height : auto;
 }
+
+
+.footerBox {
+	
+	background-color: black;
+}
+.footer-body {
+	display : flex;
+	flex-direction: column;
+	color : white;
+	padding: 1rem 0;
+}
+
+.dev-info-title {
+	
+	font-weight: bold;
+}
+
+.hr-f {
+	
+	background-color: #dee2e6;
+}
